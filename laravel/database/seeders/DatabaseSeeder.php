@@ -1,0 +1,37 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use \RobotKudos\RKDB\Options;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $options = new Options();
+        $options->set('homepage_headline1', 'Create a Property Website', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_headline2', 'In Less than 20 Minutes', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_cta_button', 'Create a Property Website', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_text', 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy', 'homepage_options', 'Homepage Options');
+
+        $options->set('homepage_box2_icon', 'fa-smile', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_box2_title', 'Fast and Easy', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_box2_text', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit commodi veniam expedita minus facere voluptatem dignissimos sit ab aperiam maxime, porro voluptatibus omnis nostrum laudantium nisi quae recusandae, vero illum.', 'homepage_options', 'Homepage Options');
+
+        $options->set('homepage_box3_icon', 'fa-smile', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_box3_title', 'Fast and Easy', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_box3_text', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit commodi veniam expedita minus facere voluptatem dignissimos sit ab aperiam maxime, porro voluptatibus omnis nostrum laudantium nisi quae recusandae, vero illum.', 'homepage_options', 'Homepage Options');
+
+        $options->set('homepage_box4_icon', 'fa-smile', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_box4_title', 'Fast and Easy', 'homepage_options', 'Homepage Options');
+        $options->set('homepage_box4_text', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit commodi veniam expedita minus facere voluptatem dignissimos sit ab aperiam maxime, porro voluptatibus omnis nostrum laudantium nisi quae recusandae, vero illum.', 'homepage_options', 'Homepage Options');
+
+    }
+}

@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec propertyspot_laravel php artisan $@

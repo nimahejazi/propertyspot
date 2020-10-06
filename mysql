@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec -ti propertyspot_db /usr/bin/mysql -upropertyspot -ppropertyspot
