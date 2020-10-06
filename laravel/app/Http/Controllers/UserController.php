@@ -30,8 +30,19 @@ class UserController extends Controller
             return redirect('/signup')->with('error', 'An error occurred, sorry for the inconvenience.')->withInput();
         }
 
-
-        // return view('auth.verify-email', ['email' => $request->email]);
+         return view('notification', [
+             'type'     => 'success',
+             'title'    => 'Success!',
+             'subtitle' => 'Your account has been created successfully!',
+             'paragraphs' => [
+                 'Thanks for signing up with PropertySpot.net. Now you can create a website for your property easy and fast',
+                 'To start creating a new website, sign in to your account.'
+             ],
+             'link' => [
+                 'title'    => 'Sign in to start using PropertySpot.net',
+                 'url'      => '/signin'
+             ]
+         ]);
     }
 
 
