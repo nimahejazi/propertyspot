@@ -26,6 +26,32 @@ a {
   }
 }
 
+.input-loader {
+    &.is-loading {
+        opacity: 0.5;
+    }
+}
+
+.img-loader {
+    &.is-loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.5;
+        &:after {
+            @include loader;
+            border-color: $accent-color;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            position: absolute;
+            top: calc(50% - 2.5em);
+            left: calc(50% - 2.5em);
+            width: 5em;
+            height: 5em;
+            border-width: 0.25em;
+        }
+    }
+}
+
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
 }
@@ -495,6 +521,10 @@ a.listing-new {
     padding-top: 1rem;
 }
 
-p {
+.notification p {
   margin-bottom: 1rem;
+}
+
+.card-fullname {
+    margin-bottom: 0;
 }

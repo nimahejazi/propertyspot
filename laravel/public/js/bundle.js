@@ -30218,11 +30218,13 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
+var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
 $(function () {
   $('#resendEmail').on('click', function (e) {
     $('#resendEmail').prop('disabled', true).addClass('is-loading');
   });
-  $('#hasCompany').on('change', function (e) {
+  $('#has_company').on('change', function (e) {
     if (e.target.checked) {
       $('#companyForm').slideDown();
     } else {
@@ -30243,12 +30245,47 @@ $(function () {
         $(e.currentTarget).addClass('featured');
       }
     });
-  });
+  }); // toggle agent photo photo upload, loading and disable upload button while uploading
+
+  function agentPhotoUploadLoading(isLoading) {
+    if (isLoading) {
+      $('#agent-photo input[type=file]').prop('disabled', true);
+      $('.input-loader').addClass('is-loading');
+      $('.img-loader').addClass('is-loading');
+    } else {
+      $('#agent-photo input[type=file]').prop('disabled', false);
+      $('.input-loader').removeClass('is-loading');
+      $('.img-loader').removeClass('is-loading');
+    }
+  }
+
   $('#agent-photo input[type=file]').on('change', function (e) {
     var fileInput = $('#agent-photo input[type=file]')[0];
 
     if (fileInput.files.length > 0) {
-      $('#agent-photo .file-name').text(fileInput.files[0].name);
+      // change input title on the page
+      $('#agent-photo .file-name').text(fileInput.files[0].name); // start sending the photo to the server
+
+      agentPhotoUploadLoading(true);
+      var formData = new FormData();
+      formData.append('image', fileInput.files[0]);
+      axios({
+        method: 'post',
+        url: '/api/profile-photo',
+        params: {
+          'api_token': $('#api_token').val()
+        },
+        headers: {
+          'Accept': 'application/json'
+        },
+        data: formData
+      }).then(function (res) {
+        return res.data;
+      }).then(function (data) {
+        $('#agent-photo').attr('src', data.photo_url).on('load', function (e) {
+          agentPhotoUploadLoading(false);
+        });
+      });
     }
   });
   $('#show-website-address').on('click', function (e) {

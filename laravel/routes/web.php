@@ -30,23 +30,17 @@ Route::post('/signup', [UserController::class, 'signup']);
 Route::get('/signin', [UserController::class, 'showSignin']);
 Route::post('/signin', [UserController::class, 'signin']);
 
+// Signout
+Route::get('/signout', [UserController::class, 'signout']);
+
 // Email verification
 Route::get('/email/verify', function() {
     return view('auth.verify-email');
 })->middleware(['auth'])->name('verification.notice');
 
-// Email verification email click
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fullfill();
-
-    return redirect('/dashboard');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::get('/confirmation', function() {
-    return view('confirmation');
+Route::group([ 'middleware' => 'auth', 'prefix' => 'users' ], function() {
+        Route::get('/dashboard', [userController::class,'showDashboard'] )->name('dashboard');
+        Route::get('/profile', [userController::class, 'showProfile'])->name('profile');
+        Route::post('/profile', [userController::class, 'saveProfile']);
 });
 
-
-Route::get('/dashboard', function() {
-    return view('dashboard');
-})->middleware(['auth', 'verified']);

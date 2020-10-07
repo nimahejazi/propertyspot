@@ -1,6 +1,7 @@
 require('./bootstrap');
 
 const $ = require('jquery');
+const axios = require('axios');
 
 $(() => {
     $('#resendEmail').on('click', e => {
@@ -8,7 +9,7 @@ $(() => {
         .prop('disabled', true)
         .addClass('is-loading');
     });
-    $('#hasCompany').on('change', (e) => {
+    $('#has_company').on('change', (e) => {
         if (e.target.checked) {
             $('#companyForm').slideDown();
         } else {
@@ -26,12 +27,52 @@ $(() => {
             }
         });
     });
+    // toggle agent photo photo upload, loading and disable upload button while uploading
+    function agentPhotoUploadLoading(isLoading) {
+        if (isLoading) {
+            $('#agent-photo input[type=file]')
+                .prop('disabled', true);
+            $('.input-loader').addClass('is-loading');
+            $('.img-loader').addClass('is-loading');
+        } else {
+            $('#agent-photo input[type=file]')
+                .prop('disabled', false);
+            $('.input-loader').removeClass('is-loading');
+            $('.img-loader').removeClass('is-loading');
+        }
+    }
     $('#agent-photo input[type=file]').on('change', e => {
         const fileInput = $('#agent-photo input[type=file]')[0];
         if (fileInput.files.length > 0) {
+            // change input title on the page
             $('#agent-photo .file-name').text(fileInput.files[0].name);
+
+            // start sending the photo to the server
+            agentPhotoUploadLoading(true);
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+            axios({
+                method: 'post',
+                url: '/api/profile-photo',
+                params: {
+                    'api_token': $('#api_token').val(),
+                },
+                headers: {
+                    'Accept': 'application/json',
+                },
+                data: formData
+            })
+                .then(res => res.data)
+                .then(data => {
+                    $('#agent-photo')
+                        .attr('src', data.photo_url)
+                        .on('load', e => {
+                            agentPhotoUploadLoading(false);
+                        });
+                });
+
         }
-        
+
     });
     $('#show-website-address').on('click', e => {
         e.preventDefault();

@@ -19071,6 +19071,39 @@ a.is-loading:before {
   margin-right: 0.2rem;
 }
 
+.input-loader.is-loading {
+  opacity: 0.5;
+}
+
+.img-loader.is-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.img-loader.is-loading:after {
+  -webkit-animation: spinAround 500ms infinite linear;
+          animation: spinAround 500ms infinite linear;
+  border: 2px solid #dbdbdb;
+  border-radius: 290486px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  content: "";
+  display: block;
+  height: 1em;
+  position: relative;
+  width: 1em;
+  border-color: #0073b1;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  top: calc(50% - 2.5em);
+  left: calc(50% - 2.5em);
+  width: 5em;
+  height: 5em;
+  border-width: 0.25em;
+}
+
 h1,
 h2,
 h3,
@@ -19596,7 +19629,11 @@ a.listing-new:hover div {
   padding-top: 1rem;
 }
 
-p {
+.notification p {
   margin-bottom: 1rem;
+}
+
+.card-fullname {
+  margin-bottom: 0;
 }
 

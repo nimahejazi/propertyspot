@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "robotkudos/rkdb": "dev-master"
+        "robotkudos/rkdb": "dev-master",
+        "robotkudos/rkimage": "^0.1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

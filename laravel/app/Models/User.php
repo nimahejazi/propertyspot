@@ -15,10 +15,17 @@ class User extends Authenticatable
      *
      * @var array
      */
-protected $fillable = [
-        'name',
+    protected $fillable = [
+        'fullname',
         'email',
         'password',
+        'title',
+        'license_no',
+        'has_company',
+        'company_name',
+        'company_website',
+        'company_address',
+        'api_token'
     ];
 
     /**
@@ -39,4 +46,42 @@ protected $fillable = [
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Get email or fullname if available
+    public function getName() {
+        return $this->fullname ? ucfirst($this->fullname) : $this->email;
+    }
+
+    // To be used for avatar inital
+    public function getInitial() {
+        return $this->fullname ? strtoupper(substr($this->fullname, 0, 1)) : substr($this->email, 0, 1);
+    }
+
+    /**
+     * Checks if user has complete profile, or partially completed and no profile
+     * @return string 'complete'|'partially'|'empty'
+     */
+    public function userProfileStatus() {
+        $allDetails = false;
+        $userDetails = [
+            'fullname',
+            'license_no',
+            'title',
+            'photo_url'
+        ];
+
+        foreach ($userDetails as $detail) {
+            $allDetails = $this[$detail] ? true : false;
+        }
+        if ($allDetails) {
+            return 'complete';
+        }
+        foreach ($userDetails as $detail) {
+            if ($this[$detail]) return 'partially';
+        }
+        return 'empty';
+
+    }
+
+
 }

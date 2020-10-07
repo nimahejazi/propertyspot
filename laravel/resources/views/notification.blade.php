@@ -2,7 +2,7 @@
 
 @section('main')
     <main class="bg-gray">
-        <div class="section container">
+        <div class="section container notification">
             <div class="columns is-centered">
                 <div class="column is-two-thirds">
                     @if($type === 'success')

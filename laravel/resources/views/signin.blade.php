@@ -21,6 +21,12 @@
                 {{session('error')}}
               </div>
             @endif
+            @if (session('message'))
+                <div class='notification is-success'>
+                    <div class='delete'></div>
+                    {{session('message')}}
+                </div>
+            @endif
             <form class="form" action="/signin" method='post'>
               @csrf
               <div class="field">

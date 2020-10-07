@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8dd0e682f54f77084f82def1007536c",
+    "content-hash": "e86abbbbbee4bffcf64e7a2118855722",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2287,6 +2287,39 @@
             ],
             "description": "Add Options DB functionality",
             "time": "2020-07-30T21:06:48+00:00"
+        },
+        {
+            "name": "robotkudos/rkimage",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robotkudos/RKImage.git",
+                "reference": "038101ba01f02ea726d1e30222f7f332fc3a593a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robotkudos/RKImage/zipball/038101ba01f02ea726d1e30222f7f332fc3a593a",
+                "reference": "038101ba01f02ea726d1e30222f7f332fc3a593a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RobotKudos\\RKImage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nima Hejazi",
+                    "email": "nima@robotkudos.com"
+                }
+            ],
+            "description": "Image resizer and watermarker for Laravel.",
+            "time": "2020-08-05T17:47:34+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
