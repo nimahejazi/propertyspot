@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ListingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +16,7 @@ use App\Http\Controllers\UserController;
 */
 
 // api photo post
-Route::middleware('auth:api')->post('/profile-photo', [userController::class, 'saveProfilePhoto']);
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->post('/profile-photo', [ListingController::class, 'saveProfilePhoto']);
+Route::middleware('auth:api')->post('/listing', [ListingController::class, 'saveListingParts']);
+Route::middleware('auth:api')->get('/schools', [ListingController::class, 'getNearbySchools']);
+Route::middleware('auth:api')->get('/get-fields', [ListingController::class, 'getFields']);

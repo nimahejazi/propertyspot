@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use \RobotKudos\RKDB\Options;
 
 class DatabaseSeeder extends Seeder
@@ -33,5 +35,28 @@ class DatabaseSeeder extends Seeder
         $options->set('homepage_box4_title', 'Fast and Easy', 'homepage_options', 'Homepage Options');
         $options->set('homepage_box4_text', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit commodi veniam expedita minus facere voluptatem dignissimos sit ab aperiam maxime, porro voluptatibus omnis nostrum laudantium nisi quae recusandae, vero illum.', 'homepage_options', 'Homepage Options');
 
+        DB::table('property_types')->insert([
+            [ 'property_type' => 'Farm/Ranch' ],
+            [ 'property_type' => 'Multi-Family Home' ],
+            [ 'property_type' => 'Single-Family Home' ],
+            [ 'property_type' => 'Income/Investment' ],
+            [ 'property_type' => 'Condo' ],
+            [ 'property_type' => 'Lot/Land' ],
+            [ 'property_type' => 'Townhome' ],
+            [ 'property_type' => 'Mobile Home' ],
+            [ 'property_type' => 'Loft' ]
+        ]);
+
+        DB::table('listing_statuses')->insert([
+            [ 'listing_status' => 'Active' ],
+            [ 'listing_status' => 'Pending' ],
+            [ 'listing_status' => 'Sold' ],
+        ]);
+
+        DB::table('users')->insert([
+            'email' => 'nhejazi@gmail.com',
+            'password' => Hash::make('asdf1234'),
+            'api_token' => Str::random(60),
+        ]);
     }
 }

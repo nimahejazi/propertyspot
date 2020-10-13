@@ -1,23 +1,7 @@
 @extends('layouts.main')
 
 @section('menu')
-  <div class="menu-container-light">
-    <div class="container">
-        <div class="avatar-container">
-            <div></div>
-            <nav class="avatar-icon">
-                <figure id="avatar"><p>{{$user->getInitial()}}</p></figure>
-                <div class="avatar-menu">
-                    <ul>
-                        <li>{{$user->getName()}}</li>
-                        <li><a href="{{route('profile')}}">Profile</a></li>
-                        <li><a href="/signout">Sign out</a></li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </div>
-  </div>
+    @include('includes.menu')
 @endsection
 
 @section('main')
@@ -59,7 +43,6 @@
                         @else
                             <img class="avatar" src="/img/sillouette.svg" />
                         @endif
-
                     </div>
                     @if($user->userProfileStatus() === 'empty')
                         <div class="column"><a class="ps-button ps-button-full" href="{{route('profile')}}">Complete Your Profile</a></div>
@@ -80,19 +63,21 @@
             <div class="box-title">My Listings</div>
             <div class="mobile-box">
                 <div class="columns is-multiline is-mobile is-centered-mobile">
-                    <div class="column is-narrow is-flex">
-                        <div class="listing-card">
-                            <img src="/img/placeholder.svg" />
-                            <div class="listing-body">
-                                <h3>3153 Midway Dr, Santa Rosa, CA, 95405</h3>
-                                <ul class="links">
-                                    <li><a href="#">Edit Listing</a><a href="#">View Website</a><a href="#" id="show-website-address">Show Website Address</a></li>
-                                </ul>
+                    @foreach($listings as $listing)
+                        <div class="column is-narrow is-flex">
+                            <div class="listing-card">
+                                <img src="/img/placeholder.svg" />
+                                <div class="listing-body">
+                                    <h3>{{$listing->street}} {{$listing->add_line2}}, {{$listing->city}}, {{$listing->state}} {{$listing->zip}}</h3>
+                                    <ul class="links">
+                                        <li><a href="/users/new-listing/{{$listing->id}}">Edit Listing</a><a href="#">View Website</a><a href="#" id="show-website-address">Show Website Address</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                     <div class="column is-narrow is-flex">
-                        <a class="listing-new" href="/new-listing.html">
+                        <a class="listing-new" href="{{route('new-listing')}}">
                             <div class="listing-card-dashed">
                                 <div class="plus-icon"><span class="icon"><i class="fas fa-plus"></i></span></div>
                                 <div class="addnew"><span>Add a New Website</span></div>

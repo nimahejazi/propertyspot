@@ -17,7 +17,7 @@
                       <h1 class="is-size-4">Create a Property Website</h1>
                       <h2 class="is-size-4">In Less Than 20 Minutes</h2>
                   </div>
-                  <a class="main-btn" href="/sign-in.html">Create a Property Website</a>
+                  <a class="main-btn" href="{{route('signup')}}">Create a Property Website</a>
                   <p class="hero-line">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy</p>
               </div>
               <div class="column"><img class="main-img" src="/img/main.svg" /></div>

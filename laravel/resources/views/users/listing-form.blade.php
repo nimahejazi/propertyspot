@@ -1,0 +1,379 @@
+@extends('layouts.main')
+
+@section('menu')
+    @include('includes.menu')
+@endsection
+
+@section('main')
+    <main class="bg-gray">
+        <div class="section container">
+            <form class="form" action='{{url()->current()}}' method='post'>
+                <input type='hidden' id='api_token' value='{{$user->api_token}}'>
+                <input type='hidden' id='id' value='{{$listing->id}}'>
+                <article class='ps-box multipage' id='page-loading'>
+                    <div class='box box-loading is-loading'></div>
+                </article>
+                <article class="ps-box multipage" style='display: block' id="page-address">
+                    <div class="box-title">Address</div>
+                    <div class="box rows">
+                        <div class='cover-loading'></div>
+                        <div class='page-box'>
+                            <div class="row-item">
+                                <div class='has-text-danger' id='page-address-error'></div>
+                                <div class="field">
+                                    <label class="label">Address Lookup</label>
+                                    <div id="rkGoogleMapsAutocomplete" apiKey="AIzaSyAZiXczeIoAt6mwCXt-CUU9Z-yB4bMWBIw" addressLineInput="street" countyInput="county" cityInput="city" zipInput="zip" stateDropdown="state" latInput="lat" lngInput="lng"></div>
+                                </div>
+                                <div class="field"><label class="label" for='street'>Street</label><input class="input" id="street" name='street' value='{{$listing->street}}'/></div>
+                                <div class="field is-horizontal">
+                                    <div class="field-body">
+                                        <div class="field"><label class="label" for='line2'>APT, Unit, ...</label><input class="input" id="line2" name='line2' value='{{$listing->add_line2}}' /></div>
+                                        <div class="field"><label class="label" for='county'>County</label><input class="input" id="county" name='county' value='{{$listing->county}}' /></div>
+                                    </div>
+                                </div>
+                                <div class="field is-horizontal">
+                                    <div class="field-body">
+                                        <div class="field"><label class="label" for='city'>City</label><input class="input" id="city" name='city' value='{{$listing->city}}' /></div>
+                                        <div class="field">
+                                            <label class="label" for='state'>State</label>
+                                            <div class="select is-fullwidth">
+                                                <select id="state" name='state'>
+                                                    <option></option>
+                                                    @foreach($states as $state)
+                                                        <option value='{{$state}}' {{($state === $listing->state) ? 'selected' : ''}}>{{$state}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="field"><label class="label" for='zip'>ZIP Code</label><input class="input" id="zip" name='zip' value='{{$listing->zip}}' /></div>
+                                    </div>
+                                </div>
+                                <input type='hidden' id="lng" name='lng' value='{{$listing->lng}}'/>
+                                <input type='hidden' id="lat" name='lat' value='{{$listing->lat}}'/>
+                            </div>
+                        </div>
+
+                    </div>
+                </article>
+                <article class="ps-box multipage" id="page-schools">
+                    <div class="box-title">Nearby schools</div>
+                    <div class="box">
+                        <div class='cover-loading'></div>
+                        <div class='page-box'>
+                            <div class='has-text-danger' id='page-schools-error'></div>
+                            <div class='field'>
+                                <div>These are the schools nearby, you can change them if you want.</div>
+                            </div>
+                            <div class="field">
+                                <label class="label" for='elementary_school'>Elementary School</label>
+                                <input class="input" id='elementary_school' name='elementary_school' list='elementary_school_list'/>
+                                <datalist id='elementary_school_list'></datalist>
+                            </div>
+                            <div class="field">
+                                <label class="label" for='middle_school'>Middle School</label>
+                                <input class="input" id='middle_school' name='middle_school' list='middle_school_list'/>
+                                <datalist id='middle_school_list'></datalist>
+                            </div>
+                            <div class="field">
+                                <label class="label" for='high_school'>High School</label>
+                                <input class="input" id='high_school' name='high_school' list='high_school_list'/>
+                                <datalist id='high_school_list'></datalist>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="ps-box multipage" id="page-listing-info">
+                    <div class="box-title">Listing information</div>
+                    <div class="box">
+                        <div class='cover-loading'></div>
+                        <div class='page-box'>
+                            <div class='has-text-danger' id='page-listing-info-error'></div>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field">
+                                        <label class="label" for='property_type_id'>Property Type</label>
+                                        <div class="select is-fullwidth">
+                                            <select id='property_type_id' name='property_type_id'>
+                                                <option></option>
+                                                @foreach($propertyTypes as $type)
+                                                    <option value='{{$type->id}}'>{{$type->property_type}}</option>
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label" for='bedrooms'>Bedrooms</label>
+                                        <div class="select is-fullwidth">
+                                            <select id='bedrooms' name='bedrooms'>
+                                                <option></option>
+                                                <option value='0'>0</option>
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                                <option value='11'>11</option>
+                                                <option value='12'>12</option>
+                                                <option value='13'>13</option>
+                                                <option value='14'>14</option>
+                                                <option value='15'>15</option>
+                                                <option value='16'>16</option>
+                                                <option value='17'>17</option>
+                                                <option value='18'>18</option>
+                                                <option value='19'>19</option>
+                                                <option value='20'>20</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label" for='bathrooms'>Bathrooms</label>
+                                        <div class="select is-fullwidth">
+                                            <select id='bathrooms' name='bathrooms'>
+                                                <option></option>
+                                                <option value='0'>0</option>
+                                                <option value='0.5'>0.5</option>
+                                                <option value='1'>1</option>
+                                                <option value='1.5'>1.5</option>
+                                                <option value='2'>2</option>
+                                                <option value='2.5'>2.5</option>
+                                                <option value='3'>3</option>
+                                                <option value='3.5'>3.5</option>
+                                                <option value='4'>4</option>
+                                                <option value='4.5'>4.5</option>
+                                                <option value='5'>5</option>
+                                                <option value='5.5'>5.5</option>
+                                                <option value='6'>6</option>
+                                                <option value='6.5'>6.5</option>
+                                                <option value='7'>7</option>
+                                                <option value='7.5'>7.5</option>
+                                                <option value='8'>8</option>
+                                                <option value='8.5'>8.5</option>
+                                                <option value='9'>9</option>
+                                                <option value='9.5'>9.5</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field"><label class="label" for='square_ft'>Square Ft.</label><input class="input" id='square_ft' name='square_ft' /></div>
+                                    <div class="field"><label class="label" for='price'>Price ($)</label><input class="input" id='price' name='price' /></div>
+                                </div>
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field"><label class="label" for='mls_no'>MLS Number</label><input class="input" id='mls_no' name='mls_no' /></div>
+                                    <div class="field">
+                                        <label class="label" for='listing_status_id'>Listing Status</label>
+                                        <div class="select is-fullwidth">
+                                            <select id='listing_status_id' name='listing_status_id'>
+                                                <option></option>
+                                                @foreach($listingStatus as $status)
+                                                    <option value='{{$status->id}}'>{{$status->listing_status}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label" for='year_built'>Year Built</label>
+                                        <input type='number' class='input' id='year_built' name='year_built'>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="field-body">
+                                    <div class="field"><label class="label" for='lot_square_ft'>Lot Square Ft.</label><input class="input" id='lot_square_ft' name='lot_square_ft' /></div>
+
+                                    <div class="field">
+                                        <label class="label" for='floors'>Floors</label>
+                                        <div class="select is-fullwidth">
+                                            <select id='floors' name='floors'>
+                                                <option></option>
+                                                <option value='0'>0</option>
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label" for='garage_size'>Garage Size</label>
+                                        <div class="select is-fullwidth">
+                                            <select id='garage_size' name='garage_size'>
+                                                <option></option>
+                                                <option value='0'>0</option>
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                                <option value='6'>6</option>
+                                                <option value='7'>7</option>
+                                                <option value='8'>8</option>
+                                                <option value='9'>9</option>
+                                                <option value='10'>10</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field"><label class="label" for='property_desc'>Property Description</label><textarea class="textarea" id='property_desc' name='property_desc'></textarea></div>
+                        </div>
+
+                    </div>
+                </article>
+                <article class="ps-box multipage" id="page-videos">
+                    <div class="box-title">Property videos (Youtube link)</div>
+                    <div class="box">
+                        <div class='cover-loading'></div>
+                        <div class='page-box'>
+                            <div class='has-text-danger' id='page-videos-error'></div>
+                            <div class="field">
+                                <div class="label label">Paste the YouTube link of the property video</div>
+                                <div id='rkTaglist'
+                                     listType="video"
+                                     placeholder="e.g https://youtu.be/VnS6m_E-WcY"
+                                     addButtonTitle="Add Video"
+                                     youtubeApiKey="AIzaSyAZiXczeIoAt6mwCXt-CUU9Z-yB4bMWBIw"
+                                     vimeoApiKey="8ab15256c3536301721d3bd34af0a5f0"
+                                     hiddenInput='listing_videos'
+                                     maxItems='2'
+                                     initialItems='{!! $videos !!}'
+                                ></div>
+                                <input type='hidden' name='listing_videos' id='listing_videos' value=''>
+                            </div>
+                        </div>
+
+                    </div>
+                </article>
+                <article class="ps-box multipage" id="page-image-upload">
+                    <div class="box-title">Property images</div>
+                    <div class="box">
+                        <div class='has-text-danger' id='page-image-upload-error'></div>
+                        <div class="field">
+                            <div class="label label">Paste the YouTube link of the property video</div>
+                            <div id="rkImageUploader" url="http://localhost:3008" rkKey="asdf"></div>
+                        </div>
+                    </div>
+                </article>
+                <article class="ps-box multipage" id="page-amenities">
+                    <div class="box-title">Property Amenities</div>
+                    <div class="box">
+                        <div class='has-text-danger' id='page-amenities-error'></div>
+                        <h5>Internal Amenities</h5>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="alarm-system" /><label for="alarm-system"> Alarm System</label></div>
+                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="fireplace" /><label for="fireplace"> Fireplace(s)</label></div>
+                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="sauna-internal" /><label for="sauna-internal"> Sauna (internal)</label></div>
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="basement-finished" /><label for="basement-finished"> Basement - Finished askdfj alsfasdkfja s;</label></div>
+                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="gym-internal" /><label for="gym-internal"> Gym (internal)</label></div>
+                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="sauna-internal" /><label for="basement-finished"> Sauna (internal)</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <h5>External Amenities</h5>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field"><input class="is-checkradio is-link" type="checkbox" id="balcony-deck" /><label for="balcony-deck"> Balcony Deck</label></div>
+                                <div class="field"><input class="is-checkradio is-link" type="checkbox" id="outbuilding" /><label for="outbuilding"> Outbuilding</label></div>
+                                <div class="field"><input class="is-checkradio is-link" type="checkbox" id="barn-stable-detached" /><label for="barn-stable-detached"> Bard/Stable Detached</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="ps-box multipage" id="page-featured-photo">
+                    <div class="box"><h5>Have amenities not listed? Add them here:</h5></div>
+                    <div class="box-title">Featured photo</div>
+                    <div class="box">
+                        <div class='has-text-danger' id='page-featured-photo-error'></div>
+                        <h5>Choose one photo to feature as the main photo:</h5>
+                        <div class="columns is-multiline featured-photos">
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a class="featured" href="#" id="item1"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item2"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item3"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item4"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item5"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item6"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item7"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item8"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item9"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                            <div class="column is-one-third-tablet is-one-quarter-desktop">
+                                    <span class="photo"
+                                    ><a href="#" id="item10"><img class="image" src="/img/placeholder.svg" /></a
+                                        ></span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <input type='hidden' id='current-page' value='page-address'>
+                <input type='hidden' id='is-loading' value='0'>
+                <div class="submit-container"><a class="ps-button is-white-button" id='listing-back-button' href='{{route('dashboard')}}'>Cancel</a><a class="ps-button" id='listing-next-button'>Next</a></div>
+            </form>
+        </div>
+    </main>
+@endsection
+
+@section('scripts')
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin="crossorigin"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin="crossorigin"></script>
+    <script src="/js/rk-google-maps-autocomplete.min.js"></script>
+    <script src="/js/rk-taglist.min.js"></script>
+    <script src="/js/rk-image-uploader.min.js"></script>
+@endsection

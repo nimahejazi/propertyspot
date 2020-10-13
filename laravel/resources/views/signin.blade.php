@@ -31,21 +31,17 @@
               @csrf
               <div class="field">
                 <label class="label" for="email">Email</label><input class="input @error('email') is-danger @enderror" type="email" id='email' name='email' value='{{old('email')}}' />
-                @error('email')
-                  <div class='help is-danger'>{{$message}}</div>
-                @enderror
+                <div class='help is-danger' id='email-err'>@error('email'){{$message}}@enderror</div>
               </div>
               <div class="field">
                 <label class="label" for="password">Password</label><input class="input @error('password') is-danger @enderror" type="password" id='password' name='password' />
-                @error('password')
-                  <div class='help is-danger'>{{$message}}</div>
-                @enderror
+                <div class='help is-danger' id='password-err'>@error('password'){{$message}}@enderror</div>
               </div>
               <a class="form-link has-text-right" href="/forgot">Forgot your password?</a>
               <div class="field">
                 <label class="checkbox"><input type="checkbox" id='remember_me' name='remember_me' /><span class="checkbox-label">Remember me</span></label>
               </div>
-              <div class="field"><button class="ps-button full-width" type="submit">Sign in</button></div>
+              <div class="field"><button class="ps-button full-width" type="submit" id='submit'>Sign in</button></div>
               <div class="field"><a class="form-link has-text-centered" href="/signup">Don't have an account yet? Sign up FREE</a></div>
             </form>
           </div>

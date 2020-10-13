@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFeaturedPhotoToListing extends Migration
+class CreatePropertyVideosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddFeaturedPhotoToListing extends Migration
      */
     public function up()
     {
-        Schema::table('listings', function (Blueprint $table) {
-            $table->foreignId('featured_photo_id')->nullable()->constrained('property_photos');
+        Schema::create('property_videos', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('provider');
+            $table->string('video_id');
+            $table->foreignId('listing_id')->constrained();
         });
     }
 
@@ -25,8 +29,6 @@ class AddFeaturedPhotoToListing extends Migration
      */
     public function down()
     {
-        Schema::table('listings', function (Blueprint $table) {
-            $table->dropForeign(['featured_photo_id']);
-        });
+        Schema::dropIfExists('property_videos');
     }
 }

@@ -54,7 +54,8 @@ class User extends Authenticatable
 
     // To be used for avatar inital
     public function getInitial() {
-        return $this->fullname ? strtoupper(substr($this->fullname, 0, 1)) : substr($this->email, 0, 1);
+        $name = $this->fullname ? substr($this->fullname, 0, 1) : substr($this->email, 0, 1);
+        return strtoupper($name);
     }
 
     /**
@@ -81,6 +82,10 @@ class User extends Authenticatable
         }
         return 'empty';
 
+    }
+
+    public function listings() {
+        return $this->hasMany('App\Models\Listing');
     }
 
 

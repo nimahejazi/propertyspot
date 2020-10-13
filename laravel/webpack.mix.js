@@ -16,6 +16,26 @@ const mix = require('laravel-mix');
 //         //
 //     ]);
 
+mix.webpackConfig({
+    resolve: {
+        extensions: ['.ts']
+    },
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: [
+                    'babel-loader',
+                    'ts-loader'
+                ]
+            }
+        ]
+    }
+});
+
 mix.sass('resources/scss/main.scss', 'public/css').version();
 
-mix.js('resources/js/app.js', 'public/js/bundle.js').version();
+mix.js('resources/js/app.js', 'public/js/bundle.js').sourceMaps().version();
+
+mix.copy('resources/js/rk-*.*', 'public/js');
+mix.copy('resources/img', 'public');

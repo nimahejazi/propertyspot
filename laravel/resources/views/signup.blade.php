@@ -24,25 +24,19 @@
             <form class="form" action="/signup" method='post'>
               @csrf
               <div class="field">
-                <label class="label" for="username">Email</label><input class="input @error('email') is-danger @enderror" type="email" id='email' name='email' value='{{old('email')}}''  />
-                @error('email')
-                  <div class='help is-danger'>{{ $message }}</div>
-                @enderror
+                <label class="label" for="email">Email</label><input class="input @error('email') is-danger @enderror" type="email" id='email' name='email' value='{{old('email')}}'  />
+                <div class='help is-danger' id='email-err'>@error('email'){{ $message }}@enderror</div>
               </div>
               <div class="field">
                 <label class="label" for="password">Password</label><input class="input @error('password') is-danger @enderror" type="password" id='password' name='password' />
-                  <div class="help">Minimum 8 characters and at least 2 numbers.</div>
-                @error('password')
-                  <div class='help is-danger'>{{ $message}}</div>
-                @enderror
+                <div class="help">Minimum 8 characters and at least 2 numbers.</div>
+                <div class='help is-danger' id='password-err'>@error('password'){{ $message}}@enderror</div>
               </div>
               <div class="field">
                 <label class="label" for="password_confirmation">Confirm Password</label><input class="input @error('password_confirmation') is-danger @enderror" type="password" id='password_confirmation' name='password_confirmation' />
-                @error('password_confirmation')
-                  <div class='help is-danger'>{{ $message}}</div>
-                @enderror
+                <div class='help is-danger' id='password_confirmation-err'>@error('password_confirmation'){{ $message}}@enderror</div>
               </div>
-              <div class="field"><button class="ps-button full-width" type="submit">Create My FREE Account</button></div>
+              <div class="field"><button class="ps-button full-width" type="submit" id='submit'>Create My FREE Account</button></div>
               <div class="field"><a class="form-link has-text-centered" href="/signin">Already have an account? Sign in here</a></div>
             </form>
           </div>

@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="field">
                                     <label class="label" for="email">Email</label><input class="input @error('email') is-danger @enderror" type="email" id="email" name="email" value="{{old('email', $user->email)}}"/>
-                                    <div class='help is-danger'>@error('email'){{$message}} @enderror</div>
+                                    <div class='help is-danger' id='email-err'>@error('email'){{$message}} @enderror</div>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </article>
-                <div class="submit-container"><a class="ps-button is-white-button is-hidden-mobile" href="{{route('dashboard')}}">Back</a><button class="ps-button" type="submit">Save</button></div>
+                <div class="submit-container"><a class="ps-button is-white-button is-hidden-mobile" href="{{route('dashboard')}}">Back</a><button class="ps-button" type="submit" id='submit'>Save</button></div>
             </form>
         </div>
     </main>

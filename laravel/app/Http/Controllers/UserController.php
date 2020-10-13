@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Listing;
+use App\Models\ListingStatus;
+use App\Models\PropertyType;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -9,6 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RobotKudos\RKImage\ImageUploader;
 use RobotKudos\RKImage\Size;
@@ -53,6 +57,8 @@ class UserController extends Controller
 
 
     public function showSignin() {
+        if (Auth::check())
+            return redirect()->intended(route('dashboard'));
         return view('signin');
     }
 
@@ -79,7 +85,8 @@ class UserController extends Controller
     }
 
     public function showDashboard() {
-        return view('users/dashboard');
+        $listings = Auth::user()->listings()->get();
+        return view('users/dashboard', [ 'listings' => $listings]);
     }
 
     public function showProfile() {
@@ -146,5 +153,6 @@ class UserController extends Controller
             'photo_url_2x' => $user->photo_url_2x
         ]);
     }
-}
 
+
+}

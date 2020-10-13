@@ -52,6 +52,64 @@ a {
     }
 }
 
+.box-loading {
+    height: 30rem;
+    &.is-loading {
+        position: relative;
+        pointer-events: none;
+        &:after {
+            @include loader;
+            border-color: $accent-color;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            position: absolute;
+            top: calc(50% - 2.5em);
+            left: calc(50% - 2.5em);
+            width: 5em;
+            height: 5em;
+            border-width: 0.25em;
+        }
+    }
+}
+
+
+.page-box {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+.cover-loading {
+    position: absolute;
+    z-index: 10;
+    border-radius: $box-radius;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.55);
+    display: none;
+    &.is-loading {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        &:after {
+            @include loader;
+            border-color: $accent-color;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            position: absolute;
+            width: 5em;
+            height: 5em;
+            border-width: 0.25em;
+        }
+    }
+}
+
+
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
 }
@@ -130,6 +188,9 @@ a {
     text-align: center;
     padding: .7rem 0;
     font-weight: bold;
+    &:hover {
+        color: $accent-color2;
+    }
 }
 
 .logo {
@@ -315,6 +376,10 @@ a {
     }
     &:first-child {
         margin-top: 0;
+    }
+    &.multipage {
+        margin-top: 0 !important;
+        display: none;
     }
 }
 
@@ -527,4 +592,8 @@ a.listing-new {
 
 .card-fullname {
     margin-bottom: 0;
+}
+
+.box {
+    position:relative;
 }
