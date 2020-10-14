@@ -7,8 +7,8 @@ const pages = [
     'page-address',
     'page-schools',
     'page-listing-info',
-    'page-amenities',
     'page-videos',
+    'page-amenities',
     'page-image-upload',
     'page-featured-photo',
     'page-payment'
@@ -259,6 +259,25 @@ function nextPage(curPage, nextPage) {
                         hideLoading(curPage);
                     });
                 break;
+            case 'page-amenities':
+                saveListingData({
+                    id: id,
+                    'custom_amenities': $('#custom_amenities').val()
+                })
+                    .then(res => res.data)
+                    .then(data => {
+                        if (data.success) {
+                            transitToNextPage(curPage, nextPage);
+                        } else {
+                            toggleError(curPage, data.message);
+                            hideLoading(curPage);
+                        }
+                    })
+                    .catch(err => {
+                        toggleError(curPage, data.message);
+                        hideLoading(curPage);
+                    });
+                break;
         }
 
     }))
@@ -397,7 +416,7 @@ function addFieldChecks(page) {
         case '/users/profile/':
             rkFormValidator.addValidator(new Validator(
                 {id: 'email', title: 'Email'},
-                ['email'],
+                ['required', 'email'],
                 {id: 'email-err'},
                 'is-danger'
             ));
@@ -416,6 +435,8 @@ $(() => {
     // sign up page field checks
     addFieldChecks(window.location.pathname);
 
+
+    $('#listing-form').on('submit', e => e.preventDefault());
 
     $('#resendEmail').on('click', e => {
       $('#resendEmail')
@@ -557,6 +578,7 @@ $(() => {
         }
         cur = currentPage;
         next = pages[pages.findIndex(page => page == cur) + 1];
+        console.log('curPage:', cur, 'nextPage:', next);
         nextPage(cur, next);
     });
 
@@ -576,15 +598,12 @@ $(() => {
 
     // listening for history back and forward if the page is new-listing
     if (window.location.pathname.substr(0, 18) == '/users/new-listing') {
+        history.replaceState({page: currentPage}, '', '#page-address');
         window.onpopstate = e => {
             if (e.state.page !== currentPage) {
                 prevPage(currentPage, e.state.page, true);
             }
         }
-    }
-
-    if (window.location.pathname.substr(0, 18) === '/users/new-listing') {
-        history.replaceState({page: currentPage}, '', '#page-address');
     }
 });
 

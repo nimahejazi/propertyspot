@@ -18,6 +18,7 @@ class CreatePropertyAmenitiesTable extends Migration
             $table->timestamps();
             $table->string('amenity');
             $table->foreignId('listing_id')->contrained();
+            $table->boolean('is_custom')->default(false);
         });
     }
 

@@ -11,9 +11,10 @@ class PropertyAmenity extends Model
 
     public $fillable = [
         'amenity',
+        'is_custom'
     ];
 
     public function listing() {
-        $this->belongsTo('App\Model\Listing');
+        $this->belongsTo('App\Models\Listing');
     }
 }

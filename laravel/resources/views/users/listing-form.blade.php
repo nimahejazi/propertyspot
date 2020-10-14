@@ -7,7 +7,7 @@
 @section('main')
     <main class="bg-gray">
         <div class="section container">
-            <form class="form" action='{{url()->current()}}' method='post'>
+            <form class="form" id='listing-form'>
                 <input type='hidden' id='api_token' value='{{$user->api_token}}'>
                 <input type='hidden' id='id' value='{{$listing->id}}'>
                 <article class='ps-box multipage' id='page-loading'>
@@ -245,7 +245,7 @@
                             <div class='has-text-danger' id='page-videos-error'></div>
                             <div class="field">
                                 <div class="label label">Paste the YouTube link of the property video</div>
-                                <div id='rkTaglist'
+                                <div id='rkVideos'
                                      listType="video"
                                      placeholder="e.g https://youtu.be/VnS6m_E-WcY"
                                      addButtonTitle="Add Video"
@@ -253,7 +253,7 @@
                                      vimeoApiKey="8ab15256c3536301721d3bd34af0a5f0"
                                      hiddenInput='listing_videos'
                                      maxItems='2'
-                                     initialItems='{!! $videos !!}'
+                                     initialItems='{{ $videos }}'
                                 ></div>
                                 <input type='hidden' name='listing_videos' id='listing_videos' value=''>
                             </div>
@@ -273,33 +273,35 @@
                 </article>
                 <article class="ps-box multipage" id="page-amenities">
                     <div class="box-title">Property Amenities</div>
-                    <div class="box">
                         <div class='has-text-danger' id='page-amenities-error'></div>
-                        <h5>Internal Amenities</h5>
-                        <div class="field is-horizontal">
-                            <div class="field-body">
-                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="alarm-system" /><label for="alarm-system"> Alarm System</label></div>
-                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="fireplace" /><label for="fireplace"> Fireplace(s)</label></div>
-                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="sauna-internal" /><label for="sauna-internal"> Sauna (internal)</label></div>
-                            </div>
-                        </div>
-                        <div class="field is-horizontal">
-                            <div class="field-body">
-                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="basement-finished" /><label for="basement-finished"> Basement - Finished askdfj alsfasdkfja s;</label></div>
-                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="gym-internal" /><label for="gym-internal"> Gym (internal)</label></div>
-                                <div class="field column"><input class="is-checkradio is-link" type="checkbox" id="sauna-internal" /><label for="basement-finished"> Sauna (internal)</label></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <h5>External Amenities</h5>
-                        <div class="field is-horizontal">
-                            <div class="field-body">
-                                <div class="field"><input class="is-checkradio is-link" type="checkbox" id="balcony-deck" /><label for="balcony-deck"> Balcony Deck</label></div>
-                                <div class="field"><input class="is-checkradio is-link" type="checkbox" id="outbuilding" /><label for="outbuilding"> Outbuilding</label></div>
-                                <div class="field"><input class="is-checkradio is-link" type="checkbox" id="barn-stable-detached" /><label for="barn-stable-detached"> Bard/Stable Detached</label></div>
-                            </div>
-                        </div>
+                        @php
+                            $i = 0;
+                            foreach($property_amenities as $amenity_title => $amenities) {
+                                echo "<div class='box'><h5>$amenity_title</h5>";
+                                foreach($amenities as $amenity) {
+                                    if ($i%3 == 0) {
+                                        echo $i > 0 ? '</div></div>' : '';
+                                        echo '<div class="field is-horizontal"><div class="field-body">';
+                                    }
+                                    echo "<div class='field column'><input class='is-checkradio is-link' type='checkbox' id='$amenity' /><label for='$amenity'> $amenity</label></div>";
+                                    $i++;
+                                }
+                                $i = 0;
+                                echo '</div></div></div>';
+                            }
+                        @endphp
+                    <div class='box'>
+                        <h5>Custom amenities</h5>
+                        <p>Do you need to add an amenity that you can't find in the list above? Add them here:</p>
+
+                        <div id='rkAmenities'
+                             listType="tag"
+                             placeholder="Type your amenity here"
+                             addButtonTitle="Add Amenity"
+                             hiddenInput='custom_amenities'
+                             initialItems='{{ $custom_amenities }}'
+                        ></div>
+                        <input type='hidden' name='custom_amenities' id='custom_amenities' value=''>
                     </div>
                 </article>
                 <article class="ps-box multipage" id="page-featured-photo">

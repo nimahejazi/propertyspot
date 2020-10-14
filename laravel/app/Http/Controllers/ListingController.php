@@ -16,7 +16,13 @@ class ListingController extends Controller
         $listing = Listing::where(['id'=>$id, 'user_id'=>Auth::user()->id])->first();
         $listing = is_object($listing) ? $listing : new Listing();
         $videos = $listing->videos()->get();
+        $amenities = $listing->amenities()->where('is_custom', false);
+        $custom_amenities = $listing->amenities()->where('is_custom', true)->get(['amenity']);
         $property_videos = [];
+        $property_custom_amenities = [];
+        foreach($custom_amenities as $custom_amenity) {
+            $property_custom_amenities[] = $custom_amenity['amenity'];
+        }
         foreach($videos as $video) {
             $property_videos[] = ['provider' => $video->provider, 'videoId' => $video->video_id];
         }
@@ -25,6 +31,7 @@ class ListingController extends Controller
             'listingStatus' => ListingStatus::all(),
             'listing' => $listing,
             'videos' => json_encode($property_videos),
+            'custom_amenities' => json_encode($property_custom_amenities),
             'states' => [
                 'AL',
                 'AK',
@@ -76,6 +83,117 @@ class ListingController extends Controller
                 'WV',
                 'WI',
                 'WY',
+            ],
+            'property_amenities'    => [
+                'Internal Amenities'    => [
+                    'Alarm System',
+                    'Basement - Finished',
+                    'Basement - Unfinished',
+                    'Bonus Room',
+                    'Broadband Available',
+                    'Concierge Service',
+                    'Elevator',
+                    'Fireplace(s)',
+                    'Gym (internal)',
+                    'Hot Tub/Spa (internal)',
+                    'Humidifier',
+                    'Pool (internal)',
+                    'Office/Den',
+                    'Satellite Dish(es)',
+                    'Sauna (internal)',
+                    'Skylights',
+                    'Surround Sound',
+                    'Vaulted Ceilings',
+                    'Water Softener',
+                    'Wet Bar',
+                    'Wine Storage',
+                ],
+                'External Amenities'=> [
+                    'Barn/Stable – Detached',
+                    'Carport',
+                    'Garage-Attached',
+                    'Garage-Unattached',
+                    'Hot Tub/Spa (external)',
+                    'Outbuilding',
+                    'Pool (external)',
+                    'Parking/Garage Included',
+                    'Roof Top Deck',
+                    'Sauna (external)',
+                    'Spa',
+                    'Sports Court',
+                    'Swimming Pool',
+                    'Tennis Court',
+                    'Workshop – Detached',
+                ],
+                'Property Amenities' => [
+
+                    'Boat Facilities',
+                    'Club House',
+                    'Community Beach',
+                    'Corner Lot',
+                    'Country Club',
+                    'Cul-de-sac Location',
+                    'Dock',
+                    'Fenced Yard',
+                    'Float',
+                    'Fully Fenced',
+                    'Gated Community',
+                    'Garden Area',
+                    'Golf Course Lot',
+                    'Gym (building)',
+                    'High-Rise',
+                    'Landscaped',
+                    'Low-Rise',
+                    'Partially Fenced',
+                    'Patio',
+                    'Pool (building)',
+                    'Sprinkler System',
+                ],
+                'Appliances' => [
+                    'Convection Oven',
+                    'Dishwasher',
+                    'Dryer',
+                    'Freezer',
+                    'Garbage Disposal',
+                    'Indoor Grill',
+                    'Microwave',
+                    'Oven Range',
+                    'Refrigerator',
+                    'Stainless Steel',
+                    'Stove',
+                    'Trash Compactor',
+                    'Washer',
+                ],
+                'Cooling/Heating' => [
+                    'Central Air',
+                    'Central Electric',
+                    'Electric Baseboard',
+                    'Forced Air',
+                    'Fuel Oil',
+                    'Gravity Air',
+                    'Heat Pump',
+                    'Hot Water / Steam',
+                    'Multi Zone A/C',
+                    'Natural Gas',
+                    'Propane',
+                    'Radiant',
+                    'Solar',
+                    'Swamp Cooler',
+                    'Wall Furnace',
+                    'Window/Wall Unit',
+                    'Wood',
+                ],
+                'Other Amenities'   => [
+                    'Air Purifier',
+                    'Balcony',
+                    'Cable Ready',
+                    'Gas Line Hook-up for BBQ',
+                    'Intercom',
+                    'Lobby',
+                    'Pets Allowed',
+                    'Storm Shutters (manual)',
+                    'Valet Parking',
+                ]
             ]
         ]);
     }
@@ -104,13 +222,25 @@ class ListingController extends Controller
             if ($request->has('listing_videos')) {
                 $videos = json_decode($request->listing_videos);
                 $property_videos = [];
-                foreach($videos as $video) {
+                foreach ($videos as $video) {
                     $property_videos[] = [
-                        'provider'  => $video->provider,
-                        'video_id'   => $video->videoId
+                        'provider' => $video->provider,
+                        'video_id' => $video->videoId
                     ];
                 }
+                $listing->videos()->delete();
                 $listing->videos()->createMany($property_videos);
+            } else if ($request->has('custom_amenities')) {
+                $amenities = json_decode($request->custom_amenities);
+                $custom_amenities = [];
+                foreach ($amenities as $amenity) {
+                    $custom_amenities[] = [
+                        'amenity'   => $amenity,
+                        'is_custom' => true
+                    ];
+                }
+                $listing->amenities()->delete();
+                $listing->amenities()->createMany($custom_amenities);
             } else {
                 $listing->fill($request->all());
                 $listing->save();
