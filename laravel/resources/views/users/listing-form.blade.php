@@ -362,7 +362,6 @@
                         </div>
                     </div>
                 </article>
-                <input type='hidden' id='current-page' value='page-address'>
                 <input type='hidden' id='is-loading' value='0'>
                 <div class="submit-container"><a class="ps-button is-white-button" id='listing-back-button' href='{{route('dashboard')}}'>Cancel</a><a class="ps-button" id='listing-next-button'>Next</a></div>
             </form>

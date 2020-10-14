@@ -88,12 +88,12 @@ class ListingController extends Controller
             }
             try {
 //                $listing = new Listing($request->all());
-                $id = $request->user()->listings()->create($request->all());
+                $newListing = $request->user()->listings()->create($request->all());
             } catch (\Exception $e) {
                 $exception = config('app.debug') ? $e->getMessage() : 'Error in saving the listing';
                 return response()->json(['success' => false, 'message' => $exception]);
             }
-            return response()->json(['success' => true, 'id' => $id]);
+            return response()->json(['success' => true, 'id' => $newListing->id]);
         } else {
             $listing = Listing::find($request->id);
             if ($listing->user_id !== $request->user()->id) {
@@ -105,12 +105,12 @@ class ListingController extends Controller
                 $videos = json_decode($request->listing_videos);
                 $property_videos = [];
                 foreach($videos as $video) {
-                    $listing_videos[] = [
+                    $property_videos[] = [
                         'provider'  => $video->provider,
                         'video_id'   => $video->videoId
                     ];
                 }
-                $listing->videos()->createMany($listing_videos);
+                $listing->videos()->createMany($property_videos);
             } else {
                 $listing->fill($request->all());
                 $listing->save();

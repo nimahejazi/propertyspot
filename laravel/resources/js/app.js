@@ -7,10 +7,16 @@ const pages = [
     'page-address',
     'page-schools',
     'page-listing-info',
+    'page-amenities',
     'page-videos',
     'page-image-upload',
-    'page-amenities',
+    'page-featured-photo',
+    'page-payment'
 ];
+
+let currentPage = 'page-address';
+let isLoading = false;
+let id = $('#id').val() || null;
 
 /**
  * Save partial listing fields
@@ -99,14 +105,14 @@ function pullData(id, fields) {
  */
 function showLoading(page) {
     $('#' + page + ' .cover-loading').addClass('is-loading');
-    $('#is-loading').val(1);
+    isLoading = true;
 }
 function hideLoading(page) {
     $('#' + page + ' .cover-loading').removeClass('is-loading');
-    $('#is-loading').val(0);
+    isLoading = false;
 }
 
-function transitToNextPage(curPage, nextPage) {
+function transitToNextPage(curPage, nextPage, browserBackButtonPushed = false) {
     return new Promise((resolve, reject) => {
         $('#' + curPage).fadeOut(400, () => {
             $('#' + nextPage).fadeIn(() => {
@@ -121,10 +127,12 @@ function transitToNextPage(curPage, nextPage) {
                     $('#listing-back-button').text('Back');
                 }
                 // because we don't hideLoading before transitToNextPage
-                $('#is-loading').val(0);
-                $('#current-page').val(nextPage);
+                isLoading = false;
+                currentPage = nextPage;
 
-                history.pushState({curPage: curPage, nextPage: nextPage}, '', '#' + nextPage);
+                if (!browserBackButtonPushed) {
+                    history.pushState({page: nextPage}, '', '#' + nextPage);
+                }
                 resolve();
             });
         });
@@ -150,7 +158,7 @@ function nextPage(curPage, nextPage) {
         switch(curPage) {
             case 'page-address':
                 saveListingData({
-                    'id': $('#id').val(),
+                    'id': id,
                     'street': $('#street').val(),
                     'add_line2': $('#line2').val(),
                     'county': $('#county').val(),
@@ -164,7 +172,7 @@ function nextPage(curPage, nextPage) {
                     .then(data => {
                         if (data.success) {
                             if (data.id) {
-                                $('#id').val(data.id);
+                                id = data.id;
                             }
                             resolve(transitToNextPage(curPage, nextPage));
                         } else {
@@ -181,7 +189,7 @@ function nextPage(curPage, nextPage) {
                 break;
             case 'page-schools':
                 saveListingData({
-                    'id': $('#id').val(),
+                    'id': id,
                     'elementary_school': $('#elementary_school').val(),
                     'middle_school': $('#middle_school').val(),
                     'high_school': $('#high_school').val(),
@@ -204,7 +212,7 @@ function nextPage(curPage, nextPage) {
                 break;
             case 'page-listing-info':
                 saveListingData({
-                    'id': $('#id').val(),
+                    'id': id,
                     'property_type_id': $('#property_type_id').val(),
                     'bedrooms': $('#bedrooms').val(),
                     'bathrooms': $('#bathrooms').val(),
@@ -234,7 +242,7 @@ function nextPage(curPage, nextPage) {
                 break;
             case 'page-videos':
                 saveListingData({
-                    id: $('#id').val(),
+                    id: id,
                     'listing_videos': $('#listing_videos').val()
                 })
                     .then(res => res.data)
@@ -267,11 +275,11 @@ function nextPage(curPage, nextPage) {
                         .finally(() => hideLoading(nextPage));
                     break;
             }
-        });
+        })
 }
 
-function prevPage(curPage, prevPage) {
-    transitToNextPage(curPage, prevPage);
+function prevPage(curPage, prevPage, browserBackButtonPushed = false) {
+    transitToNextPage(curPage, prevPage, browserBackButtonPushed);
 }
 
 /**
@@ -280,7 +288,6 @@ function prevPage(curPage, prevPage) {
  * @param page {string} The page name to check for server data and fill in if any data found
  */
 function fillInPage(page) {
-    const id = $('#id').val();
     if (!id) return Promise.reject();
     let fields = [];
     switch (page) {
@@ -543,24 +550,24 @@ $(() => {
 
 
     // Listing page form buttons
+    let i = 0;
     $('#listing-next-button').on('click', e => {
-        if ($('#is-loading').val() == 1) {
+        if (isLoading) {
             return;
         }
-
-        cur = $('#current-page').val();
+        cur = currentPage;
         next = pages[pages.findIndex(page => page == cur) + 1];
         nextPage(cur, next);
     });
 
     $('#listing-back-button').on('click', e => {
-        if ($('#is-loading').val() == 1) {
+        if (isLoading) {
             return;
         }
         // if it's page-address href link returns user to the dashboard
-        if ($('#current-page').val() != 'page-address') {
+        if (currentPage != 'page-address') {
             e.preventDefault();
-            const cur = $('#current-page').val();
+            const cur = currentPage;
             const prev = pages[pages.findIndex(page => page == cur) - 1];
             prevPage(cur, prev);
         }
@@ -570,10 +577,14 @@ $(() => {
     // listening for history back and forward if the page is new-listing
     if (window.location.pathname.substr(0, 18) == '/users/new-listing') {
         window.onpopstate = e => {
-            if (e.state.curPage !== $('#current-page').val()) {
-                prevPage($('#current-page').val(), e.state.curPage);
+            if (e.state.page !== currentPage) {
+                prevPage(currentPage, e.state.page, true);
             }
         }
+    }
+
+    if (window.location.pathname.substr(0, 18) === '/users/new-listing') {
+        history.replaceState({page: currentPage}, '', '#page-address');
     }
 });
 
