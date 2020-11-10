@@ -88,9 +88,9 @@
                         <div class='cover-loading'></div>
                         <div class='page-box'>
                             <div class='has-text-danger' id='page-listing-info-error'></div>
-                            <div class="field is-horizontal">
+                            <div class="field is-horizontal columns">
                                 <div class="field-body">
-                                    <div class="field">
+                                    <div class="field column">
                                         <label class="label" for='property_type_id'>Property Type</label>
                                         <div class="select is-fullwidth">
                                             <select id='property_type_id' name='property_type_id'>
@@ -102,7 +102,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="field">
+                                    <div class="field column">
                                         <label class="label" for='bedrooms'>Bedrooms</label>
                                         <div class="select is-fullwidth">
                                             <select id='bedrooms' name='bedrooms'>
@@ -131,7 +131,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="field">
+                                    <div class="field column">
                                         <label class="label" for='bathrooms'>Bathrooms</label>
                                         <div class="select is-fullwidth">
                                             <select id='bathrooms' name='bathrooms'>
@@ -162,16 +162,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="field is-horizontal">
+                            <div class="field is-horizontal columns">
                                 <div class="field-body">
-                                    <div class="field"><label class="label" for='square_ft'>Square Ft.</label><input class="input" id='square_ft' name='square_ft' /></div>
-                                    <div class="field"><label class="label" for='price'>Price ($)</label><input class="input" id='price' name='price' /></div>
+                                    <div class="field column">
+                                        <label class="label" for='square_ft'>Square Ft.</label>
+                                        <input class="input" id='square_ft' name='square_ft' />
+                                    </div>
+                                    <div class="field column">
+                                        <label class="label" for='price'>Price</label>
+                                        <div class='field has-addons'>
+                                            <p class='control'>
+                                                <a class='button is-static'>$</a>
+                                            </p>
+                                            <p class='control is-expanded'>
+                                                <input class="input" id='price' name='price'/>
+
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="field is-horizontal">
+                            <div class="field is-horizontal columns">
                                 <div class="field-body">
-                                    <div class="field"><label class="label" for='mls_no'>MLS Number</label><input class="input" id='mls_no' name='mls_no' /></div>
-                                    <div class="field">
+                                    <div class="field column"><label class="label" for='mls_no'>MLS Number</label><input class="input" id='mls_no' name='mls_no' /></div>
+                                    <div class="field column">
                                         <label class="label" for='listing_status_id'>Listing Status</label>
                                         <div class="select is-fullwidth">
                                             <select id='listing_status_id' name='listing_status_id'>
@@ -182,17 +196,17 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="field">
+                                    <div class="field column">
                                         <label class="label" for='year_built'>Year Built</label>
-                                        <input type='number' class='input' id='year_built' name='year_built'>
+                                        <input type='text' class='input' id='year_built' name='year_built' placeholder='YYYY'>
                                     </div>
                                 </div>
                             </div>
-                            <div class="field is-horizontal">
+                            <div class="field is-horizontal columns">
                                 <div class="field-body">
-                                    <div class="field"><label class="label" for='lot_square_ft'>Lot Square Ft.</label><input class="input" id='lot_square_ft' name='lot_square_ft' /></div>
+                                    <div class="field column"><label class="label" for='lot_square_ft'>Lot Square Ft.</label><input class="input" id='lot_square_ft' name='lot_square_ft' /></div>
 
-                                    <div class="field">
+                                    <div class="field column">
                                         <label class="label" for='floors'>Floors</label>
                                         <div class="select is-fullwidth">
                                             <select id='floors' name='floors'>
@@ -211,7 +225,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="field">
+                                    <div class="field column">
                                         <label class="label" for='garage_size'>Garage Size</label>
                                         <div class="select is-fullwidth">
                                             <select id='garage_size' name='garage_size'>
@@ -238,7 +252,7 @@
                     </div>
                 </article>
                 <article class="ps-box multipage" id="page-videos">
-                    <div class="box-title">Property videos (Youtube link)</div>
+                    <div class="box-title">Property videos (Youtube or Vimeo links)</div>
                     <div class="box">
                         <div class='cover-loading'></div>
                         <div class='page-box'>
@@ -264,10 +278,17 @@
                 <article class="ps-box multipage" id="page-image-upload">
                     <div class="box-title">Property images</div>
                     <div class="box">
+                        <div class='cover-loading'></div>
                         <div class='has-text-danger' id='page-image-upload-error'></div>
                         <div class="field">
-                            <div class="label label">Paste the YouTube link of the property video</div>
-                            <div id="rkImageUploader" url="http://localhost:3008" rkKey="asdf"></div>
+                            <div
+                                id="rkImageUploader"
+                                url="{{$_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/api'}}"
+                                rkKey="{{$listing->id}}"
+                                apiToken='{{$user->api_token}}'
+                                bulletPoints='["You can drag and drop images to the dashed box.", "Maximum 50 images can be add", "You can rename images if you want"]'
+                                maxItems='50'
+                            ></div>
                         </div>
                     </div>
                 </article>
@@ -283,7 +304,7 @@
                                         echo $i > 0 ? '</div></div>' : '';
                                         echo '<div class="field is-horizontal"><div class="field-body">';
                                     }
-                                    echo "<div class='field column'><input class='is-checkradio is-link' type='checkbox' id='$amenity' /><label for='$amenity'> $amenity</label></div>";
+                                    echo "<div class='field column'><input class='is-checkradio is-link' type='checkbox' id='$amenity' value='$amenity' name='amenities' /><label for='$amenity'> $amenity</label></div>";
                                     $i++;
                                 }
                                 $i = 0;
@@ -305,62 +326,12 @@
                     </div>
                 </article>
                 <article class="ps-box multipage" id="page-featured-photo">
-                    <div class="box"><h5>Have amenities not listed? Add them here:</h5></div>
                     <div class="box-title">Featured photo</div>
                     <div class="box">
+                        <div class='cover-loading'></div>
                         <div class='has-text-danger' id='page-featured-photo-error'></div>
                         <h5>Choose one photo to feature as the main photo:</h5>
-                        <div class="columns is-multiline featured-photos">
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a class="featured" href="#" id="item1"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item2"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item3"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item4"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item5"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item6"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item7"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item8"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item9"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
-                            <div class="column is-one-third-tablet is-one-quarter-desktop">
-                                    <span class="photo"
-                                    ><a href="#" id="item10"><img class="image" src="/img/placeholder.svg" /></a
-                                        ></span>
-                            </div>
+                        <div class="columns is-multiline featured-photos" id='featured-photos'>
                         </div>
                     </div>
                 </article>

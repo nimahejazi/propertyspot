@@ -4,28 +4,7 @@
 @endsection
 
 @section('menu')
-    <div class="menu-container-light">
-        <div class="container">
-            <div class="avatar-container">
-                <div>
-                    <a class="button back is-hidden-tablet" href="#" >
-                        <span class="icon"><i class="fas fa-chevron-left"></i></span>
-                        <span>Back</span>
-                    </a>
-                </div>
-                <nav class="avatar-icon">
-                    <figure id="avatar"><p>{{$user->getInitial()}}</p></figure>
-                    <div class="avatar-menu">
-                        <ul>
-                            <li>{{$user->getName()}}</li>
-                            <li><a href="{{route('profile')}}">Profile</a></li>
-                            <li><a href="/signout">Sign out</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
+    @include('includes.menu')
 @endsection
 
 @section('main')
@@ -40,21 +19,21 @@
                         @if ($errors->any())
                             {!!  implode('', $errors->all('<div class="help is-danger">:message</div>')) !!}
                         @endif
-                        <div class="field is-horizontal">
+                        <div class="field is-horizontal columns">
                             <div class="field-body">
-                                <div class="field">
+                                <div class="field column">
                                     <label class="label" for="fullname">Full name</label><input class="input @error('fullname') is-danger @enderror" type="text" id="fullname" name="fullname" value="{{old('fullname', $user->fullname)}}" />
                                     <div class='help is-danger'>@error('fullname'){{$message}} @enderror</div>
                                 </div>
-                                <div class="field">
+                                <div class="field column">
                                     <label class="label" for="license_no">License #</label><input class="input @error('license_no') is-danger @enderror" type="text" id="license_no" name="license_no" value="{{old('license_no', $user->license_no)}}"/>
                                     <div class='help is-danger'>@error('license_no'){{$message}} @enderror</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="field is-horizontal">
+                        <div class="field is-horizontal columns">
                             <div class="field-body">
-                                <div class="field">
+                                <div class="field column">
                                     <label class="label" for="title">Title</label>
                                     <input class="input @error('title') is-danger @enderror" type="text" id="title" name="title" value="{{old('title', $user->title)}}" list='agent_titles'/>
                                     <datalist id='agent_titles'>
@@ -64,9 +43,13 @@
                                     </datalist>
                                     <div class='help is-danger'>@error('title'){{$message}} @enderror</div>
                                 </div>
-                                <div class="field">
+                                <div class="field column">
                                     <label class="label" for="email">Email</label><input class="input @error('email') is-danger @enderror" type="email" id="email" name="email" value="{{old('email', $user->email)}}"/>
                                     <div class='help is-danger' id='email-err'>@error('email'){{$message}} @enderror</div>
+                                </div>
+                                <div class="field column">
+                                    <label class="label" for="email">Phone</label><input class="input @error('phone') is-danger @enderror" type="text" id="phone" placeholder='(123) 123-1234' name="phone" value="{{old('phone', $user->phone)}}"/>
+                                    <div class='help is-danger' id='phone-err'>@error('phone'){{$message}} @enderror</div>
                                 </div>
                             </div>
                         </div>

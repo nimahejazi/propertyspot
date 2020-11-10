@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', env('APP_ENV', 'production') ? 'bugsnag' : ''],
             'ignore_exceptions' => false,
         ],
 
@@ -98,6 +98,10 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+        'bugsnag' => [
+            'driver' => 'bugsnag'
         ],
     ],
 

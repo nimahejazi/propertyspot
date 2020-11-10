@@ -1,6 +1,9 @@
-require('./bootstrap');
-const {RKFormValidator, Validator} = require('rk-form-validator');
+require('./modules/bootstrap');
+const addFormValidators = require('./modules/form-validators');
+const preparePayment = require('./modules/stripe');
+const mask = require('./modules/mask');
 
+const Inputmask = require('inputmask');
 const $ = require('jquery');
 const axios = require('axios');
 const pages = [
@@ -50,30 +53,39 @@ function getSchools() {
                 'api_token': $('#api_token').val(),
                 lng,
                 lat,
-                state
+                state,
+                listing_id: id
             }
         })
             .then(res => res.data)
             .then(data => {
+                let firstElementarySchool = '';
+                let firstMiddleSchool = '';
+                let firstHighSchool = '';
+                console.log(data.schools);
+                data.schools.forEach(school => {
+                    if (school.elementary_school) {
+                        firstElementarySchool = firstElementarySchool || school.name;
+                        $('#elementary_school_list').append('<option value="' + school.name + '">');
+                    }
+                    if (school.middle_school) {
+                        firstMiddleSchool = firstMiddleSchool || school.name;
+                        $('#middle_school_list').append('<option value="' + school.name + '"></option>');
+                    }
+                    if (school.high_school) {
+                        firstHighSchool = firstHighSchool || school.name;
+                        $('#high_school_list').append('<option value="' + school.name + '"></option>');
+                    }
+                });
                 if ($('#elementary_school').val() === '') {
-                    $('#elementary_school').val(data.elementarySchool.school[0].name);
+                    $('#elementary_school').val(firstElementarySchool);
                 }
                 if ($('#middle_school').val() === '') {
-                    $('#middle_school').val(data.middleSchool.school[0].name);
+                    $('#middle_school').val(firstMiddleSchool);
                 }
                 if ($('#high_school').val() === '') {
-                    $('#high_school').val(data.highSchool.school[0].name);
+                    $('#high_school').val(firstHighSchool);
                 }
-                data.elementarySchool.school.forEach(school => {
-                    $('#elementary_school_list').append('<option value="' + school.name + '"></option>');
-                });
-                data.middleSchool.school.forEach(school => {
-                    $('#middle_school_list').append('<option value="' + school.name + '"></option>');
-                });
-                data.highSchool.school.forEach(school => {
-                    $('#high_school_list').append('<option value="' + school.name + '"></option>');
-                });
-
                 return true
             })
             .catch(e => false);
@@ -105,10 +117,14 @@ function pullData(id, fields) {
  */
 function showLoading(page) {
     $('#' + page + ' .cover-loading').addClass('is-loading');
+    $('#listing-next-button').addClass('button-loading');
+    $('#listing-back-button').addClass('button-loading');
     isLoading = true;
 }
 function hideLoading(page) {
     $('#' + page + ' .cover-loading').removeClass('is-loading');
+    $('#listing-next-button').removeClass('button-loading');
+    $('#listing-back-button').removeClass('button-loading');
     isLoading = false;
 }
 
@@ -173,6 +189,7 @@ function nextPage(curPage, nextPage) {
                         if (data.success) {
                             if (data.id) {
                                 id = data.id;
+                                $('#rkImageUploader').attr('rkKey', id);
                             }
                             resolve(transitToNextPage(curPage, nextPage));
                         } else {
@@ -217,7 +234,7 @@ function nextPage(curPage, nextPage) {
                     'bedrooms': $('#bedrooms').val(),
                     'bathrooms': $('#bathrooms').val(),
                     'square_ft': $('#square_ft').val(),
-                    'price': $('#price').val(),
+                    'price': Number.parseInt($('#price').val()),
                     'mls_no': $('#mls_no').val(),
                     'listing_status_id': $('#listing_status_id').val(),
                     'year_built': $('#year_built').val(),
@@ -229,15 +246,17 @@ function nextPage(curPage, nextPage) {
                     .then(res => res.data)
                     .then(data => {
                         if (data.success) {
-                            transitToNextPage(curPage, nextPage);
+                            resolve(transitToNextPage(curPage, nextPage));
                         } else {
                             toggleError(curPage, data.message);
                             hideLoading(curPage);
+                            resolve();
                         }
                     })
                     .catch(err => {
                         toggleError(curPage, err);
                         hideLoading(curPage);
+                        resolve();
                     });
                 break;
             case 'page-videos':
@@ -248,36 +267,47 @@ function nextPage(curPage, nextPage) {
                     .then(res => res.data)
                     .then(data => {
                         if (data.success) {
-                            transitToNextPage(curPage, nextPage);
+                            resolve(transitToNextPage(curPage, nextPage));
                         } else {
                             toggleError(curPage, data.message);
                             hideLoading(curPage);
+                            resolve();
                         }
                     })
                     .catch(e => {
                         toggleError(curPage, e);
                         hideLoading(curPage);
+                        resolve();
                     });
                 break;
             case 'page-amenities':
+                const amenities = $('#page-amenities input:checked').map(function() {
+                    return $(this).val();
+                }).get();
                 saveListingData({
                     id: id,
-                    'custom_amenities': $('#custom_amenities').val()
+                    'custom_amenities': $('#custom_amenities').val(),
+                    'amenities': JSON.stringify(amenities)
                 })
                     .then(res => res.data)
                     .then(data => {
                         if (data.success) {
-                            transitToNextPage(curPage, nextPage);
+                            resolve(transitToNextPage(curPage, nextPage));
                         } else {
                             toggleError(curPage, data.message);
                             hideLoading(curPage);
+                            resolve();
                         }
                     })
                     .catch(err => {
                         toggleError(curPage, data.message);
                         hideLoading(curPage);
+                        resolve();
                     });
                 break;
+            case 'page-image-upload':
+                showLoading(curPage);
+                resolve(transitToNextPage(curPage, nextPage));
         }
 
     }))
@@ -297,8 +327,17 @@ function nextPage(curPage, nextPage) {
         })
 }
 
-function prevPage(curPage, prevPage, browserBackButtonPushed = false) {
-    transitToNextPage(curPage, prevPage, browserBackButtonPushed);
+function prevPage(curPage, prevPage, browserBackButtonPushed = false, loadData = false) {
+    const promise = transitToNextPage(curPage, prevPage, browserBackButtonPushed);
+    if (loadData) {
+        showLoading(prevPage);
+        promise
+            .then(e => {
+                return fillInPage(prevPage)
+            })
+            .finally(e => hideLoading(prevPage))
+    }
+
 }
 
 /**
@@ -353,6 +392,60 @@ function fillInPage(page) {
                 .then(res => res.data)
                 .then(data => fields.forEach(field => $('#' + field).val(data[field])));
             break;
+        case 'page-featured-photo':
+            $('#featured-photos').html('');
+            return axios({
+                method: 'get',
+                url: '/api/image-api',
+                params: {
+                    api_token: $('#api_token').val(),
+                    key: id
+                }
+            })
+                .then(res => res.data)
+                .then(images => {
+                    images
+                        .sort((img1, img2) => img1.position - img2.position)
+                        .forEach(image => {
+                            const img = document.createElement('img');
+                            img.classList.add('image');
+                            console.log(image);
+                            img.src = '/' + image.thumb_2x_url;
+
+                            const a = document.createElement('a');
+                            a.id = image.id;
+                            a.href = '#';
+                            a.onclick = e => {
+                                e.preventDefault();
+                                if (! $('#' + a.id).hasClass('featured')) {
+                                    axios({
+                                        method: 'put',
+                                        url: '/api/photos',
+                                        params: {
+                                            id: a.id,
+                                            listing_id: id,
+                                            api_token: $('#api_token').val()
+                                        }
+                                    });
+                                    $('.featured-photos a').toArray().forEach(a => $('#' + a.id).removeClass('featured'));
+                                    $('#' + a.id).addClass('featured');
+                                }
+                            }
+
+                            const spanContainer = document.createElement('span');
+                            spanContainer.classList.add('photo');
+
+                            const divContainer = document.createElement('div');
+                            divContainer.classList.add('column', 'is-one-third-tablet', 'is-one-quarter-desktop');
+
+                            a.appendChild(img);
+                            spanContainer.appendChild(a);
+                            divContainer.appendChild(spanContainer);
+
+                            $('#featured-photos').append(divContainer);
+                    });
+                });
+
 
         default:
             return Promise.resolve();
@@ -361,80 +454,17 @@ function fillInPage(page) {
 
 }
 
-function addFieldChecks(page) {
-    const rkFormValidator = new RKFormValidator();
-    switch(page) {
-        case '/signup':
-        case '/signup/':
-            rkFormValidator.addValidator(new Validator(
-                {id: 'email', title: 'Email'},
-                ['required', 'email'],
-                {id: 'email-err'},
-                'is-danger'
-            ));
-            rkFormValidator.addValidator(new Validator(
-                {id: 'password', title: 'Password'},
-                ['required', 'min:8', 'max:40', 'include:2:1234567890'],
-                {id: 'password-err'},
-                'is-danger'
-            ));
-            rkFormValidator.addValidator(new Validator(
-                {id: 'password_confirmation', title: 'Password confirmation'},
-                ['required', 'compare:eq:password'],
-                {id: 'password_confirmation-err'},
-                'is-danger'
-            ));
-            $('#submit').on('click', e => {
-                rkFormValidator.checkAll();
-                if (rkFormValidator.hasErrors()) {
-                    e.preventDefault();
-                }
-            })
-            break;
-        case '/signin':
-        case '/signin/':
-            rkFormValidator.addValidator(new Validator(
-                {id: 'email', title: 'Email'},
-                ['required', 'email'],
-                {id: 'email-err'},
-                'is-danger'
-            ));
-            rkFormValidator.addValidator(new Validator(
-                {id: 'password', title: 'Password'},
-                ['required'],
-                {id: 'password-err'},
-                'is-danger'
-            ));
-            $('#submit').on('click', e => {
-                rkFormValidator.checkAll();
-                if (rkFormValidator.hasErrors()) {
-                    e.preventDefault();
-                }
-            })
-            break;
-        case '/users/profile':
-        case '/users/profile/':
-            rkFormValidator.addValidator(new Validator(
-                {id: 'email', title: 'Email'},
-                ['required', 'email'],
-                {id: 'email-err'},
-                'is-danger'
-            ));
-            $('#submit').on('click', e => {
-                rkFormValidator.checkAll();
-                if (rkFormValidator.hasErrors()) {
-                    e.preventDefault();
-                }
-            })
-
-            break;
-    }
-}
 
 $(() => {
-    // sign up page field checks
-    addFieldChecks(window.location.pathname);
+    addFormValidators(window.location.pathname, $);
 
+    // masking the fields in listing page
+    mask(window.location.pathname);
+
+    $('#listing-new').on('click', e => {
+        $(e.target).attr('disabled', true);
+        $('#listing-new-loading').addClass('is-loading');
+    });
 
     $('#listing-form').on('submit', e => e.preventDefault());
 
@@ -508,11 +538,18 @@ $(() => {
         }
 
     });
-    $('#show-website-address').on('click', e => {
+
+
+    $('.show-website-address').on('click', function(e) {
+        const url = $(this).data('url');
+        const address = $(this).data('address');
         e.preventDefault();
+        $('#website-url').text(url);
+        $('#website-address').text(address);
+        $('#website-url-a').attr('href', 'https://' + url);
         $('#website-address-modal').addClass(['is-active', 'is-clipped']);
     });
-    $('#website-address-modal-close').on('click', e => {
+    $('#website-address-modal button').on('click', e => {
         e.preventDefault();
         $('#website-address-modal').removeClass(['is-active', 'is-clipped']);
     });
@@ -577,17 +614,31 @@ $(() => {
             return;
         }
         cur = currentPage;
-        next = pages[pages.findIndex(page => page == cur) + 1];
-        console.log('curPage:', cur, 'nextPage:', next);
-        nextPage(cur, next);
+        next = pages[pages.findIndex(page => page === cur) + 1];
+        if (next === 'page-payment') {
+            showLoading(currentPage);
+            pullData(id, ['paid', 'payment_status', 'payment_date'])
+                .then(res => res.data)
+                .then(data => {
+                    if (data.paid || data.payment_status) {
+                        location.href = '/users/dashboard';
+                    } else {
+                        location.href = '/users/payment/' + id;
+                    }
+                })
+                .finally(() => hideLoading(currentPage))
+        } else {
+            nextPage(cur, next);
+        }
     });
 
     $('#listing-back-button').on('click', e => {
         if (isLoading) {
+            e.preventDefault();
             return;
         }
         // if it's page-address href link returns user to the dashboard
-        if (currentPage != 'page-address') {
+        if (currentPage !== 'page-address') {
             e.preventDefault();
             const cur = currentPage;
             const prev = pages[pages.findIndex(page => page == cur) - 1];
@@ -597,13 +648,38 @@ $(() => {
 
 
     // listening for history back and forward if the page is new-listing
-    if (window.location.pathname.substr(0, 18) == '/users/new-listing') {
-        history.replaceState({page: currentPage}, '', '#page-address');
-        window.onpopstate = e => {
-            if (e.state.page !== currentPage) {
-                prevPage(currentPage, e.state.page, true);
+    if (window.location.pathname.substr(0, 18) === '/users/new-listing') {
+        const location = window.location.href.split('#');
+        if (location.length < 2) {
+            history.replaceState({page: currentPage}, '', '#page-address');
+        } else {
+            const pageRequested = location[1];
+            history.replaceState({page: currentPage}, '', '#' + pageRequested);
+            if (pageRequested !== 'page-address') {
+                prevPage(currentPage, pageRequested, false, true);
             }
         }
+
+        window.onpopstate = e => {
+            if (e.state) {
+                if (e.state.page !== currentPage) {
+                    prevPage(currentPage, e.state.page, true);
+                }
+            } else {
+                const location = window.location.href.split('#');
+                if (location.length > 1) {
+                    prevPage(currentPage, location[1]);
+                }
+            }
+
+
+
+        }
+    }
+    if (document.getElementById('pay')) {
+        // if there is no card element, we in paying by preexisted cards page
+        preparePayment(id,document.getElementById('card') === null);
+
     }
 });
 

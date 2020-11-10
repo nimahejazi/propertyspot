@@ -1,0 +1,394 @@
+$font-family-sans-serif:      Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$font-size-base: 1rem;
+//$line-height-base
+$enable-responsive-font-sizes: true;
+
+
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/root";
+@import "node_modules/bootstrap/scss/reboot";
+@import "node_modules/bootstrap/scss/type";
+@import "node_modules/bootstrap/scss/images";
+// @import "node_modules/bootstrap/scss/code";
+@import "node_modules/bootstrap/scss/grid";
+@import "node_modules/bootstrap/scss/tables";
+@import "node_modules/bootstrap/scss/forms";
+@import "node_modules/bootstrap/scss/buttons";
+@import "node_modules/bootstrap/scss/transitions";
+@import "node_modules/bootstrap/scss/dropdown";
+@import "node_modules/bootstrap/scss/button-group";
+@import "node_modules/bootstrap/scss/input-group";
+@import "node_modules/bootstrap/scss/custom-forms";
+@import "node_modules/bootstrap/scss/nav";
+@import "node_modules/bootstrap/scss/navbar";
+// @import "node_modules/bootstrap/scss/card";
+// @import "node_modules/bootstrap/scss/breadcrumb";
+// @import "node_modules/bootstrap/scss/pagination";
+ @import "node_modules/bootstrap/scss/badge";
+// @import "node_modules/bootstrap/scss/jumbotron";
+// @import "node_modules/bootstrap/scss/alert";
+// @import "node_modules/bootstrap/scss/progress";
+// @import "node_modules/bootstrap/scss/media";
+// @import "node_modules/bootstrap/scss/list-group";
+@import "node_modules/bootstrap/scss/close";
+// @import "node_modules/bootstrap/scss/toasts";
+@import "node_modules/bootstrap/scss/modal";
+// @import "node_modules/bootstrap/scss/tooltip";
+// @import "node_modules/bootstrap/scss/popover";
+// @import "node_modules/bootstrap/scss/carousel";
+ @import "node_modules/bootstrap/scss/spinners";
+@import "node_modules/bootstrap/scss/utilities";
+// @import "node_modules/bootstrap/scss/print";
+
+
+@import "node_modules/blueimp-gallery/css/blueimp-gallery";
+
+.blueimp-gallery-controls a {
+    text-indent: -9999px;
+}
+
+$retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
+
+header.header {
+    border-bottom: solid 1px $gray-200;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+.navbar-brand {
+    font-size: 1.2rem;
+}
+
+.intro-img {
+    //background-image: url('../img/front.jpg');
+    background-size: cover;
+    height: 800px;
+    height: 80vh;
+    min-height: 400px;
+    max-height: 1800px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    position: relative;
+    @media #{$retina} {
+        //background-image: url('../img/front@2x.jpg');
+    }
+
+    .intro-box {
+        color: #fff;
+        display: inline-block;
+        position: absolute;
+        bottom: 2rem;
+        .price-tag {
+            background: rgba(189, 31, 44, 0.74);
+            padding: 1rem;
+            margin-bottom: 1rem;
+
+            h3 {
+                font-size: 2rem;
+                font-weight: 400;
+            }
+        }
+        .open-house {
+            background: rgba(189, 31, 44, 0.74);
+            padding: 1rem;
+
+            h3 {
+                font-size: 1.2rem;
+                font-weight: 400;
+            }
+
+        }
+    }
+}
+
+.intro-text {
+    .text {
+
+        h3 {
+            color: $gray-700;
+            font-size: 1.5rem;
+        }
+    }
+    margin-top: 4rem;
+}
+
+.features {
+    .key-feature {
+        background-color: $gray-200;
+        display: inline-block;
+        padding: 1rem;
+        margin: 1rem;
+        width: 40%;
+        vertical-align: top;
+        height: 5rem;
+    }
+}
+
+.section-separator {
+    padding-top: 4rem;
+    border-top: solid 1px $gray-300;
+    margin-top: 5rem;
+}
+
+header h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.gallery {
+    .container {
+        max-width: 930px;
+        text-align: left;
+
+        .slide {
+            max-width: 44%;
+            margin: 2%;
+        }
+    }
+
+}
+
+.request-btn {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.banner {
+    background: $gray-700;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    margin-top: -10px;
+}
+
+.specifications {
+
+    .spec-row {
+        display: flex;
+        margin-bottom: 1.5rem;
+        .item {
+            span {
+                padding-left: .5rem;
+                color: $gray-600;
+            }
+            width: 100%;
+            min-width: 10rem;
+        }
+    }
+}
+
+.details ul {
+    line-height: 2.5rem;
+}
+
+.details-table {
+    tr th {
+        text-align: right;
+        padding-right: 3rem;
+    }
+    ul {
+        padding-left: 0;
+    }
+}
+
+.contact {
+    text-align: center;
+    .contact-info {
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+
+section {
+    header {
+        text-align: center;
+    }
+}
+
+.mail-box {
+    max-width: 900px;
+}
+
+.icon {
+    display: flex;
+    svg {
+        width: 1.2rem;
+        margin-right: 0.5rem;
+        color: $gray-500;
+    }
+}
+
+.stacked {
+    display: flex;
+    .item {
+        padding-right: 10px;
+        h5 {
+            margin-top: 10px;
+        }
+    }
+}
+
+.title-icon {
+    width: 3rem;
+    padding-bottom: 0.5rem;
+}
+
+.copyright {
+    color: $gray-600;
+    font-size: small;
+}
+
+.table-title {
+    font-weight: bold;
+    text-align: left;
+}
+
+.table-row {
+    border-bottom: solid 1px $gray-300;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+#captcha-error1, #captcha-error2 {
+    font-size: small;
+}
+
+.hide-gallery {
+    max-height: 600px !important;
+
+}
+
+.gallery-container {
+    transition: all 1.3s ease;
+    overflow: hidden;
+    position: relative;
+    .gallery-expand {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        margin: 0; padding: 30px 0;
+
+        background-image: linear-gradient(to bottom, transparent, white 99%);
+
+        .expand-btn {
+            color: #6c757d;
+            border-color: #6c757d;
+            bottom: 0;
+            background: #009cdc;
+            padding: 1rem 6rem;
+            border-radius: 100px;
+            color: white;
+        }
+    }
+}
+
+
+.cta {
+    h2 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 2rem;
+    }
+    background: #bd1f2c;
+    padding: 3rem;
+    button {
+        color: #fff;
+        border-color: #fff;
+        padding: 1rem;
+        max-width: 800px;
+        width: 100%;
+        margin: 0 auto;
+        display: block;
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        &:hover {
+            background: #fff;
+            color: #bd1f2c;
+            border-color: #bd1f2c;
+        }
+    }
+}
+
+// ***************************
+// ****** SMALL AND UP *******
+// ***************************
+@include media-breakpoint-up(sm) {
+    .table-title {
+        text-align: right;
+    }
+}
+
+
+// ***************************
+// ****** MEDIUM AND UP ******
+// ***************************
+@include media-breakpoint-up(md) {
+    .intro-text {
+        .text {
+            padding-right: 3rem;
+        }
+    }
+
+    .features {
+        .key-feature {
+            width: 10rem;
+        }
+    }
+
+
+    .gallery {
+        .container {
+            .slide {
+                margin: 1rem;
+            }
+        }
+
+    }
+}
+
+
+// ***************************
+// ****** LARGE AND UP *******
+// ***************************
+@include media-breakpoint-up(lg) {
+
+}
+
+.nav-item.active {
+    color: #000 !important;
+    background: #e8e8e8 !important;
+    border-radius: 6px !important;
+}
+
+#gallery {
+    min-height: 35rem;
+}
+
+.grecaptcha-badge {
+    visibility: hidden;
+}
+
+.preview {
+    background: #929292;
+    padding: 0.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+.success-box, .error-box {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.status-icon {
+    display: block;
+    margin: 0 auto;
+    width: 128px;
+    height: 128px;
+    margin-bottom: 1rem;
+}

@@ -3,8 +3,15 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use App\Listeners\CreateStripeUser;
+use App\Listeners\SendWelcomeEmail;
+use App\Events\LeadCreated;
+use App\Events\PasswordResetRequested;
+use App\Events\PasswordReset;
+use App\Listeners\NotifyUserAboutLead;
+use App\Listeners\SendResetPasswordEmail;
+use App\Listeners\SendPasswordResetEmail;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,8 +22,17 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         Registered::class => [
-            SendEmailVerificationNotification::class,
-            SendWelcomeEmail::class
+            SendWelcomeEmail::class,
+            CreateStripeUser::class
+        ],
+        LeadCreated::class => [
+            NotifyUserAboutLead::class
+        ],
+        PasswordResetRequested::class => [
+            SendResetPasswordEmail::class
+        ],
+        PasswordReset::class => [
+            SendPasswordResetEmail::class
         ],
     ];
 

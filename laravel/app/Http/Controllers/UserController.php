@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use \App\Events\PasswordReset;
 use App\Models\Listing;
 use App\Models\ListingStatus;
 use App\Models\PropertyType;
+use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -19,6 +21,27 @@ use RobotKudos\RKImage\Size;
 
 class UserController extends Controller
 {
+    public function showForgotPassword() {
+        return view('forgot-password');
+    }
+
+    public function forgotPassword(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+        try {
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
+                return redirect(route('forgot-password'))->with('error', 'Email not found')->withInput();
+            }
+            $user->resetPassword();
+
+
+        } catch(\Exception $e) {
+            return redirect(route('forgot-password'))->with('error', 'Unknown error happened. Sorry for the inconvenience.' . $e->getMessage())->withInput();
+        }
+        return view('forgot-password', ['email' => $user->email, 'success' => true]);
+    }
     public function showSignup() {
         return view('signup');
     }
@@ -35,10 +58,11 @@ class UserController extends Controller
                 'password'    => Hash::make($request->password),
                 'api_token'   => Str::random(60)
             ]);
-            event(new Registered($user));
+//            event(new Registered($user));
         } catch(\Exception $e) {
             return redirect('/signup')->with('error', 'An error occurred, sorry for the inconvenience.')->withInput();
         }
+        Auth::login($user);
 
          return view('notification', [
              'type'     => 'success',
@@ -50,7 +74,7 @@ class UserController extends Controller
              ],
              'link' => [
                  'title'    => 'Sign in to start using PropertySpot.net',
-                 'url'      => '/signin'
+                 'url'      => '/users/dashboard'
              ]
          ]);
     }
@@ -154,5 +178,40 @@ class UserController extends Controller
         ]);
     }
 
+    public function showResetPassword(Request $request) {
+        $token = $request->query('token');
+        $user = User::where('reset_token', $token)->first();
 
+        if (!$user || !$user->isResetTokenValid($token)) {
+            return view('reset-password', ['invalid' => true]);
+        }
+        return view('reset-password', [
+            'token' => $token,
+            'user' => $user
+        ]);
+    }
+
+    public function resetPassword(Request $request) {
+        $token = $request->input('token');
+        $user = User::where('reset_token', $token)->first();
+
+        if (!$user || !$user->isResetTokenValid($token)) {
+            return view('reset-password', ['invalid' => true]);
+        }
+        $request->validate([
+            'token' => 'required',
+            'password'  => 'required|min:8|regex:/(?=.*[0-9].*[0-9])/|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+        try {
+            $user->reset_token = null;
+            $user->reset_token_requested_at = null;
+            $user->password = Hash::make($request->password);
+            $user->save();
+        } catch(\Exception $e) {
+            return redirect(route('reset-password'))->with('error', 'Unknown error happened. Sorry for the inconvenience.' . $e->getMessage())->withInput();
+        }
+        event(new PasswordReset($user));
+        return view('reset-password', ['success' => true]);
+    }
 }

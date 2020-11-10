@@ -14,7 +14,7 @@ class AddFeaturedPhotoToListing extends Migration
     public function up()
     {
         Schema::table('listings', function (Blueprint $table) {
-            $table->foreignId('featured_photo_id')->nullable()->constrained('property_photos');
+            $table->unsignedBigInteger('featured_photo_id')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddFeaturedPhotoToListing extends Migration
     public function down()
     {
         Schema::table('listings', function (Blueprint $table) {
-            $table->dropForeign(['featured_photo_id']);
+            $table->dropColumn(['featured_photo_id']);
         });
     }
 }

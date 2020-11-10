@@ -64,20 +64,47 @@
             <div class="mobile-box">
                 <div class="columns is-multiline is-mobile is-centered-mobile">
                     @foreach($listings as $listing)
+                        @php
+                            $nextStep = $listing->nextStep();
+                            $isLive = $listing->isLive();
+                        @endphp
                         <div class="column is-narrow is-flex">
                             <div class="listing-card">
-                                <img src="/img/placeholder.svg" />
+                                <div class='listing-card-img'>
+                                        @if ($isLive)
+                                            <div class='status-tag is-success'>
+                                                Live
+                                            </div>
+                                        @else
+                                            <div class='status-tag is-warning'>
+                                                Incomplete
+                                            </div>
+                                        @endif
+                                    <img src="/{{$listing->featuredPhotoThumb() ?? 'img/placeholder.svg'}}" />
+                                </div>
                                 <div class="listing-body">
-                                    <h3>{{$listing->street}} {{$listing->add_line2}}, {{$listing->city}}, {{$listing->state}} {{$listing->zip}}</h3>
+                                    <h3 class='address-container'>{{$listing->getAddress()}}</h3>
                                     <ul class="links">
-                                        <li><a href="/users/new-listing/{{$listing->id}}">Edit Listing</a><a href="#">View Website</a><a href="#" id="show-website-address">Show Website Address</a></li>
+                                        <li><a href="/users/new-listing/{{$listing->id}}">Edit Listing</a></li>
+                                        @if($isLive)
+                                            <li><a href="#" class="show-website-address" data-url='propertyspot.net/{{$listing->slug}}' data-address='{{$listing->getAddress()}}'>Show the Website Address</a></li>
+                                        @endif
+                                        <li><a href="{{route('preview-website', ['id' => $listing->id])}}" target='_blank'>Preview the Website</a></li>
+                                        <li><a href="{{route('listing-settings', ['id' => $listing->id])}}">Change Settings</a></li>
                                     </ul>
+                                    @if ($nextStep)
+                                        <div class='next-step-container'>
+                                            <div class='next-step'>NEXT STEP</div>
+                                            <div class='next-step-link'><a href="{{$nextStep['url']}}">{{$nextStep['title']}}</a></div>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                    <div class="column is-narrow is-flex">
-                        <a class="listing-new" href="{{route('new-listing')}}">
+                    <div class="column is-narrow is-flex" style='position:relative'>
+                        <div class='cover-loading' id='listing-new-loading'></div>
+                        <a class="listing-new" href="{{route('new-listing')}}" id='listing-new'>
                             <div class="listing-card-dashed">
                                 <div class="plus-icon"><span class="icon"><i class="fas fa-plus"></i></span></div>
                                 <div class="addnew"><span>Add a New Website</span></div>
@@ -89,11 +116,19 @@
         </article>
     </div>
   </main>
-  <div class="modal" id="website-address-modal">
-    <div class="modal-background"></div>
-    <div class="modal-content">
-        <div class="box has-text-centered"><h3 class="title">propertyspot.net/1351miday</h3></div>
-    </div>
-    <button class="modal-close is-large" id="website-address-modal-close" aria-label="close"></button>
+  <div class='modal' id='website-address-modal'>
+      <div class='modal-background'></div>
+      <div class='modal-card'>
+          <header class='modal-card-head'>
+              <p class='modal-card-title' id='website-address'></p>
+              <button class='delete' aria-label='close'></button>
+          </header>
+          <section class='modal-card-body'>
+              <div class="has-text-centered"><a id='website-url-a' href='#' target='_blank' class="title"><span  id='website-url'></span></a></div>
+          </section>
+          <div class='footer modal-card-foot'>
+              <button class='button'>Close</button>
+          </div>
+      </div>
   </div>
 @endsection

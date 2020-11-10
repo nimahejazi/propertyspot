@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use \App\Http\Controllers\ListingController;
+use \App\Http\Controllers\WebsiteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/test-bugsnag', function() {
+    Bugsnag\BugsnagLaravel\Facades\Bugsnag::notifyException(new \RuntimeException('Test error'));
+});
+
 Route::get('/signin', function() {
     return view('signin');
 });
@@ -30,8 +35,18 @@ Route::post('/signup', [UserController::class, 'signup']);
 Route::get('/signin', [UserController::class, 'showSignin'])->name('signin');
 Route::post('/signin', [UserController::class, 'signin']);
 
+Route::get('/forgot-password', [UserController::class, 'showForgotPassword'])->name('forgot-password');
+Route::post('/forgot-password', [UserController::class, 'forgotPassword']);
+
+Route::get('/reset-password', [UserController::class, 'showResetPassword'])->name('reset-password');
+Route::post('/reset-password', [UserController::class, 'resetPassword']);
+
 // Signout
 Route::get('/signout', [UserController::class, 'signout']);
+
+Route::post('/stripe/payment-hook', function() {
+    return view('stripe/payment-hook');
+});
 
 // Email verification
 Route::get('/email/verify', function() {
@@ -39,9 +54,19 @@ Route::get('/email/verify', function() {
 })->middleware(['auth'])->name('verification.notice');
 
 Route::group([ 'middleware' => 'auth', 'prefix' => 'users' ], function() {
-        Route::get('/dashboard', [UserController::class,'showDashboard'] )->name('dashboard');
-        Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
-        Route::post('/profile', [UserController::class, 'saveProfile']);
-        Route::get('/new-listing/{id?}', [ListingController::class, 'showListing'])->name('new-listing');
+    Route::get('/dashboard', [UserController::class,'showDashboard'] )->name('dashboard');
+    Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
+    Route::post('/profile', [UserController::class, 'saveProfile']);
+    Route::get('/new-listing/{id?}', [ListingController::class, 'showListing'])->name('new-listing');
+    Route::get('/payment/{id}/new', [ListingController::class, 'showPaymentNew'])->name('payment');
+    Route::get('/payment/{id}', [ListingController::class, 'showPayment'])->name('payment');
+    Route::get('/preview/{id}', [WebsiteController::class, 'previewWebsite'])->name('preview-website');
+    Route::get('/settings/{id}', [WebsiteController::class, 'previewWebsite'])->name('listing-settings');
 });
+
+Route::post('/post-form', [WebsiteController::class, 'postForm']);
+
+// Listing Website
+Route::get('/{slug}', [WebsiteController::class, 'showWebsite']);
+
 

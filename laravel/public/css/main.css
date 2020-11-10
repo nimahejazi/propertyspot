@@ -19073,6 +19073,11 @@ a.is-loading:before {
   opacity: 0.5;
 }
 
+.button-loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .img-loader.is-loading {
   position: relative;
   pointer-events: none;
@@ -19332,7 +19337,6 @@ a {
 }
 
 .form-link {
-  display: block;
   padding: .5rem 0;
 }
 
@@ -19407,6 +19411,31 @@ a {
   }
 }
 
+.ps-button.is-loading {
+  opacity: .5;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ps-button.is-loading:before {
+  -webkit-animation: spinAround 500ms infinite linear;
+          animation: spinAround 500ms infinite linear;
+  border: 2px solid #dbdbdb;
+  border-radius: 290486px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  content: "";
+  display: block;
+  height: 1em;
+  position: relative;
+  width: 1em;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-right: 0.5rem;
+}
+
 @media screen and (max-width: 768px) {
   .ps-button-full {
     width: 100%;
@@ -19437,17 +19466,28 @@ a {
 .listing-card-dashed {
   width: 15rem;
   border: solid 1px #3c3c3c;
+  height: 32.5rem;
+  overflow: hidden;
+  position: relative;
 }
 
-.listing-card h3,
-.listing-card-dashed h3 {
+.listing-card .address-container,
+.listing-card-dashed .address-container {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  height: 4.5rem;
 }
 
-.listing-card .listing-body,
-.listing-card-dashed .listing-body {
-  padding: 1rem;
+.listing-card .listing-body h3,
+.listing-card-dashed .listing-body h3 {
+  padding: 1rem 1rem 0 1rem;
+}
+
+.listing-card .next-step-container,
+.listing-card-dashed .next-step-container {
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
 }
 
 .listing-card-dashed {
@@ -19456,7 +19496,7 @@ a {
 
 .listing-card-dashed .plus-icon {
   transition: all .2s ease-in-out;
-  height: 15rem;
+  height: 16.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19472,6 +19512,42 @@ a {
   color: #c0c0c0;
   height: 15rem;
   border-top: dashed 1px #c0c0c0;
+}
+
+.listing-card .listing-card-img,
+.listing-card-dashed .listing-card-img {
+  position: relative;
+  height: 11rem;
+  overflow: hidden;
+}
+
+.listing-card .listing-card-img .status-tag,
+.listing-card-dashed .listing-card-img .status-tag {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: #fff;
+  padding: 2px 9px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.listing-card .next-step,
+.listing-card-dashed .next-step {
+  background: #cbcbcb;
+  display: block;
+  padding: 5px 0;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+  text-transform: uppercase;
+}
+
+.listing-card .next-step-link,
+.listing-card-dashed .next-step-link {
+  padding: 0 1rem;
 }
 
 .ps-box {
@@ -19497,7 +19573,7 @@ a {
 }
 
 .small-ps-box {
-  max-width: 45rem;
+  max-width: 45rem !important;
   margin-left: auto;
   margin-right: auto;
 }
@@ -19550,12 +19626,19 @@ a {
 
 ul.links li {
   display: block;
+  padding: 0 1rem;
+  border-bottom: solid 1px #c0c0c0;
+}
+
+ul.links li:last-child {
+  border-bottom: none;
 }
 
 ul.links a {
-  font-size: 1.2rem;
+  font-size: 1rem;
   display: inline-block;
-  margin-bottom: .5rem;
+  margin-bottom: .3rem;
+  margin-top: .3rem;
   transition: .2s all ease-in-out;
 }
 
@@ -19639,6 +19722,7 @@ a.listing-new:hover div {
   text-align: center;
   width: 100%;
   font-weight: bold;
+  text-shadow: 0px  0px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px  1px 0 #fff, 1px  1px 0 #fff;
 }
 
 .featured-photos .photo a.featured img {
@@ -19728,5 +19812,15 @@ a.listing-new:hover div {
 .box,
 .mobile-box {
   position: relative;
+}
+
+.payment-card {
+  height: 1.62rem;
+  margin-right: .5rem;
+}
+
+.is-success {
+  background: #48c774 !important;
+  color: #fff !important;
 }
 

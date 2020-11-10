@@ -13,10 +13,11 @@ class Welcome extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param User $user
      */
     public function __construct(User $user)
     {
@@ -30,6 +31,8 @@ class Welcome extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.welcomeUser');
+        return $this
+            ->subject('Welcome to PropertySpot.net')
+            ->view('emails.welcomeUser');
     }
 }

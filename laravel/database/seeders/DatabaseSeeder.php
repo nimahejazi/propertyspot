@@ -35,6 +35,8 @@ class DatabaseSeeder extends Seeder
         $options->set('homepage_box4_title', 'Fast and Easy', 'homepage_options', 'Homepage Options');
         $options->set('homepage_box4_text', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit commodi veniam expedita minus facere voluptatem dignissimos sit ab aperiam maxime, porro voluptatibus omnis nostrum laudantium nisi quae recusandae, vero illum.', 'homepage_options', 'Homepage Options');
 
+        $options->set('listing_price', '19.99', 'pricing', 'Pricing');
+
         DB::table('property_types')->insert([
             [ 'property_type' => 'Farm/Ranch' ],
             [ 'property_type' => 'Multi-Family Home' ],
@@ -57,6 +59,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'nhejazi@gmail.com',
             'password' => Hash::make('asdf1234'),
             'api_token' => Str::random(60),
+            'stripe_customer_id' => 'cus_IFImmNb5SZ8CWQ'
+        ]);
+
+        DB::table('payment_statuses')->insert([
+            ['name' => 'paid'],
+            ['name' => 'pending'],
         ]);
     }
 }

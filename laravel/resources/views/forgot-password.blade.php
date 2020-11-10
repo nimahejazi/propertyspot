@@ -1,0 +1,49 @@
+@extends('layouts/main')
+
+@section('menu')
+    <div class="menu-container">
+        <div class="container">
+            <nav class="menu"><a href="/signup">Join now</a><a class="sign-in" href="/signin">Sign in</a></nav>
+        </div>
+    </div>
+@endsection
+
+@section('main')
+    <main class="bg-gray">
+        <div class="section container">
+            <div class="columns is-centered">
+                <div class="column is-half-desktop is-two-thirds-tablet">
+                    <h1 class="box-title">Forgot Password</h1>
+                    <div class="box">
+                        @if (session('error'))
+                            <div class='notification is-danger'>
+                                <div class='delete'></div>
+                                {{session('error')}}
+                            </div>
+                        @endif
+                        @if (session('message'))
+                            <div class='notification is-success'>
+                                <div class='delete'></div>
+                                {{session('message')}}
+                            </div>
+                        @endif
+                        @isset($success)
+                            <div class='notification is-success'>
+                                Please check your email for a link to change your password.
+                            </div>
+                        @else
+                            <form class="form" action="{{route('forgot-password')}}" method='post'>
+                                @csrf
+                                <div class="field">
+                                    <label class="label" for="email">Email</label><input class="input @error('email') is-danger @enderror" type="email" id='email' name='email' value='{{old('email')}}' />
+                                    <div class='help is-danger' id='email-err'>@error('email'){{$message}}@enderror</div>
+                                </div>
+                                <div class="field"><button class="ps-button full-width m-0" type="submit" id='submit'>Send Password Reset Email</button></div>
+                            </form>
+                        @endisset
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+@endsection

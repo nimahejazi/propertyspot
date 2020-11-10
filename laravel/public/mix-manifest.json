@@ -1,7 +1,11 @@
 {
-    "/js/bundle.js": "/js/bundle.js?id=5f43b010068607557992",
-    "/css/main.css": "/css/main.css?id=5a56ab6c7b3c508a2920",
-    "/js/rk-google-maps-autocomplete.min.js": "/js/rk-google-maps-autocomplete.min.js?id=48051d52c58fab9ea926",
-    "/js/rk-image-uploader.min.js": "/js/rk-image-uploader.min.js?id=d730aea43500a725f4d7",
-    "/js/rk-taglist.min.js": "/js/rk-taglist.min.js?id=2ef88a3b967464b5caad"
+    "/js/bundle.js": "/js/bundle.js?id=19f44f17846c33b5784d",
+    "/css/main.css": "/css/main.css?id=ab75e01590a4847ce5ec",
+    "/css/simple.css": "/css/simple.css?id=ece48a2e6a8b1aec8f26",
+    "/js/simple.js": "/js/simple.js?id=c33c93cb4843a9411134",
+    "/js/rk-google-maps-autocomplete.min.js": "/js/rk-google-maps-autocomplete.min.js?id=7842402f62f3c5db3eb5",
+    "/js/rk-image-uploader.min.js": "/js/rk-image-uploader.min.js?id=4b9c36c72c1310ed4373",
+    "/js/rk-taglist.min.js": "/js/rk-taglist.min.js?id=2ef88a3b967464b5caad",
+    "/js/vendor/blueimp-gallery.min.js": "/js/vendor/blueimp-gallery.min.js?id=135941eb019241bf6c4e",
+    "/js/vendor/bootstrap.bundle.min.js": "/js/vendor/bootstrap.bundle.min.js?id=a5334e475209f965b486"
 }

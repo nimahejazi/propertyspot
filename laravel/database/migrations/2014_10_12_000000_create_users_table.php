@@ -20,16 +20,20 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('api_token', 80)->unique();
+            $table->string('reset_token', 100)->nullable();
+            $table->timestamp('reset_token_requested_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->string('license_no')->nullable();
             $table->string('title')->nullable();
+            $table->string('phone')->nullable();
             $table->string('photo_url')->nullable();
             $table->string('photo_url_2x')->nullable();
             $table->boolean('has_company')->default(false);
             $table->string('company_name')->nullable();
             $table->string('company_website')->nullable();
             $table->string('company_address')->nullable();
+            $table->string('stripe_customer_id')->nullable();
         });
     }
 

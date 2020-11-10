@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Providers;
+namespace App\Listeners;
 
-use App\Mail\Welcome;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
+use Stripe;
 
-class SendWelcomeEmail
+class CreateStripeUser
 {
     /**
      * Create the event listener.
@@ -23,11 +22,16 @@ class SendWelcomeEmail
     /**
      * Handle the event.
      *
-     * @param  Registered  $event
+     * @param  Registered  $user
      * @return void
      */
     public function handle(Registered $event)
     {
-        Mail::to($event->user->email)->send(new Welcome($event->user));
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        $strip_customer = Stripe\Customer::create([
+            'email' => $event->user->email
+        ]);
+        $event->user->stripe_customer_id = $strip_customer->id;
+        $event->user->save();
     }
 }

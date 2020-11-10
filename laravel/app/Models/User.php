@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use App\Events\PasswordResetRequested;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -20,12 +24,17 @@ class User extends Authenticatable
         'email',
         'password',
         'title',
+        'phone',
         'license_no',
         'has_company',
         'company_name',
         'company_website',
         'company_address',
         'api_token'
+    ];
+
+    protected $dispatchesEvents = [
+        'created'   => Registered::class
     ];
 
     /**
@@ -45,6 +54,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    protected $dates = [
+        'reset_token_requested_at'
     ];
 
     // Get email or fullname if available
@@ -88,5 +101,19 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Listing');
     }
 
+    public function resetPassword() {
+        $this->reset_token = Str::random(80);
+        $this->reset_token_requested_at = Carbon::now();
+        $this->save();
+        event(new PasswordResetRequested($this));
+    }
+
+    public function isResetTokenValid($token) {
+        return (
+            $this->reset_token == $token &&
+            $this->reset_token_requested_at &&
+            $this->reset_token_requested_at->addMinutes(30) >= Carbon::now()
+        );
+    }
 
 }

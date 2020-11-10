@@ -28,14 +28,18 @@ mix.webpackConfig({
                     'babel-loader',
                     'ts-loader'
                 ]
-            }
+            },
         ]
-    }
+    },
+
 });
 
 mix.sass('resources/scss/main.scss', 'public/css').version();
+mix.sass('resources/scss/templates/simple.scss', 'public/css/simple.css').version();
 
 mix.js('resources/js/app.js', 'public/js/bundle.js').sourceMaps().version();
+mix.js('resources/js/simple.js', 'public/js/simple.js').sourceMaps().version();
 
 mix.copy('resources/js/rk-*.*', 'public/js');
-mix.copy('resources/img', 'public');
+mix.copy('resources/js/vendor/*.js', 'public/js/vendor');
+mix.copy('resources/img', 'public/img');

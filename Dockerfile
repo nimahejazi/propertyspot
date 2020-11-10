@@ -5,6 +5,8 @@ RUN apt-get update && \
     docker-php-ext-install pdo_mysql && \
     apt-get install -y --no-install-recommends apt-utils && \
     apt-get install -y libmagickwand-dev libmagickcore-dev && \
+    pecl install xdebug-2.8.1 && \
+    docker-php-ext-enable xdebug && \
     pecl install imagick && \
     docker-php-ext-enable imagick
 CMD service nginx start && \

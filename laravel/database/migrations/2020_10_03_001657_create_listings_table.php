@@ -17,7 +17,7 @@ class CreateListingsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('user_id')->constrained();
-            $table->string('street');
+            $table->string('street')->nullable();
             $table->string('add_line2')->nullable();
             $table->string('county')->nullable();
             $table->string('city')->nullable();
@@ -25,6 +25,7 @@ class CreateListingsTable extends Migration
             $table->string('zip')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
+            $table->boolean('schools_fetched')->default(false);
             $table->string('elementary_school')->nullable();
             $table->string('middle_school')->nullable();
             $table->string('high_school')->nullable();
@@ -41,7 +42,11 @@ class CreateListingsTable extends Migration
             $table->tinyInteger('garage_size')->nullable();
             $table->text('property_desc')->nullable();
             $table->string('slug')->nullable();
-            $table->string('square_customer_id')->nullable();
+            $table->foreignId('payment_status')->constrained()->nullable();
+            $table->string('payment_id')->nullable();
+            $table->string('payment_amount')->nullable();
+            $table->dateTime('payment_date')->nullable();
+            $table->integer('views')->nullable();
         });
     }
 

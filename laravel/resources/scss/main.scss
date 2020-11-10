@@ -32,6 +32,11 @@ a {
     }
 }
 
+.button-loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .img-loader {
     &.is-loading {
         position: relative;
@@ -241,7 +246,6 @@ a {
 }
 
 .form-link {
-    display: block;
     padding: .5rem 0;
 }
 
@@ -278,6 +282,7 @@ a {
 .ps-button-steps {
     margin: 1rem;
 }
+
 .ps-button {
     text-align: center;
     border-radius: 100px;
@@ -304,6 +309,22 @@ a {
         margin: 1rem;
         width: auto;
     }
+    &.is-loading {
+        opacity: .5;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:before {
+            @include loader;
+            //position: absolute;
+            //left: calc(50% - .8rem);
+            //top: calc(50% - .8rem);
+            width: 1.3rem;
+            height: 1.3rem;
+            margin-right: 0.5rem;
+        }
+    }
 }
 .ps-button-full {
     @include until($tablet) {
@@ -314,6 +335,7 @@ a {
         margin-bottom: 1rem !important;
     }
 }
+
 
 .float-right-tablet {
     @include from($tablet) {
@@ -334,19 +356,30 @@ a {
 .listing-card {
     width: 15rem;
     border: solid 1px $dark-bg;
-    h3 {
+    height: 32.5rem;
+    overflow: hidden;
+    position: relative;
+    .address-container {
         font-size: 1.2rem;
         margin-bottom: 1rem;
+        height: 4.5rem;
     }
     .listing-body {
-        padding: 1rem;
+        h3 {
+            padding: 1rem 1rem 0 1rem;
+        }
+    }
+    .next-step-container {
+        position: absolute;
+        bottom: 2rem;
+        width: 100%;
     }
     &-dashed {
         @extend .listing-card;
         border: dashed 1px $light-bg;
         .plus-icon {
             transition: all .2s ease-in-out;
-            height: 15rem;
+            height: 16.3rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -362,6 +395,35 @@ a {
             height: 15rem;
             border-top: dashed 1px $light-bg;
         }
+    }
+    .listing-card-img {
+        position: relative;
+        height: 11rem;
+        overflow: hidden;
+        .status-tag {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: #fff;
+            padding: 2px 9px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+    .next-step {
+        background: rgb(203, 203, 203);
+        display: block;
+        padding: 5px 0;
+        text-align: center;
+        margin-top: 1rem;
+        margin-bottom: .5rem;
+        text-transform: uppercase;
+    }
+    .next-step-link {
+        padding: 0 1rem;
+
     }
 }
 
@@ -384,7 +446,7 @@ a {
 }
 
 .small-ps-box {
-    max-width: 45rem;
+    max-width: 45rem !important;
     margin-left: auto;
     margin-right: auto;
 }
@@ -427,11 +489,17 @@ a {
 ul.links {
     li {
         display: block;
+        padding: 0 1rem;
+        border-bottom: solid 1px $light-bg;
+        &:last-child {
+            border-bottom: none;
+        }
     }
     a {
-        font-size: 1.2rem;
+        font-size: 1rem;
         display: inline-block;
-        margin-bottom: .5rem;
+        margin-bottom: .3rem;
+        margin-top: .3rem;
         transition: .2s all ease-in-out;
         &:hover {
             color: lighten($accent-color, 10%);
@@ -513,6 +581,12 @@ a.listing-new {
                 text-align: center;
                 width:100%;
                 font-weight: bold;
+                text-shadow:
+                    0px  0px 0 #fff,
+                    -1px -1px 0 #fff,
+                    1px -1px 0 #fff,
+                    -1px  1px 0 #fff,
+                    1px  1px 0 #fff;
             }
             img {
                 border: solid 8px $accent-color;
@@ -596,4 +670,14 @@ a.listing-new {
 
 .box {
     position:relative;
+}
+
+.payment-card {
+    height: 1.62rem;
+    margin-right: .5rem;
+}
+
+.is-success {
+    background: $success !important;
+    color: #fff !important;
 }
