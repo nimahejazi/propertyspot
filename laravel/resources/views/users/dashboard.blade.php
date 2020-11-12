@@ -22,19 +22,19 @@
         @switch($user->userProfileStatus())
             @case('empty')
                 <article class="message is-warning">
-                    <div class="message-header"><p>MISSING PROFILE DETAILS</p></div>
+                    <div class="message-header"><p>MISSING AGENT PROFILE DETAILS</p></div>
                     <div class="message-body">Your profile as an agent is missing. <a href="{{route('profile')}}">Add your headshot and details now</a>.</div>
                 </article>
                 @break
             @case('partially')
                 <article class="message is-warning">
-                    <div class="message-header"><p>MISSING SOME PROFILE DETAILS</p></div>
-                    <div class="message-body">Your profile as an agent is not complete. <a href="{{route('profile')}}">Complete your profile</a>.</div>
+                    <div class="message-header"><p>MISSING SOME AGENT PROFILE DETAILS</p></div>
+                    <div class="message-body">Your profile as an agent is incomplete. <a href="{{route('profile')}}">Complete your profile now</a>.</div>
                 </article>
                 @break
         @endswitch
         <article class="ps-box">
-            <div class="box-title">Welcome</div>
+            <div class="box-title">Welcome, {{$user->getName()}}!</div>
             <div class="box">
                 <div class="columns">
                     <div class="column is-narrow-desktop has-text-centered">

@@ -145,7 +145,7 @@ class Listing extends Model
         if ($this->state) $address[] = $this->state;
         $retAddress = implode(', ', $address);
         if ($this->zip) $retAddress .= ' ' . $this->zip;
-        if (!$retAddress) return 'Address not disclosed';
+        if (!$retAddress) return 'Address undisclosed';
         return $retAddress;
     }
 

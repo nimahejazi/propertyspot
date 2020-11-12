@@ -40,18 +40,19 @@
                     </article>
                     <div class="submit-container">
                         {{--                    <a class="ps-button is-white-button" id='listing-back-button' href='{{route('dashboard')}}'>Cancel</a>--}}
-                        <button class="ps-button ps-button-full" id='pay' type='submit'>Pay and Publish the Website</button>
+                        <button class="ps-button ps-button-full" id='pay' type='submit'>Pay and Publish My Website!</button>
                     </div>
 
                 </div>
                 <div id='page-payment-success' style='display: none'>
                     <div class="success has-text-centered">
                         <div class="icon has-text-success"><div class="fas fa-check-circle fa-5x"></div></div>
-                        <h2 class="is-size-4 is-size-3-tablet is-size-2-desktop">Your payment was successful!</h2>
+                        <h3 class="is-size-5 is-size-4-tablet is-size-3-desktop mb-0 mt-5">Thank you for choosing PropertySpot.net.</h3>
+                        <h2 class="is-size-4 is-size-3-tablet is-size-2-desktop mt-0">Your payment was successful!</h2>
                         <a class="ps-button" href="{{route('dashboard')}}">Done</a>
                     </div>
                     <article class="ps-box small-ps-box">
-                        <div class="box-title">Payment confirmed</div>
+                        <div class="box-title">Payment confirmation</div>
                         <div class="box">
                             <div class="report">
                                 <div class="columns">
@@ -63,7 +64,7 @@
                                     <div class="column"><p id='date'></p></div>
                                 </div>
                                 <div class="columns">
-                                    <div class="column is-one-third"><p class="col-title">Your services</p></div>
+                                    <div class="column is-one-third"><p class="col-title">Your order</p></div>
                                     <div class="column"><p>Property website</p></div>
                                 </div>
                                 <div class="columns">
@@ -71,7 +72,7 @@
                                     <div class="column"><p>{{Auth::user()->email}}</p></div>
                                 </div>
                                 <hr />
-                                <p>Please allow 1 business day for us to process your payment.</p>
+                                <p>Please allow up to one business day for payment processing.</p>
                             </div>
                         </div>
                     </article>

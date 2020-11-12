@@ -46,7 +46,8 @@ class DatabaseSeeder extends Seeder
             [ 'property_type' => 'Lot/Land' ],
             [ 'property_type' => 'Townhome' ],
             [ 'property_type' => 'Mobile Home' ],
-            [ 'property_type' => 'Loft' ]
+            [ 'property_type' => 'Loft' ],
+            [ 'property_type' => 'Commercials' ]
         ]);
 
         DB::table('listing_statuses')->insert([

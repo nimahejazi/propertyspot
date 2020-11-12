@@ -31,7 +31,7 @@ class ListingController extends Controller
             $property_videos[] = ['provider' => $video->provider, 'videoId' => $video->video_id];
         }
         return view('users/listing-form', [
-            'propertyTypes' => PropertyType::all(),
+            'propertyTypes' => PropertyType::orderBy('property_type')->get(),
             'listingStatus' => ListingStatus::all(),
             'listing' => $listing,
             'videos' => json_encode($property_videos),

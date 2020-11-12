@@ -20,7 +20,7 @@
                     <article class="ps-box">
                         <div class="box">
                             <div class="field">
-                                <input class="is-checkradio is-link" type="checkbox" id='future-use' /><label class="label" for="future-use">Store this payment method for future purchase. <a href="#">Terms & Condition</a> apply.</label>
+                                <input class="is-checkradio is-link" type="checkbox" id='future-use' /><label class="label" for="future-use">Store this payment method for future purchases. <a href="#">Terms & Conditions</a> apply.</label>
                             </div>
                         </div>
                     </article>

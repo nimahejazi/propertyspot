@@ -62,9 +62,9 @@
                         <div class='page-box'>
                             <div class='has-text-danger' id='page-schools-error'></div>
                             <div class='field'>
-                                <div>These are the schools nearby, you can change them if you want.</div>
+                                <div>School data may not auto-populate in rural areas. Feel free to type in different schools.</div>
                             </div>
-                            <div class="field">
+                            <div class="field"
                                 <label class="label" for='elementary_school'>Elementary School</label>
                                 <input class="input" id='elementary_school' name='elementary_school' list='elementary_school_list'/>
                                 <datalist id='elementary_school_list'></datalist>
@@ -258,7 +258,7 @@
                         <div class='page-box'>
                             <div class='has-text-danger' id='page-videos-error'></div>
                             <div class="field">
-                                <div class="label label">Paste the YouTube link of the property video</div>
+                                <div class="label label">Paste your YouTube or Vimeo video link here. You can add up to two videos.</div>
                                 <div id='rkVideos'
                                      listType="video"
                                      placeholder="e.g https://youtu.be/VnS6m_E-WcY"
@@ -286,14 +286,14 @@
                                 url="{{$_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/api'}}"
                                 rkKey="{{$listing->id}}"
                                 apiToken='{{$user->api_token}}'
-                                bulletPoints='["You can drag and drop images to the dashed box.", "Maximum 50 images can be add", "You can rename images if you want"]'
+                                bulletPoints='["- Click UPLOAD PHOTOS or drag and drop below", "- A maximum of 50 images can be added", "- Drag images to reorder them"]'
                                 maxItems='50'
                             ></div>
                         </div>
                     </div>
                 </article>
                 <article class="ps-box multipage" id="page-amenities">
-                    <div class="box-title">Property Amenities</div>
+                    <div class="box-title">Property amenities</div>
                         <div class='has-text-danger' id='page-amenities-error'></div>
                         @php
                             $i = 0;
@@ -313,11 +313,11 @@
                         @endphp
                     <div class='box'>
                         <h5>Custom amenities</h5>
-                        <p>Do you need to add an amenity that you can't find in the list above? Add them here:</p>
+                        <p>Do you need to add an amenity that you can't find in the list above? Add them here, one by one:</p>
 
                         <div id='rkAmenities'
                              listType="tag"
-                             placeholder="Type your amenity here"
+                             placeholder="Type amenity here"
                              addButtonTitle="Add Amenity"
                              hiddenInput='custom_amenities'
                              initialItems='{{ $custom_amenities }}'
@@ -330,7 +330,7 @@
                     <div class="box">
                         <div class='cover-loading'></div>
                         <div class='has-text-danger' id='page-featured-photo-error'></div>
-                        <h5>Choose one photo to feature as the main photo:</h5>
+                        <h5>Click on the photo you want to feature for this listing:</h5>
                         <div class="columns is-multiline featured-photos" id='featured-photos'>
                         </div>
                     </div>

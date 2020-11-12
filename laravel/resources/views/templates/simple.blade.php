@@ -298,7 +298,7 @@
     <form class="needs-validation" id="form" novalidate>
         <div class="container mail-box">
             <div class='form-box'>
-                <header><h4>Or Email me directly</h4></header>
+                <header><h4>Or email me directly</h4></header>
                 <div class="row">
                     <div class="col-lg">
                         <div class="form-group">

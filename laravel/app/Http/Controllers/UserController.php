@@ -142,7 +142,7 @@ class UserController extends Controller
         } catch(\Exception $e) {
             return redirect(route('dashboard'))->with('error', 'An error occurred. We apologize for the inconvenience.');
         }
-        return redirect(route('dashboard'))->with('message', 'Your profile saved.');
+        return redirect(route('dashboard'))->with('message', 'Your profile has been saved.');
     }
 
     public function saveProfilePhoto(Request $request) {
