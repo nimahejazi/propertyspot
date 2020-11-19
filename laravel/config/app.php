@@ -166,7 +166,7 @@ return [
          * Package Service Providers...
          */
         RobotKudos\RKDB\RKDBServiceProvider::class,
-        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+        //Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
         /*
          * Application Service Providers...
