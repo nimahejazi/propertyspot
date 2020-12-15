@@ -16,192 +16,75 @@ class ListingController extends Controller
 {
     public function showListing($id = null) {
 
-        $user_id = Auth::user()->id;
-        $listing = Listing::where(['id'=>$id, 'user_id'=> $user_id])->first();
-        $listing = is_object($listing) ? $listing : Listing::create(['user_id' => $user_id]);
-        $videos = $listing->videos()->get();
-        $amenities = $listing->amenities()->where('is_custom', false);
-        $custom_amenities = $listing->amenities()->where('is_custom', true)->get(['amenity']);
-        $property_videos = [];
-        $property_custom_amenities = [];
-        foreach($custom_amenities as $custom_amenity) {
-            $property_custom_amenities[] = $custom_amenity['amenity'];
-        }
-        foreach($videos as $video) {
-            $property_videos[] = ['provider' => $video->provider, 'videoId' => $video->video_id];
-        }
-        return view('users/listing-form', [
-            'propertyTypes' => PropertyType::orderBy('property_type')->get(),
-            'listingStatus' => ListingStatus::all(),
-            'listing' => $listing,
-            'videos' => json_encode($property_videos),
-            'custom_amenities' => json_encode($property_custom_amenities),
-            'states' => [
-                'AL',
-                'AK',
-                'AZ',
-                'AR',
-                'CA',
-                'CO',
-                'CT',
-                'DE',
-                'FL',
-                'GA',
-                'HI',
-                'ID',
-                'IL',
-                'IN',
-                'IA',
-                'KS',
-                'KY',
-                'LA',
-                'ME',
-                'MD',
-                'MA',
-                'MI',
-                'MN',
-                'MS',
-                'MO',
-                'MT',
-                'NE',
-                'NV',
-                'NH',
-                'NJ',
-                'NM',
-                'NY',
-                'NC',
-                'ND',
-                'OH',
-                'OK',
-                'OR',
-                'PA',
-                'RI',
-                'SC',
-                'SD',
-                'TN',
-                'TX',
-                'UT',
-                'VT',
-                'VA',
-                'WA',
-                'WV',
-                'WI',
-                'WY',
-            ],
-            'property_amenities'    => [
-                'Internal Amenities'    => [
-                    'Alarm System',
-                    'Basement - Finished',
-                    'Basement - Unfinished',
-                    'Bonus Room',
-                    'Broadband Available',
-                    'Concierge Service',
-                    'Elevator',
-                    'Fireplace(s)',
-                    'Gym (internal)',
-                    'Hot Tub/Spa (internal)',
-                    'Humidifier',
-                    'Pool (internal)',
-                    'Office/Den',
-                    'Satellite Dish(es)',
-                    'Sauna (internal)',
-                    'Skylights',
-                    'Surround Sound',
-                    'Vaulted Ceilings',
-                    'Water Softener',
-                    'Wet Bar',
-                    'Wine Storage',
-                ],
-                'External Amenities'=> [
-                    'Barn/Stable – Detached',
-                    'Carport',
-                    'Garage-Attached',
-                    'Garage-Unattached',
-                    'Hot Tub/Spa (external)',
-                    'Outbuilding',
-                    'Pool (external)',
-                    'Parking/Garage Included',
-                    'Roof Top Deck',
-                    'Sauna (external)',
-                    'Spa',
-                    'Sports Court',
-                    'Swimming Pool',
-                    'Tennis Court',
-                    'Workshop – Detached',
-                ],
-                'Property Amenities' => [
-
-                    'Boat Facilities',
-                    'Club House',
-                    'Community Beach',
-                    'Corner Lot',
-                    'Country Club',
-                    'Cul-de-sac Location',
-                    'Dock',
-                    'Fenced Yard',
-                    'Float',
-                    'Fully Fenced',
-                    'Gated Community',
-                    'Garden Area',
-                    'Golf Course Lot',
-                    'Gym (building)',
-                    'High-Rise',
-                    'Landscaped',
-                    'Low-Rise',
-                    'Partially Fenced',
-                    'Patio',
-                    'Pool (building)',
-                    'Sprinkler System',
-                ],
-                'Appliances' => [
-                    'Convection Oven',
-                    'Dishwasher',
-                    'Dryer',
-                    'Freezer',
-                    'Garbage Disposal',
-                    'Indoor Grill',
-                    'Microwave',
-                    'Oven Range',
-                    'Refrigerator',
-                    'Stainless Steel',
-                    'Stove',
-                    'Trash Compactor',
-                    'Washer',
-                ],
-                'Cooling/Heating' => [
-                    'Central Air',
-                    'Central Electric',
-                    'Electric Baseboard',
-                    'Forced Air',
-                    'Fuel Oil',
-                    'Gravity Air',
-                    'Heat Pump',
-                    'Hot Water / Steam',
-                    'Multi Zone A/C',
-                    'Natural Gas',
-                    'Propane',
-                    'Radiant',
-                    'Solar',
-                    'Swamp Cooler',
-                    'Wall Furnace',
-                    'Window/Wall Unit',
-                    'Wood',
-                ],
-                'Other Amenities'   => [
-                    'Air Purifier',
-                    'Balcony',
-                    'Cable Ready',
-                    'Gas Line Hook-up for BBQ',
-                    'Intercom',
-                    'Lobby',
-                    'Pets Allowed',
-                    'Storm Shutters (manual)',
-                    'Valet Parking',
-                ]
-            ]
+        return view('users/listing-form-new', [
+          'listing_id' => $id,
+          'api_token' => Auth::user()->api_token,
         ]);
     }
 
+    // To work with new React listing edit form
+    public function saveListingDetails(Request $request) {
+      if ($request->has('id')) {
+        $listing = Listing::find($request->id);
+        if ($listing->user_id !== $request->user()->id) {
+            return response()->json(['success'=>false, 'message'=> 'Unauthorized']);
+        }
+        // from videos page
+        if ($request->has('listing_videos')) {
+            $videos = $request->listing_videos;
+            $property_videos = [];
+            foreach ($videos as $video) {
+                $property_videos[] = [
+                    'provider' => $video['provider'],
+                    'video_id' => $video['videoId']
+                ];
+            }
+            $listing->videos()->delete();
+            $listing->videos()->createMany($property_videos);
+        }
+        if ($request->has('custom_amenities')) {
+            $custom_amenities = $request->custom_amenities;
+            $amenities = $request->amenities;
+            $this_amenities = [];
+            foreach ($amenities as $amenity) {
+                $this_amenities[] = [
+                    'amenity'   => $amenity,
+                    'is_custom' => false
+                ];
+            }
+            foreach ($custom_amenities as $amenity) {
+                $this_amenities[] = [
+                    'amenity'   => $amenity,
+                    'is_custom' => true
+                ];
+            }
+            $listing->amenities()->delete();
+            $listing->amenities()->createMany($this_amenities);
+        }
+        $listing->fill($request->all());
+        $listing->save();
+        return response()->json([
+            'success'=> true
+        ]);
+
+      } else {
+        $listing = new Listing([
+          'user_id' =>  $request->user()->id,
+          'street' => $request->street,
+          'add_line2' => $request->add_line2,
+          'county' => $request->county,
+          'city' => $request->city,
+          'state' => $request->state,
+          'zip' => $request->zip,
+          'lat' => $request->lat,
+          'lng' => $request->lng,
+        ]);
+        $listing->save();
+        return response()->json(['success' => true, 'id' => $listing->id]);
+      }
+    }
+
+    // to work with old vanilla js app for listing edit
     public function saveListingParts(Request $request) {
         // we know it's new one and data is about address
         if ($request->has('street') && empty($request->street)) {
@@ -268,6 +151,26 @@ class ListingController extends Controller
         foreach($fields as $field) {
             $res_fields[$field] = $listing[$field];
         }
+
+        if (in_array('listing_videos', $fields)) {
+          $videos = $listing->videos()->get();
+          foreach($videos as $video) {
+            $res_fields['listing_videos'][] = [
+              'videoId' => $video->video_id,
+              'provider' => $video->provider,
+              ];
+          }
+        }
+        if (in_array('amenities', $fields)) {
+            $amenities = $listing->amenities()->get();
+            foreach($amenities as $amenity) {
+                if ($amenity->is_custom) {
+                    $res_fields['custom_amenities'][] = $amenity->amenity;
+                } else {
+                    $res_fields['amenities'][] = $amenity->amenity;
+                }
+            }
+        }
         return response()->json($res_fields);
     }
 
@@ -275,20 +178,19 @@ class ListingController extends Controller
         $lng = $request->lng;
         $lat = $request->lat;
         $state = $request->state;
-        $listing_id = $request->listing_id;
 
-        if (!$lng || !$lat || !$state || !$listing_id) {
-            return response()->json(['success' => false, 'message' => '"lng", "lat", "state" and "listing_id" are required']);
+        if (!$lng || !$lat || !$state) {
+            return response()->json(['success' => false, 'message' => '"lng", "lat" and "state" are required']);
         }
 
-        $listing = Listing::where('id', $listing_id)->firstOrFail();
-        if ($listing->schools_fetched) {
-            $schools = $listing->schools()->get(['name', 'elementary_school', 'middle_school', 'high_school']);
-            return response()->json([
-                'success'   => true,
-                'schools'   => $schools
-            ]);
-        } else {
+        /* $listing = Listing::where('id', $listing_id)->firstOrFail(); */
+        /* if ($listing->schools_fetched) { */
+        /*     $schools = $listing->schools()->get(['name', 'elementary_school', 'middle_school', 'high_school']); */
+        /*     return response()->json([ */
+        /*         'success'   => true, */
+        /*         'schools'   => $schools */
+        /*     ]); */
+        /* } else { */
             $res = Http::get('https://api.greatschools.org/schools/nearby',[
                 'key'   => 'a46e8bc708fdbd23cec422804df8b61c',
                 'state' => $state,
@@ -324,15 +226,15 @@ class ListingController extends Controller
                         'distance'      => (float) $school->distance ?? null
                     ];
                 }
-                $listing->schools_fetched = true;
-                $listing->save();
+                //$listing->schools_fetched = true;
+                //$listing->save();
                 return response()->json([
                     'success' => true,
                     'schools' => $schoolsToBeSaved
                 ]);
             }
 
-        }
+        /* } */
 
         return response()->json([
             'success' => false,

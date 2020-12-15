@@ -22,7 +22,7 @@ class Listing extends Model
         'elementary_school',
         'middle_school',
         'high_school',
-        'property_type_id',
+        'property_type',
         'bedrooms',
         'bathrooms',
         'square_ft',
@@ -36,6 +36,7 @@ class Listing extends Model
         'property_desc',
         'slug',
         'square_customer_id',
+        'featured_photo_id',
     ];
 
     public function amenities() {
@@ -50,10 +51,6 @@ class Listing extends Model
 
     public function status() {
         return $this->hasOne('App\Models\ListingStatus');
-    }
-
-    public function type() {
-        return $this->hasOne('App\Models\PropertyType', 'id', 'property_type_id');
     }
 
     public function user() {
@@ -105,13 +102,13 @@ class Listing extends Model
         if (!$this->hasPhotos()) {
             return [
                 'title' => 'Upload Property Photos',
-                'url'   => '/users/new-listing/' . $this->id . '#page-image-upload'
+                'url'   => '/users/new-listing/' . $this->id . '/#/photos'
             ];
         }
         if (!$this->featured_photo_id) {
             return [
                 'title' => 'Set Featured Photo',
-                'url'   => '/users/new-listing/' . $this->id . '#page-featured-photo'
+                'url'   => '/users/new-listing/' . $this->id . '/#/featured-photo'
             ];
 
         }

@@ -226,7 +226,7 @@
         </div>
         <div class="row table-row">
             <div class="col-sm-3"><div class="table-title">Property Type</div></div>
-            <div class="col-sm-9">{{$listing->type ? $listing->type->property_type : ''}}</div>
+            <div class="col-sm-9">{{$listing->property_type}}</div>
         </div>
         <div class="row table-row">
             <div class="col-sm-3"><div class="table-title">Price</div></div>

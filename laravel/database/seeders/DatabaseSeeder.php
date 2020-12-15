@@ -37,19 +37,6 @@ class DatabaseSeeder extends Seeder
 
         $options->set('listing_price', '19.99', 'pricing', 'Pricing');
 
-        DB::table('property_types')->insert([
-            [ 'property_type' => 'Farm/Ranch' ],
-            [ 'property_type' => 'Multi-Family Home' ],
-            [ 'property_type' => 'Single-Family Home' ],
-            [ 'property_type' => 'Income/Investment' ],
-            [ 'property_type' => 'Condo' ],
-            [ 'property_type' => 'Lot/Land' ],
-            [ 'property_type' => 'Townhome' ],
-            [ 'property_type' => 'Mobile Home' ],
-            [ 'property_type' => 'Loft' ],
-            [ 'property_type' => 'Commercials' ]
-        ]);
-
         DB::table('listing_statuses')->insert([
             [ 'listing_status' => 'Active' ],
             [ 'listing_status' => 'Pending' ],

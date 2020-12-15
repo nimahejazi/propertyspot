@@ -9,6 +9,7 @@
         <div class="section container small-ps-box">
             <form class="form" id='payment-form'>
                 <input type='hidden' id='api_token' value='{{Auth::user()->api_token}}'>
+                <input type='hidden' id='id' value='{{$id}}'>
                 <div id='page-payment'>
                     <article class="ps-box">
                         <div class='cover-loading' id='cover-loading'></div>
@@ -24,7 +25,7 @@
                             </div>
                         </div>
                     </article>
-                    <div class="submit-container"><a class="ps-button is-white-button" href="/users/payment/1">Cancel</a><button class="ps-button" type='submit' id='pay'>Pay</button></div>
+                    <div class="submit-container"><a class="ps-button is-white-button" href="/users/payment/{{$id}}">Cancel</a><button class="ps-button" type='submit' id='pay'>Pay</button></div>
                 </div>
                 <div id='page-payment-success' style='display: none'>
                     <div class="success has-text-centered">

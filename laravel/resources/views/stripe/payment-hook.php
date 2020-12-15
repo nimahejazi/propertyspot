@@ -19,6 +19,7 @@ try {
 
 switch ($event->type) {
     case 'payment_intent.succeeded':
+    case 'charge.succeeded':
         $paymentIntent = $event->data->object;
         $id = $paymentIntent->metadata->listing_id;
 //        file_put_contents('test.txt', $id);

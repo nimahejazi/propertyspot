@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -18,28 +18,31 @@ const mix = require('laravel-mix');
 
 mix.webpackConfig({
     resolve: {
-        extensions: ['.ts']
+        extensions: [".ts"],
     },
     module: {
         rules: [
             {
                 test: /\.ts$/,
-                use: [
-                    'babel-loader',
-                    'ts-loader'
-                ]
+                use: ["babel-loader", "ts-loader"],
             },
-        ]
+        ],
     },
-
 });
 
-mix.sass('resources/scss/main.scss', 'public/css').version();
-mix.sass('resources/scss/templates/simple.scss', 'public/css/simple.css').version();
+mix.sass("resources/scss/main.scss", "public/css").version();
+mix.sass(
+    "resources/scss/templates/simple.scss",
+    "public/css/simple.css"
+).version();
 
-mix.js('resources/js/app.js', 'public/js/bundle.js').sourceMaps().version();
-mix.js('resources/js/simple.js', 'public/js/simple.js').sourceMaps().version();
+mix.js("resources/js/app.js", "public/js/bundle.js")
+    .sourceMaps()
+    .version();
+mix.js("resources/js/simple.js", "public/js/simple.js")
+    .sourceMaps()
+    .version();
+/* mix.js("resources/js/propertyspot-dashboard.js", "public/js"); */
 
-mix.copy('resources/js/rk-*.*', 'public/js');
-mix.copy('resources/js/vendor/*.js', 'public/js/vendor');
-mix.copy('resources/img', 'public/img');
+mix.copy("resources/js/vendor/*.js", "public/js/vendor");
+mix.copy("resources/img", "public/img");

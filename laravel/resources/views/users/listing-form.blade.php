@@ -345,7 +345,8 @@
 @section('scripts')
     <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin="crossorigin"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin="crossorigin"></script>
-    <script src="/js/rk-google-maps-autocomplete.min.js"></script>
+    <!--<script src="/js/rk-google-maps-autocomplete.min.js"></script>
     <script src="/js/rk-taglist.min.js"></script>
-    <script src="/js/rk-image-uploader.min.js"></script>
+    <script src="/js/rk-image-uploader.min.js"></script>-->
+    <script src='/js/propertyspot-dashboard.js'></script>
 @endsection

@@ -29,7 +29,7 @@ class CreateListingsTable extends Migration
             $table->string('elementary_school')->nullable();
             $table->string('middle_school')->nullable();
             $table->string('high_school')->nullable();
-            $table->foreignId('property_type_id')->nullable()->contrained();
+            $table->string('property_type')->nullable();
             $table->integer('bedrooms')->nullable();
             $table->decimal('bathrooms', 3, 1)->nullable();
             $table->string('square_ft')->nullable();
@@ -42,8 +42,9 @@ class CreateListingsTable extends Migration
             $table->tinyInteger('garage_size')->nullable();
             $table->text('property_desc')->nullable();
             $table->string('slug')->nullable();
-            $table->foreignId('payment_status')->constrained()->nullable();
+            $table->foreignId('payment_status')->nullable()->constrained();
             $table->string('payment_id')->nullable();
+            $table->boolean('paid')->nullable();
             $table->string('payment_amount')->nullable();
             $table->dateTime('payment_date')->nullable();
             $table->integer('views')->nullable();

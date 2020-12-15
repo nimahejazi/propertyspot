@@ -14,7 +14,7 @@ class WebsiteController extends Controller
         $listing = Listing::where([
             'slug'  => $slug,
             'paid'  => true,
-        ])->with(['user', 'videos', 'type', 'amenities'])->firstOrFail();
+        ])->with(['user', 'videos', 'amenities'])->firstOrFail();
         $address = $listing->getAddress();
         $price = $listing->price ? '$' . number_format($listing->price) : '';
         return view('templates/simple', [
@@ -29,7 +29,7 @@ class WebsiteController extends Controller
         $listing = Listing::where([
             'id'  => $id,
             'user_id' => Auth::user()->id,
-        ])->with(['user', 'videos', 'type', 'amenities'])->firstOrFail();
+        ])->with(['user', 'videos', 'amenities'])->firstOrFail();
         $address = $listing->getAddress();
         $price = $listing->price ? '$' . number_format($listing->price) : '';
         return view('templates/simple', [

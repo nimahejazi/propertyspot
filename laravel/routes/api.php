@@ -22,6 +22,7 @@ use \App\Http\Middleware\VerifyCsrfToken;
 // api photo post
 Route::middleware('auth:api')->post('/profile-photo', [UserController::class, 'saveProfilePhoto']);
 Route::middleware('auth:api')->post('/listing', [ListingController::class, 'saveListingParts']);
+Route::middleware('auth:api')->post('/listing-parts', [ListingController::class, 'saveListingDetails']);
 Route::middleware('auth:api')->get('/schools', [ListingController::class, 'getNearbySchools']);
 Route::middleware('auth:api')->get('/get-fields', [ListingController::class, 'getFields']);
 Route::middleware('auth:api')->get('/photos/{key}', [ListingController::class, 'getPhotos']);

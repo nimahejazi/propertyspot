@@ -30,6 +30,8 @@
         "bulma-extensions": "^6.2.7",
         "inputmask": "^5.0.5",
         "jquery": "^3.5.1",
+        "node-sass": "^4.14.1",
+        "react-router-dom": "^5.2.0",
         "rk-form-validator": "git+ssh://git@github-robotkudos:robotkudos/rk-form-validator",
         "rk-google-maps-autocomplete": "git+ssh://git@github-robotkudos:robotkudos/rk-google-maps-autocomplete",
         "rk-taglist": "git+ssh://git@github-robotkudos:robotkudos/rk-taglist"
