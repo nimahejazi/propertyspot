@@ -55,6 +55,7 @@ class UserController extends Controller
         try {
             $user = User::create([
                 'email'       => $request->email,
+                'role'        => 'user',
                 'password'    => Hash::make($request->password),
                 'api_token'   => Str::random(60)
             ]);
@@ -94,7 +95,14 @@ class UserController extends Controller
 
         try {
             if (Auth::attempt($request->only(['email', 'password']), $request->input('remember_me'))) {
-                return redirect()->intended(route('dashboard'));
+                switch (Auth::user()->role) {
+                  case 'user':
+                    return redirect()->intended(route('dashboard'));
+                    break;
+                  case 'admin':
+                    return redirect()->intended(route('admin-dashboard'));
+                    break;
+                }
             } else {
                 return redirect('/signin')->with('error', 'Invalid username/password')->withInput();
             }

@@ -44,8 +44,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
+            'email' => 'nima@robotkudos.com',
+            'password' => Hash::make('asdf1234'),
+            'role' => 'admin',
+            'api_token' => Str::random(60),
+            'stripe_customer_id' => 'cus_IFImmNb5SZ8CWQ'
+        ]);
+
+        DB::table('users')->insert([
             'email' => 'nhejazi@gmail.com',
             'password' => Hash::make('asdf1234'),
+            'role' => 'user',
             'api_token' => Str::random(60),
             'stripe_customer_id' => 'cus_IFImmNb5SZ8CWQ'
         ]);

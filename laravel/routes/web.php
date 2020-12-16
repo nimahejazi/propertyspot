@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use \App\Http\Controllers\ListingController;
 use \App\Http\Controllers\WebsiteController;
+use \App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -62,6 +63,15 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'users' ], function() {
     Route::get('/payment/{id}', [ListingController::class, 'showPayment'])->name('payment');
     Route::get('/preview/{id}', [WebsiteController::class, 'previewWebsite'])->name('preview-website');
     Route::get('/settings/{id}', [WebsiteController::class, 'previewWebsite'])->name('listing-settings');
+});
+
+// Admin
+Route::group([ 'middleware' => [ 'auth', 'can:accessAdmin' ], 'prefix' => 'admin' ], function() {
+  Route::get('/users', [AdminController::class, 'showUsers'])->name('admin-users');
+  Route::get('/users/{id}/listings', [AdminController::class, 'showUserListings']);
+  Route::get('/listings/{id}/edit', [AdminController::class, 'showEditListing']);
+  Route::put('/listings/{id}/edit', [AdminController::class, 'editListing']);
+  Route::delete('/listings/{id}/delete', [AdminController::class, 'deleteListing']);
 });
 
 Route::post('/post-form', [WebsiteController::class, 'postForm']);
