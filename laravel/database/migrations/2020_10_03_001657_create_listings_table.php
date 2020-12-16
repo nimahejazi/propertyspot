@@ -42,9 +42,8 @@ class CreateListingsTable extends Migration
             $table->tinyInteger('garage_size')->nullable();
             $table->text('property_desc')->nullable();
             $table->string('slug')->nullable();
-            $table->foreignId('payment_status')->nullable()->constrained();
             $table->string('payment_id')->nullable();
-            $table->boolean('paid')->nullable();
+            $table->string('payment_status')->nullable();
             $table->string('payment_amount')->nullable();
             $table->dateTime('payment_date')->nullable();
             $table->integer('views')->nullable();

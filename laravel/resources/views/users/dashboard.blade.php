@@ -77,7 +77,7 @@
                                             </div>
                                         @else
                                             <div class='status-tag is-warning'>
-                                                Incomplete
+                                                {{$listing->payment_status ?? 'Incomplete'}}
                                             </div>
                                         @endif
                                     <img src="/{{$listing->featuredPhotoThumb() ?? 'img/placeholder.svg'}}" />

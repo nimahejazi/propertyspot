@@ -72,10 +72,18 @@
                                     <div class="column"><p>{{Auth::user()->email}}</p></div>
                                 </div>
                                 <hr />
-                                <p>Please allow up to one business day for payment processing.</p>
+                                <p>Please allow 1 business day for us to process your payment.</p>
                             </div>
                         </div>
                     </article>
+                </div>
+                <div id='page-payment-error' style='display: none'>
+                    <div class="success has-text-centered">
+                        <div class="icon has-text-danger"><div class="fas fa-times-circle fa-5x"></div></div>
+                        <h2 class="is-size-4 is-size-3-tablet is-size-2-desktop mb-0 mt-5">Payment Failed</h3>
+                        <h3 id='error-message' class="is-size-5 is-size-4-tablet is-size-3-desktop mt-0"></h2>
+                        <a class="ps-button" href="{{route('dashboard')}}">Done</a>
+                    </div>
                 </div>
             </form>
         </div>

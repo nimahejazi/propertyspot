@@ -2,3 +2,5 @@
 .idea/
 tags
 **/*.swp
+laravel/public/js/bundle.js
+laravel/public/css/main.css

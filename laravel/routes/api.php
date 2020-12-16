@@ -28,5 +28,6 @@ Route::middleware('auth:api')->get('/get-fields', [ListingController::class, 'ge
 Route::middleware('auth:api')->get('/photos/{key}', [ListingController::class, 'getPhotos']);
 Route::middleware('auth:api')->put('/photos', [ListingController::class, 'setFeaturedPhoto']);
 Route::middleware('auth:api')->post('/payment-intent/{id}', [ListingController::class, 'returnPaymentIntent']);
+Route::middleware('auth:api')->get('/payment-preconfirm/{id}', [ListingController::class, 'setPaymentProcessing']);
 Route::middleware('auth:api')->post('/set-payment', [ListingController::class, 'returnPaymentIntent']);
 

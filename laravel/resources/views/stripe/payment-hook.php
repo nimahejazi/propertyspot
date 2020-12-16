@@ -22,9 +22,8 @@ switch ($event->type) {
     case 'charge.succeeded':
         $paymentIntent = $event->data->object;
         $id = $paymentIntent->metadata->listing_id;
-//        file_put_contents('test.txt', $id);
         $listing = \App\Models\Listing::where('id', $id)->first();
-        $listing->paid = true;
+        $listing->payment_status = 'paid';
         $listing->payment_id = $paymentIntent->id;
         $listing->payment_amount = $paymentIntent->amount / 100;
         $listing->payment_date = date("Y-m-d H:i:s");

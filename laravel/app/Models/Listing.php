@@ -112,7 +112,7 @@ class Listing extends Model
             ];
 
         }
-        if (!$this->paid) {
+        if ($this->payment_status !== 'paid' && $this->payment_status !== 'processing') {
             return [
                 'title' => 'Pay and Publish the Website',
                 'url'   => '/users/payment/' . $this->id
@@ -131,7 +131,7 @@ class Listing extends Model
     }
 
     public function isLive() {
-        return $this->paid && $this->slug;
+        return $this->payment_status === 'paid' && $this->slug;
     }
 
     public function getAddress() {

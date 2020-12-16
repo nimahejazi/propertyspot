@@ -34,13 +34,13 @@ module.exports = function(id, withMethodId = false) {
             form.addEventListener('submit', e => {
                 e.preventDefault();
                 if (card) {
-                    pay(stripe, card, clientSecret);
+                    pay(stripe, card, clientSecret, id);
                 } else {
                     const methodId = getSelectedPayMethod();
                     if (!methodId) {
                         alert('Please select a card to pay with');
                     } else {
-                        payWithMethodId(stripe, methodId, clientSecret );
+                        payWithMethodId(stripe, methodId, clientSecret, id);
                     }
                 }
             });
@@ -77,23 +77,32 @@ function setupElements(data) {
     };
 }
 
-function payWithMethodId(stripe, methodId, clientSecret) {
+function payWithMethodId(stripe, methodId, clientSecret, id) {
     changeLoadingState(true);
 
     stripe.confirmCardPayment(clientSecret, {
         payment_method: methodId,
     })
         .then(res => {
-            changeLoadingState(false);
             if (res.error) {
-                console.log(res.error.message);
+                changeLoadingState(false);
+                showError(res.error.message);
             } else {
-                showTheForm(res.paymentIntent);
+                return axios({
+                    url: '/api/payment-preconfirm/' + id,
+                    params: {
+                        'api_token': document.getElementById('api_token').value
+                    }
+                })
+                .then(() => {
+                    changeLoadingState(false);
+                    showTheForm(res.paymentIntent)
+                });
             }
         });
 
 }
-function pay(stripe, card, clientSecret) {
+function pay(stripe, card, clientSecret, id) {
     changeLoadingState(true);
     const futureUse = document.getElementById('future-use').checked ? 'on_session' : false;
 
@@ -104,15 +113,23 @@ function pay(stripe, card, clientSecret) {
     };
 
     if (futureUse) options.setup_future_usage = futureUse;
-    console.log(options);
 
     stripe.confirmCardPayment(clientSecret, options)
         .then(res => {
-            changeLoadingState(false);
             if (res.error) {
-                console.log(res.error);
+                changeLoadingState(false);
+                showError(res.error.message);
             } else {
-                showTheForm(res.paymentIntent);
+                axios({
+                    url: '/api/payment-preconfirm/' + id,
+                    params: {
+                        'api_token': document.getElementById('api_token').value
+                    }
+                })
+                .then(() => {
+                    changeLoadingState(false);
+                    showTheForm(res.paymentIntent)
+                });
             }
         });
 }
@@ -123,6 +140,12 @@ function showTheForm(data) {
     document.getElementById('date').innerText = date.toDateString() + date.toTimeString();
     document.getElementById('page-payment').style.display = 'none';
     document.getElementById('page-payment-success').style.display = 'block';
+}
+
+function showError(err) {
+    document.getElementById('page-payment').style.display = 'none';
+    document.getElementById('error-message').innerText = err;
+    document.getElementById('page-payment-error').style.display = 'block';
 }
 function changeLoadingState(isLoadingLocal) {
     isLoading = isLoadingLocal;

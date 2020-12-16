@@ -30,7 +30,8 @@
                 <div id='page-payment-success' style='display: none'>
                     <div class="success has-text-centered">
                         <div class="icon has-text-success"><div class="fas fa-check-circle fa-5x"></div></div>
-                        <h2 class="is-size-4 is-size-3-tablet is-size-2-desktop">Your payment was successful!</h2>
+                        <h3 class="is-size-5 is-size-4-tablet is-size-3-desktop mb-0 mt-5">Thank you for choosing PropertySpot.net.</h3>
+                        <h2 class="is-size-4 is-size-3-tablet is-size-2-desktop mt-0">Your payment was successful!</h2>
                         <a class="ps-button" href="{{route('dashboard')}}">Done</a>
                     </div>
                 <article class="ps-box small-ps-box">
@@ -46,7 +47,7 @@
                                 <div class="column"><p id='date'></p></div>
                             </div>
                             <div class="columns">
-                                <div class="column is-one-third"><p class="col-title">Your services</p></div>
+                                <div class="column is-one-third"><p class="col-title">Your order</p></div>
                                 <div class="column"><p>Property website</p></div>
                             </div>
                             <div class="columns">
@@ -58,6 +59,14 @@
                         </div>
                     </div>
                 </article>
+                </div>
+                <div id='page-payment-error' style='display: none'>
+                    <div class="success has-text-centered">
+                        <div class="icon has-text-danger"><div class="fas fa-times-circle fa-5x"></div></div>
+                        <h2 class="is-size-4 is-size-3-tablet is-size-2-desktop mb-0 mt-5">Payment Failed</h3>
+                        <h3 id='error-message' class="is-size-5 is-size-4-tablet is-size-3-desktop mt-0"></h2>
+                        <a class="ps-button" href="{{route('dashboard')}}">Done</a>
+                    </div>
                 </div>
             </form>
         </div>

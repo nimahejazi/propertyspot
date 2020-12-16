@@ -13,7 +13,7 @@ class WebsiteController extends Controller
     public function showWebsite($slug) {
         $listing = Listing::where([
             'slug'  => $slug,
-            'paid'  => true,
+            'payment_status' => 'paid'
         ])->with(['user', 'videos', 'amenities'])->firstOrFail();
         $address = $listing->getAddress();
         $price = $listing->price ? '$' . number_format($listing->price) : '';

@@ -112,7 +112,7 @@
     <div class="modal" id="website-address-modal">
         <div class="modal-background"></div>
         <div class="modal-content">
-            <div class="box has-text-centered"><h3 class="title">propertyspot.net/1351miday</h3></div>
+            <div class="box has-text-centered"><h3 class="title">propertyspot.net/</h3></div>
         </div>
         <button class="modal-close is-large" id="website-address-modal-close" aria-label="close"></button>
     </div>

@@ -277,6 +277,15 @@ class ListingController extends Controller
         return view('users/payment-new', ['id' => $id]);
     }
 
+    public function setPaymentProcessing($id) {
+
+        $listing = Listing::find($id);
+        $listing->payment_status = 'processing';
+        $listing->save();
+        return response()->json([
+            'success' => true,
+        ]);
+    }
     public function returnPaymentIntent($id) {
         $stripKey = env('STRIPE_SECRET_KEY');
         Stripe\Stripe::setApiKey($stripKey);
