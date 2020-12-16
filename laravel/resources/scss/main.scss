@@ -128,6 +128,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 body {
     color: $font-color;
+    min-height: 100vh;
+    position: relative;
 }
 
 a {
@@ -143,6 +145,9 @@ a {
     }
     .menu-container {
         background-color: $bg;
+    }
+    .menu-container-light {
+        background-color: #fff;
     }
     .menu {
         text-align: center;
@@ -238,6 +243,19 @@ a {
     color: $font-color;
     text-align: center;
     font-size: .95rem;
+    position: absolute;
+    width: 100%;
+    height: 8rem;
+    bottom: 0;
+}
+
+main {
+    padding-bottom: 8rem;
+    background-color: #fff;
+}
+
+body {
+    background: $bg;
 }
 
 .link {
@@ -251,6 +269,8 @@ a {
 
 .bg-gray {
     background-color: $bg;
+    padding-bottom: 8rem;
+    height: calc(100% - 8rem);
 }
 
 .box-title {

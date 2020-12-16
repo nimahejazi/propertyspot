@@ -16,7 +16,7 @@
     </header>
     @yield('main')
     <footer class="main-footer">
-        <div class="section container"><p class="copyright">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum placeat suscipit provident molestiae nisi, necessitatibus labore odio ipsam corporis aliquam, animi, soluta cumque illum tenetur magni repellendus a ullam odit?</p></div>
+        <div class="section container"><p class="copyright">&copy; Copyright {{$copyright_year}} by <a href='https://robotkudos.com' target='_blank'>Robot Kudos</a>. All rights reserved.</p></div>
     </footer>
   </body>
   <script src="/js/bundle.js"></script>

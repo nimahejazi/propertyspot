@@ -1,7 +1,7 @@
 @extends('layouts/main')
 
 @section('menu')
-    <div class="menu-container">
+    <div class="menu-container-light">
         <div class="container">
             <nav class="menu"><a href="/signup">Join now</a><a class="sign-in" href="/signin">Sign in</a></nav>
         </div>

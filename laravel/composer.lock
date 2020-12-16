@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7e90d968ee2ff82f42b1ce52aa9d436",
+    "content-hash": "7ab470df0d5ac81f2f57d555663d9166",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2577,6 +2577,44 @@
             ],
             "description": "Add Options DB functionality",
             "time": "2020-07-30T21:06:48+00:00"
+        },
+        {
+            "name": "robotkudos/rkhelpers",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/robotkudos/rkhelpers.git",
+                "reference": "a1ba313c770e2075e5da54600e4350d088987c45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/robotkudos/rkhelpers/zipball/a1ba313c770e2075e5da54600e4350d088987c45",
+                "reference": "a1ba313c770e2075e5da54600e4350d088987c45",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RobotKudos\\RKHelpers\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nima Hejazi",
+                    "email": "nima@robotkudos.com"
+                }
+            ],
+            "description": "A collection of helpers classes and functions.",
+            "support": {
+                "issues": "https://github.com/robotkudos/rkhelpers/issues",
+                "source": "https://github.com/robotkudos/rkhelpers/tree/0.2.0"
+            },
+            "time": "2020-08-14T21:11:02+00:00"
         },
         {
             "name": "robotkudos/rkimage",
@@ -7542,7 +7580,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "robotkudos/rkdb": 20
+        "robotkudos/rkdb": 20,
+        "robotkudos/rkhelpers": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -7550,5 +7589,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

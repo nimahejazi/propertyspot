@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "robotkudos/rk-image-api": "^0.2.1",
         "robotkudos/rkdb": "dev-master",
+        "robotkudos/rkhelpers": "dev-master",
         "robotkudos/rkimage": "^0.1.0",
         "stripe/stripe-php": "^7.61"
     },
