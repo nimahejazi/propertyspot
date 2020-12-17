@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -22,19 +23,19 @@ class AdminController extends Controller
   }
 
   function showEditListing($id) {
+    $user = Auth::user();
     $listing = Listing::find($id);
-    return view('admin.listing-edit', ['listing'=> $listing]);
+    return view('admin.listing-edit', ['listing'=> $listing, 'user' => $user]);
   }
 
   function editListing($id, Request $request) {
     $listing = Listing::find($id);
     if ($request->payment_status === 'paid') {
       $listing->payment_status = 'paid';
-      if (!$listing->slug) 
-        $listing->slug = $listing->createSlug();
     } else {
       $listing->payment_status = null;
     }
+    $listing->slug = $request->slug;
     $listing->save();
     return redirect("/admin/users/$listing->user_id/listings")->with(['message'=> "Listing $listing->id has been updated."]);
   }

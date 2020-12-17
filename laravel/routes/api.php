@@ -30,4 +30,6 @@ Route::middleware('auth:api')->put('/photos', [ListingController::class, 'setFea
 Route::middleware('auth:api')->post('/payment-intent/{id}', [ListingController::class, 'returnPaymentIntent']);
 Route::middleware('auth:api')->get('/payment-preconfirm/{id}', [ListingController::class, 'setPaymentProcessing']);
 Route::middleware('auth:api')->post('/set-payment', [ListingController::class, 'returnPaymentIntent']);
+Route::middleware('auth:api')->post('/check-slug', [ListingController::class, 'checkSlug']);
+Route::middleware('auth:api')->post('/generate-slug', [ListingController::class, 'generateSlug']);
 

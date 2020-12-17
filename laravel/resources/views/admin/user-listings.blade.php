@@ -20,6 +20,7 @@
           <tr>
             <th>ID</th>
             <th>Address</th>
+            <th>Slug</th>
             <th>Payment Status</th>
             <th>Actions</th>
           </tr>
@@ -29,6 +30,7 @@
           <tr>
             <td>{{$listing->id}}</td>
             <td>{{$listing->getAddress()}}</td>
+            <td>{{$listing->slug}}</td>
             <td>{{$listing->payment_status}}</td>
             <td style='width: 17rem'>
               <a href='/admin/listings/{{$listing->id}}/edit' class='button'><span class="icon is-medium admin-icon"><i class="fa fa-edit"></i></span></a>

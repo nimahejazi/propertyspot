@@ -6,6 +6,7 @@ const mask = require('./modules/mask');
 const Inputmask = require('inputmask');
 const $ = require('jquery');
 const axios = require('axios');
+const admin = require('./modules/admin');
 const pages = [
     'page-address',
     'page-schools',
@@ -20,6 +21,8 @@ const pages = [
 let currentPage = 'page-address';
 let isLoading = false;
 let id = $('#id').val() || null;
+// setup admin page events, etc...
+admin($, axios, $('#api_token').val(), id);
 
 /**
  * Save partial listing fields

@@ -348,4 +348,21 @@ class ListingController extends Controller
         return $schoolGrades;
     }
 
+    function checkSlug(Request $request) {
+        return response()->json([
+            'available' => Listing::where('slug', $request->slug)->count() < 1
+        ]);
+    }
+    function generateSlug(Request $request) {
+        $listing = Listing::find($request->listing_id);
+        $slug = strtolower(str_replace(' ', '', $listing->street));
+        $slugBase = $slug;
+        $i = 2;
+        while(Listing::where('slug', $slug)->count()) {
+            $slug = $slugBase . '-' . $i++;
+        }
+        return response()->json([
+            'slug' => $slug
+        ]);
+    }
 }
