@@ -22,12 +22,12 @@ class AdminController extends Controller
   }
 
   function showEditListing($id) {
-    $listing = Listing::find($id)->firstOrFail();
+    $listing = Listing::find($id);
     return view('admin.listing-edit', ['listing'=> $listing]);
   }
 
   function editListing($id, Request $request) {
-    $listing = Listing::find($id)->firstOrFail();
+    $listing = Listing::find($id);
     if ($request->payment_status === 'paid') {
       $listing->payment_status = 'paid';
       if (!$listing->slug) 
