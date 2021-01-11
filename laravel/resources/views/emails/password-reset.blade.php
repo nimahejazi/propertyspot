@@ -8,10 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-Dear {{$user->getName()}}
+Dear {{$user->getName()}},
 
-<p>Your password has been reset. You can now <a href='{{route('signin')}}'>login to your account</a> with your new password.</p>
+<p>This is confirmation that your password was recently reset. You can <a href='{{route('signin')}}'>sign in</a> to your account anytime with your new password.</p> 
 
-<p>Thank you</p>
+<p>If you did not reset your password, please contact us immediately at <a href='mailto:support@propertyspot.net'>support@propertyspot.net</a>.</p>
+
+<p>Thanks!</p>
+
+<p>The PropertySpot Support Team</p>
 </body>
 </html>

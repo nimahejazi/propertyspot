@@ -9,10 +9,10 @@ services:
     ports:
       - 3306
     environment:
-      MYSQL_ROOT_PASSWORD: propertyspot
+      MYSQL_ROOT_PASSWORD: VAL;k4(f$6B@M*Z*deHvgruEtR
       MYSQL_DATABASE: propertyspot
       MYSQL_USER: propertyspot
-      MYSQL_PASSWORD: propertyspot
+      MYSQL_PASSWORD: ze7:gW+(*9_.Yh,6I]9W.b,2!H
     container_name: propertyspot_db
 
   propertyspot:
@@ -24,6 +24,10 @@ services:
       - 443
     restart: always
     container_name: propertyspot_laravel
+    environment: 
+      VIRTUAL_HOST: propertyspot.net, www.propertyspot.net
+      LETSENCRYPT_HOST: propertyspot.net, www.propertyspot.net
+      LETSENCRYPT_EMAIL: nhejazi@gmail.com
     volumes:
       - ./laravel:/var/www/html
       - ./site.conf:/etc/nginx/conf.d/site.conf

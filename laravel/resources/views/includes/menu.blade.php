@@ -1,18 +1,20 @@
-<div class="menu-container-light">
-    <div class="container">
-        <div class="avatar-container">
-            <div></div>
-            <nav class="avatar-icon">
-                <figure id="avatar"><p>{{$user->getInitial()}}</p></figure>
-                <div class="avatar-menu">
-                    <ul>
-                        <li>{{$user->getName()}}</li>
-                        <li><a href="{{route('dashboard')}}">Dashboard</a></li>
-                        <li><a href="{{route('profile')}}">Profile</a></li>
-                        <li><a href="/signout">Sign out</a></li>
-                    </ul>
+<div class="navbar-menu" id="navbarMenu2">
+    <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+            <div class="navbar-link">
+                <div class="avatar-container">
+                    <a class="avatar-icon"
+                    ><figure><p>{{$user->getInitial()}}</p></figure></a
+                    >
                 </div>
-            </nav>
+            </div>
+            <div class="navbar-dropdown is-right">
+                <div class="navbar-item">{{$user->getName()}}</div>
+                <hr class="navbar-divider" />
+                <a href='{{route('dashboard')}}' class="navbar-item">Dashboard</a>
+                <a href='{{route('profile')}}' class="navbar-item">Profile</a>
+                <a href='/signout' class="navbar-item">Sign out</a>
+            </div>
         </div>
     </div>
 </div>

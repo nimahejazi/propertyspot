@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-Dear {{$user->getName()}}
+Dear {{$user->getName()}},
 
 <p>Here is password reset link:</p>
 
@@ -17,8 +17,12 @@ Dear {{$user->getName()}}
 
 <p>This link is valid for 30 minutes.</p>
 
-<p>If you haven't request password reset, you can ignore this email.</p>
+<p>This link is valid for 30 minutes. If you did not request a password reset, you can safely disregard this email.</p>
 
-<p>Thank you</p>
+<p>Thanks!</p>
+
+<p>The PropertySpot Support Team</p>
+<p>Need support? Email us anytime at <a href='mailto:support@propertyspot.net'>support@propertyspot.net</a></p> 
+
 </body>
 </html>

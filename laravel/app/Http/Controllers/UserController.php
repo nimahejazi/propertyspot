@@ -57,7 +57,8 @@ class UserController extends Controller
                 'email'       => $request->email,
                 'role'        => 'user',
                 'password'    => Hash::make($request->password),
-                'api_token'   => Str::random(60)
+                'api_token'   => Str::random(60),
+                'role'        => 'user',
             ]);
 //            event(new Registered($user));
         } catch(\Exception $e) {

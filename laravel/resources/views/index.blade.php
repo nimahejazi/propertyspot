@@ -3,63 +3,54 @@
 @section('title', 'PropertySpot.net - The Spot for Your Property Listing Website')
 
 @section('menu')
-  <div class="menu-container">
-    <div class="container">
-      <nav class="menu"><a href="/signup">Join now</a><a class="sign-in" href="/signin">Sign in</a></nav>
+    <div class="navbar-menu" id="navbarMenu">
+        <div class="navbar-end">
+            <div class="navbar-item"><a href="/signin">Sign in</a></div>
+            <div class="navbar-item"><a href='/signup' class="join-btn is-outlined">Join now</a></div>
+        </div>
     </div>
-  </div>
 @endsection
 
 @section('main')
-  <main>
-      <div class="section container">
-          <div class="columns">
-              <div class="column">
-                  <div class="main-title">
-                      <h1 class="is-size-4">Create a Property Website</h1>
-                      <h2 class="is-size-4">In Less Than 10 Minutes</h2>
-                  </div>
-                  <a class="main-btn" href="{{route('signup')}}">Create a Property Website</a>
-                  <p class="hero-line">In a very fast, easy and secure process, you can create a website for your property listing in less than 10 minutes. Give a try, you will like it!</p>
-              </div>
-              <div class="column"><img class="main-img" src="/img/main.svg" /></div>
-          </div>
-      </div>
-      <div class="section boxes-container">
-          <div class="container">
-              <div class="boxes">
-                  <div class="columns is-multiline">
-                      <div class="column is-6-tablet is-3-desktop is-flex">
-                          <div class="info-box">
-                              <span class="home-icon"><i class="far fa-skiing fa-5x"></i></span>
-                              <h3 class="is-size-4">Fast and Easy</h3>
-                              <p>Creating a website for your property listing can't be any easier. You just fill a form and upload photos and videos of the property and voila!, your property website is live and accessible to the whole world!</p>
-                          </div>
-                      </div>
-                      <div class="column is-6-tablet is-3-desktop is-flex">
-                          <div class="info-box">
-                              <span class="home-icon"><i class="far fa-mail-bulk fa-5x"></i></span>
-                              <h3 class="is-size-4">Free Lead Generator</h3>
-                              <p>Every website you create with PropertySpot.net comes with a free lead generator that sends leads right to your mailbox. Thanks to strong and secure backend, it prevents spams and unrelated emails to show up on your mailbox.</p>
-                          </div>
-                      </div>
-                      <div class="column is-6-tablet is-3-desktop is-flex">
-                          <div class="info-box">
-                              <span class="home-icon"><i class="far fa-globe-americas fa-5x"></i></span>
-                              <h3 class="is-size-4">Short Easy URL</h3>
-                              <p>The property listing websites created with PropertySpot.net will have short and easy to remember URL. You can share the address on your marketing stuff.</p>
-                          </div>
-                      </div>
-                      <div class="column is-6-tablet is-3-desktop is-flex">
-                          <div class="info-box">
-                              <span class="home-icon"><i class="far fa-money-bill-alt fa-5x"></i></span>
-                              <h3 class="is-size-4">One-time Price</h3>
-                              <p>You don't have to worry about technical stuff, server and hosting costs. With just one-time payment, your website will be live and accessible to the whole world. Did we mention that it's blazingly fast too?</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </main>
+    <main>
+        <div class="hero-main">
+            <div class="container">
+                <div class="hero-text-container">
+                    <header>
+                        <h1>Create Your Property Website</h1>
+                        <h2>Under 20 Minutes</h2>
+                    </header>
+                    <p>Your listing deserves a dedicated website that’s beautiful, secure, and optimized for speed. At PropertySpot.net, that’s exactly what you’ll get, for just $29.99!</p>
+                    <a class="action-btn" href="{{route('signup')}}">Create Your Website Now!</a>
+                </div>
+            </div>
+        </div>
+        <div class="container section">
+            <div class="columns">
+                <div class="column">
+                    <h3 class="small-title">PropertySpot.net</h3>
+                    <h3>Why Choose PropertySpot.net for your listings?</h3>
+                    <p>Creating a website for your property listing can't be any easier. You just fill a form and upload photos and videos of the property and voila!, your property website is live and accessible to the whole world!</p>
+                    <p>The property listing websites created with PropertySpot.net will have short and easy to remember URL. You can share the address on your marketing stuff.</p>
+                </div>
+                <div class="column is-5"><div class="home-group-image"></div></div>
+            </div>
+        </div>
+        <div class="dark-bg">
+            <div class="container section">
+                <div class="columns">
+                    <div class="column is-5"><div class="quick-image"></div></div>
+                    <div class="column">
+                        <h3>Built-In Lead Generator for Every Website</h3>
+                        <p>Every website you create with PropertySpot.net comes with a built-in lead generator that sends leads right to your email! So promote away!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container section center-block">
+            <h3>Create Your Account Now!</h3>
+            <p>You won’t be charged a dime until you want to publish your website. So go ahead and play around with creating a profile for yourself, or spend a few minutes to start a listing website to see why we are so excited about this product, NO CHARGE!</p>
+            <a class="action-btn" href="{{route('signup')}}">Create Your Website Now!</a>
+        </div>
+    </main>
 @endsection

@@ -7,5 +7,55 @@ $dark-bg: #3c3c3c;
 $darkest-bg: #1d1d1d;
 $bg: #f2f4f5;
 
+// Other variables
+$main-color: #1d3557;
+$accent-color: #e63946;
+$shade-dark: #457b9d;
+$shade-medium: #a8dadc;
+$shade-light: #f1faee;
+$font-color: #212529;
+$bg: #1A2428;
+$bg-light: #f3f3f3;
+$transparent-bg: rgba(5, 3, 0, 0.63);
+
 // Bulma global variables
-$family-sans-serif: 'Lato', sans-serif;
+$family-sans-serif: 'Roboto', sans-serif;
+$navbar-background-color: $main-color;
+$navbar-burger-color: #fff;
+$navbar-item-img-max-height: 2.125rem;
+$navbar-item-hover-background-color: darken($main-color, 10%);
+$navbar-dropdown-background-color: $main-color;
+$navbar-dropdown-border-top: 2px solid darken($main-color, 10%);
+$navbar-item-color: #fff;
+$text: $font-color;
+
+$desktop-title-size: 2.9375rem;
+$desktop-subtitle-size: 2.25rem;
+$desktop-font-size: 1.25rem;
+$mobile-title-size: 1.5rem;
+$mobile-font-size: 1rem;
+
+
+@mixin responsive-image($mobile, $mobile2x, $desktop, $desktop2x) {
+    width: 100%;
+    position: relative;
+    padding-bottom: 100%;
+    background: url($mobile) no-repeat center / cover;
+
+    @media
+    (-webkit-min-device-pixel-ratio: 1.25),
+    (min-resolution: 120dpi) {
+        background-image: url($mobile2x)
+    }
+    @media
+    (min-width: 769px) {
+        background-image: url($desktop)
+    }
+    @media
+    (min-resolution: 120dpi) and
+    (min-width: 769px),
+    (-webkit-min-device-pixel-ratio: 1.25) and
+    (min-width: 769px) {
+        background-image: url($desktop2x);
+    }
+}

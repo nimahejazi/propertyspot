@@ -30,7 +30,7 @@ class User extends Authenticatable
         'company_name',
         'company_website',
         'company_address',
-        'api_token'
+        'api_token',
     ];
 
     protected $dispatchesEvents = [

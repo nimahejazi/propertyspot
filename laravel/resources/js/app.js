@@ -566,49 +566,10 @@ $(() => {
         $(item).parent().fadeOut();
     }
 
-    let onmenu = false;
-    let onicon = false;
-
-    $('#avatar')
-        .on('mouseover', function(e) {
-            onicon=true;
-            $('.avatar-menu').fadeIn(200);
-        })
-        .on('mouseout', function(e) {
-            var e = e.relatedTarget;
-            while (e.parentNode) {
-                if (e == this) {
-                    return;
-                }
-                e = e.parentNode;
-            }
-            onicon=false;
-            setTimeout(() => {
-                if (!onmenu && !onicon) {
-                    $('.avatar-menu').fadeOut(200);
-                }
-            }, 500)
+    $(".navbar-burger").on('click', function() {
+        $(".navbar-burger").toggleClass("is-active");
+        $(".navbar-menu").toggleClass("is-active");
     });
-
-    $('.avatar-menu').on('mouseover', function(e) {
-        onmenu = true;
-    });
-    $('.avatar-menu').on('mouseout', function(e) {
-        var e = e.relatedTarget;
-        while (e.parentNode) {
-            if (e == this) {
-                return;
-            }
-            e = e.parentNode;
-        }
-        onmenu = false;
-        setTimeout(() => {
-            if (!onmenu && !onicon) {
-                $('.avatar-menu').fadeOut(200);
-            }
-        }, 500)
-    });
-
 
     // Listing page form buttons
     let i = 0;

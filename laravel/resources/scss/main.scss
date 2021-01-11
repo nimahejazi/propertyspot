@@ -10,115 +10,6 @@
 @import 'node_modules/bulma-extensions/bulma-checkradio/src/sass/index.sass';
 @import 'node_modules/bulma-extensions/bulma-divider/src/sass/index.sass';
 
-a {
-  &.is-loading {
-    display: flex;
-    align-items: center;
-    pointer-events: none;
-    opacity: 0.5;
-    &:before {
-      @include loader;
-      width: 1rem;
-      height: 1rem;
-      border-width: 0.25em;
-      margin-right: 0.2rem;
-    }
-  }
-}
-
-.input-loader {
-    &.is-loading {
-        opacity: 0.5;
-    }
-}
-
-.button-loading {
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-.img-loader {
-    &.is-loading {
-        position: relative;
-        pointer-events: none;
-        opacity: 0.5;
-        &:after {
-            @include loader;
-            border-color: $accent-color;
-            border-right-color: transparent;
-            border-top-color: transparent;
-            position: absolute;
-            top: calc(50% - 2.5em);
-            left: calc(50% - 2.5em);
-            width: 5em;
-            height: 5em;
-            border-width: 0.25em;
-        }
-    }
-}
-
-.box-loading {
-    height: 30rem;
-    &.is-loading {
-        position: relative;
-        pointer-events: none;
-        &:after {
-            @include loader;
-            border-color: $accent-color;
-            border-right-color: transparent;
-            border-top-color: transparent;
-            position: absolute;
-            top: calc(50% - 2.5em);
-            left: calc(50% - 2.5em);
-            width: 5em;
-            height: 5em;
-            border-width: 0.25em;
-        }
-    }
-}
-
-
-.page-box {
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-}
-.cover-loading {
-    position: absolute;
-    z-index: 10;
-    border-radius: $box-radius;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.55);
-    display: none;
-    &.is-loading {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        &:after {
-            @include loader;
-            border-color: $accent-color;
-            border-right-color: transparent;
-            border-top-color: transparent;
-            position: absolute;
-            width: 5em;
-            height: 5em;
-            border-width: 0.25em;
-        }
-    }
-}
-
-
-h1, h2, h3, h4, h5, h6 {
-  margin-bottom: 1rem;
-}
-
 .label, .checkbox-label {
     font-weight: 300;
 }
@@ -128,47 +19,230 @@ h1, h2, h3, h4, h5, h6 {
 }
 body {
     color: $font-color;
-    min-height: 100vh;
-    position: relative;
+    //font-size: $mobile-font-size;
+    //@include from($tablet) {
+    //    font-size: $desktop-font-size;
+    //}
 }
+
 
 a {
     color: $accent-color;
 }
 
-.main-header {
-    .logo-container {
-        background-color: $accent-color;
-        height: 50px;
-        padding-top: 5px;
-        text-align: center;
+.action-btn {
+    background: $accent-color;
+    text-transform: uppercase;
+    font-size: $mobile-font-size;
+    color: #fff;
+    padding: .5rem 1rem;
+    display: block;
+    text-align: center;
+    border: none;
+    &:hover {
+        background-color: lighten($accent-color, 10%);
+        color: #fff;
     }
-    .menu-container {
-        background-color: $bg;
+    @include from($tablet) {
+        font-size: $desktop-font-size;
+        display: inline-block;
+        padding: .8rem 1.5rem;
     }
-    .menu-container-light {
-        background-color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.8rem;
+    @include from($tablet) {
+        line-height: 3rem;
     }
-    .menu {
-        text-align: center;
-        @include from($tablet) {
-            text-align: right;
-            padding-right: 1rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    @include from($tablet) {
+        font-size: $desktop-font-size;
+    }
+}
+
+h3 {
+    font-weight: bold;
+    font-size: 1.375rem;
+    &.small-title {
+        font-size: 1.125rem;
+        color: $shade-dark;
+        text-transform: uppercase;
+    }
+    @include from($tablet) {
+        font-size: $desktop-subtitle-size;
+    }
+}
+
+.home-group-image {
+    width: 100%;
+    position: relative;
+    padding-bottom: 100%;
+    @include responsive-image('/img/home-group-mobile.jpg', '/img/home-group-mobile@2x.jpg','/img/home-group.jpg', '/img/home-group@2x.jpg');
+}
+
+.quick-image {
+    width: 100%;
+    position: relative;
+    padding-bottom: 100%;
+    @include responsive-image('/img/quick-mobile.jpg','/img/quick-mobile@2x.jpg', '/img/quick.jpg', '/img/quick@2x.jpg');
+}
+
+.center-block {
+    text-align: center;
+    max-width: 50rem;
+}
+
+body {
+    color: $font-color;
+    min-height: 100vh;
+    position: relative;
+}
+
+.hero-main {
+    .form {
+        margin-top: 1rem;
+    }
+    .label {
+        color: #fff;
+    }
+    @include responsive-image('/img/home-mobile.jpg', '/img/home-mobile@2x.jpg', '/img/home-bg.jpg', '/img/home-bg@2x.jpg');
+    padding: 1rem;
+    .hero-text-container {
+        background-color: $transparent-bg;
+        padding: 1rem;
+        color: #fff;
+
+        header {
+            margin-bottom: 1rem;
         }
-        a {
-            color: $font-color;
-            font-size: 1.2rem;
+        h1, h2 {
+            font-size: $mobile-title-size;
             font-weight: bold;
-            margin: .5rem .1rem;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        h2 {
+            color: $shade-medium;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+    }
+    @include from($tablet) {
+        min-height: 40rem;
+        padding-bottom: 0;
+        .hero-text-container {
+            padding: 2rem;
+            margin-top: 15rem;
             display: inline-block;
-            padding: .1rem 2.8rem;
-            &.sign-in {
-                border: solid 1px $font-color;
-                border-radius: 5px;
+            max-width: 52rem;
+            h1, h2 {
+                font-size: $desktop-title-size;
+            }
+        }
+    }
+    .form-container {
+        a {
+            color: $accent-color;
+            &:hover {
+                color: #fff;
+            }
+        }
+        margin: 2rem auto;
+        background-color: $transparent-bg;
+        padding: 1rem;
+        color: #fff;
+        .checkbox-label:hover {
+            color: $accent-color;
+        }
+
+        header {
+            margin-bottom: 1rem;
+        }
+        h1, h2 {
+            font-size: $mobile-title-size;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        h2 {
+            color: $shade-medium;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+    }
+    @include from($tablet) {
+        min-height: 40rem;
+        @include responsive-image('/img/home-mobile.jpg', '/img/home-mobile@2x.jpg', '/img/home-bg.jpg', '/img/home-bg@2x.jpg');
+        padding-bottom: 0;
+        font-size: $desktop-font-size;
+        input {
+            font-size: $desktop-font-size;
+        }
+        .help {
+            font-size: $mobile-font-size;
+        }
+        .form-container {
+            padding: 2rem;
+            max-width: 35rem;
+            h1, h2 {
+                font-size: $desktop-title-size;
             }
         }
     }
 }
+
+.dark-bg {
+    background-color: $bg;
+    color: #fff;
+}
+
+.back-button {
+    background: $bg-light;
+    a {
+        background-color: $bg-light;
+        border: none;
+        margin: 1rem 0 -2rem;
+    }
+}
+
+.main-header {
+    background-color: $main-color;
+    height: 3.68rem;
+    .logo {
+        height: 1.5rem;
+        padding-left: 1rem;
+    }
+    a, div {
+        color: #fff;
+        font-size: 1.2rem;
+    }
+    .join-btn {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+    @include from($desktop) {
+        height: 5.75rem;
+        .logo {
+            height: 2.125rem;
+            padding-left: 3rem;
+        }
+        .join-btn {
+            border: solid 1px #fff;
+            border-radius: $radius;
+            padding: .3rem 1rem;
+            margin-right: 3rem;
+        }
+    }
+}
+
 
 .main-title {
     font-family: Oswald, sans-serif;
@@ -179,6 +253,9 @@ a {
         font-weight: bold;
         font-size: 2rem;
     }
+}
+.navbar, .navbar-brand, .navbar-burger {
+    height: 100% !important;
 }
 
 .main-img {
@@ -198,15 +275,8 @@ a {
     text-align: center;
     padding: .7rem 0;
     font-weight: bold;
-    &:hover {
-        color: $accent-color2;
-    }
 }
 
-.logo {
-    width: 300px;
-    max-width: 90%;
-}
 
 .hero-line {
     margin-top: 3rem;
@@ -239,23 +309,22 @@ a {
 }
 
 .main-footer {
-    background-color: $darkest-bg;
-    color: $font-color;
+    background-color: $bg;
+    color: #909090;
     text-align: center;
-    font-size: .95rem;
+    font-size: .8rem;
     position: absolute;
     width: 100%;
     height: 8rem;
     bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 main {
     padding-bottom: 8rem;
     background-color: #fff;
-}
-
-body {
-    background: $bg;
 }
 
 .link {
@@ -264,13 +333,12 @@ body {
 }
 
 .form-link {
+    display: block;
     padding: .5rem 0;
 }
 
 .bg-gray {
-    background-color: $bg;
-    padding-bottom: 8rem;
-    height: calc(100% - 8rem);
+    background-color: $bg-light;
 }
 
 .box-title {
@@ -302,7 +370,6 @@ body {
 .ps-button-steps {
     margin: 1rem;
 }
-
 .ps-button {
     text-align: center;
     border-radius: 100px;
@@ -329,22 +396,6 @@ body {
         margin: 1rem;
         width: auto;
     }
-    &.is-loading {
-        opacity: .5;
-        pointer-events: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        &:before {
-            @include loader;
-            //position: absolute;
-            //left: calc(50% - .8rem);
-            //top: calc(50% - .8rem);
-            width: 1.3rem;
-            height: 1.3rem;
-            margin-right: 0.5rem;
-        }
-    }
 }
 .ps-button-full {
     @include until($tablet) {
@@ -355,7 +406,6 @@ body {
         margin-bottom: 1rem !important;
     }
 }
-
 
 .float-right-tablet {
     @include from($tablet) {
@@ -376,30 +426,20 @@ body {
 .listing-card {
     width: 15rem;
     border: solid 1px $dark-bg;
-    height: 32.5rem;
-    overflow: hidden;
-    position: relative;
-    .address-container {
+    h3 {
         font-size: 1.2rem;
         margin-bottom: 1rem;
-        height: 4.5rem;
+        line-height: 1.5rem;
     }
     .listing-body {
-        h3 {
-            padding: 1rem 1rem 0 1rem;
-        }
-    }
-    .next-step-container {
-        position: absolute;
-        bottom: 2rem;
-        width: 100%;
+        padding: 1rem;
     }
     &-dashed {
         @extend .listing-card;
         border: dashed 1px $light-bg;
         .plus-icon {
             transition: all .2s ease-in-out;
-            height: 16.3rem;
+            height: 15rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -416,35 +456,6 @@ body {
             border-top: dashed 1px $light-bg;
         }
     }
-    .listing-card-img {
-        position: relative;
-        height: 11rem;
-        overflow: hidden;
-        .status-tag {
-            position: absolute;
-            right: 5px;
-            top: 5px;
-            background: #fff;
-            padding: 2px 9px;
-            border-radius: 5px;
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-    }
-    .next-step {
-        background: rgb(203, 203, 203);
-        display: block;
-        padding: 5px 0;
-        text-align: center;
-        margin-top: 1rem;
-        margin-bottom: .5rem;
-        text-transform: uppercase;
-    }
-    .next-step-link {
-        padding: 0 1rem;
-
-    }
 }
 
 .ps-box {
@@ -459,14 +470,10 @@ body {
     &:first-child {
         margin-top: 0;
     }
-    &.multipage {
-        margin-top: 0 !important;
-        display: none;
-    }
 }
 
 .small-ps-box {
-    max-width: 45rem !important;
+    max-width: 45rem;
     margin-left: auto;
     margin-right: auto;
 }
@@ -509,17 +516,10 @@ body {
 ul.links {
     li {
         display: block;
-        padding: 0 1rem;
-        border-bottom: solid 1px $light-bg;
-        &:last-child {
-            border-bottom: none;
-        }
     }
     a {
-        font-size: 1rem;
         display: inline-block;
-        margin-bottom: .3rem;
-        margin-top: .3rem;
+        margin-bottom: .5rem;
         transition: .2s all ease-in-out;
         &:hover {
             color: lighten($accent-color, 10%);
@@ -540,39 +540,20 @@ a.listing-new {
     color: $accent-color !important;
     text-decoration: none !important;
 }
+.avatar-item {
+    margin-right: 2rem;
+}
+
 .avatar-container {
     justify-content: space-between;
     align-items: center;
     display: flex;
-    .back {
-        margin-left: 1rem;
-    }
-
-    .avatar-menu {
-        padding: 0 .5rem;
-        min-width: 8rem;
-        background: #e3e3e3;
-        top: 3rem;
-        right: 0;
-        position: absolute;
-        z-index: 10000;
-        display: none;
-        li {
-            padding: .5rem 0;
-        }
-        li:not(:last-child) {
-            border-bottom: solid 1px #b4b4b4;
-        }
-    }
     .avatar-icon {
         position:relative;
-        padding: 0.5rem;
-        margin-right: 1rem;
         cursor: pointer;
         figure {
             background-color: $accent-color;
             color: #fff;
-            display: inline-block;
             border-radius: 290486px;
             width: 38px;
             height: 38px;
@@ -601,12 +582,6 @@ a.listing-new {
                 text-align: center;
                 width:100%;
                 font-weight: bold;
-                text-shadow:
-                    0px  0px 0 #fff,
-                    -1px -1px 0 #fff,
-                    1px -1px 0 #fff,
-                    -1px  1px 0 #fff,
-                    1px  1px 0 #fff;
             }
             img {
                 border: solid 8px $accent-color;
@@ -643,7 +618,7 @@ a.listing-new {
 .rows {
     padding: 0;
     .row-item {
-        border-bottom: solid 2px $bg;
+        border-bottom: solid 2px $bg-light;
         padding: $box-padding;
         .label {
             font-weight: normal;
@@ -678,30 +653,4 @@ a.listing-new {
     border-top: solid 2px $bg;
     margin-top: 1rem;
     padding-top: 1rem;
-}
-
-.notification p {
-  margin-bottom: 1rem;
-}
-
-.card-fullname {
-    margin-bottom: 0;
-}
-
-.box {
-    position:relative;
-}
-
-.payment-card {
-    height: 1.62rem;
-    margin-right: .5rem;
-}
-
-.is-success {
-    background: $success !important;
-    color: #fff !important;
-}
-
-.admin-icon {
-    font-size: 1.2rem;
 }

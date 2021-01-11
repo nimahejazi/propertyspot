@@ -1,47 +1,50 @@
 @extends('layouts/main')
 
 @section('menu')
-  <div class="menu-container-light">
-    <div class="container">
-      <nav class="menu"><a href="/signup">Join now</a><a class="sign-in" href="/signin">Sign in</a></nav>
+    <div class="navbar-menu" id="navbarMenu">
+        <div class="navbar-end">
+            <div class="navbar-item"><a href="/signin">Sign in</a></div>
+            <div class="navbar-item"><a href='/signup' class="join-btn is-outlined">Join now</a></div>
+        </div>
     </div>
-  </div>
 @endsection
 
 @section('main')
-  <main class="bg-gray">
-    <div class="section container">
-      <div class="columns is-centered">
-        <div class="column is-half-desktop is-two-thirds-tablet">
-          <h1 class="box-title">Sign up</h1>
-          <div class="box">
-            @if (session('error'))
-              <div class='notification is-danger'>
-                <div class='delete'></div>
-                {{session('error')}}
-              </div>
-            @endif
-            <form class="form" action="/signup" method='post'>
-              @csrf
-              <div class="field">
-                <label class="label" for="email">Email</label><input class="input @error('email') is-danger @enderror" type="email" id='email' name='email' value='{{old('email')}}'  />
-                <div class='help is-danger' id='email-err'>@error('email'){{ $message }}@enderror</div>
-              </div>
-              <div class="field">
-                <label class="label" for="password">Password</label><input class="input @error('password') is-danger @enderror" type="password" id='password' name='password' />
-                <div class="help">Minimum 8 characters and at least 2 numbers.</div>
-                <div class='help is-danger' id='password-err'>@error('password'){{ $message}}@enderror</div>
-              </div>
-              <div class="field">
-                <label class="label" for="password_confirmation">Confirm Password</label><input class="input @error('password_confirmation') is-danger @enderror" type="password" id='password_confirmation' name='password_confirmation' />
-                <div class='help is-danger' id='password_confirmation-err'>@error('password_confirmation'){{ $message}}@enderror</div>
-              </div>
-              <div class="field"><button class="ps-button full-width" type="submit" id='submit'>Create My FREE Account</button></div>
-              <div class="field"><a class="form-link has-text-centered" href="/signin">Already have an account? Sign in here</a></div>
-            </form>
-          </div>
+
+
+    <main>
+        <div class="hero-main">
+            <div class="container">
+                <div class="form-container">
+                    <header>
+                        <h1>Sign Up</h1>
+                    </header>
+                    <form class="form" action="/signup" method="post">
+                        @csrf
+                        @if (session('error'))
+                            <div class='notification is-danger'>
+                                <div class='delete'></div>
+                                {{session('error')}}
+                            </div>
+                        @endif
+                        <div class="field">
+                            <div class="control"><input class="input @error('email') is-danger @enderror" type="email" placeholder="Email" name="email" id="email" value="{{old('email')}}"/></div>
+                            <div class='help is-danger' id='email-err'>@error('email'){{$message}}@enderror</div>
+                        </div>
+                        <div class="field">
+                            <div class="control"><input class="input @error('password') is-danger @enderror" type="password" placeholder="Password" id="password" name="password"/></div>
+                            <div class="help">Minimum 8 characters and at least 2 numbers.</div>
+                            <div class='help is-danger' id='password-err'>@error('password'){{$message}}@enderror</div>
+                        </div>
+                        <div class="field">
+                            <div class="control"><input class="input @error('password_confirmation') is-danger @enderror" type="password" placeholder="Confirm Password" id="password_confirmation" name="password_confirmation"/></div>
+                            <div class='help is-danger' id='password_confirmation-err'>@error('password_confirmation'){{$message}}@enderror</div>
+                        </div>
+                        <div class="field"><button type='submit' id='submit' class="action-btn">Create My Free Account</button></div>
+                        <div class="field"><a href="/signin">Already have an account? Sign in here</a></div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </main>
+    </main>
 @endsection
