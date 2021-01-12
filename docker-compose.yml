@@ -9,10 +9,10 @@ services:
     ports:
       - 3306
     environment:
-      MYSQL_ROOT_PASSWORD: VAL;k4(f$6B@M*Z*deHvgruEtR
+      MYSQL_ROOT_PASSWORD: REDACTED
       MYSQL_DATABASE: propertyspot
       MYSQL_USER: propertyspot
-      MYSQL_PASSWORD: ze7:gW+(*9_.Yh,6I]9W.b,2!H
+      MYSQL_PASSWORD: REDACTED
     container_name: propertyspot_db
 
   propertyspot:

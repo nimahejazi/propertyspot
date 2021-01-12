@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ab470df0d5ac81f2f57d555663d9166",
+    "content-hash": "a57280d19fed2e6c16c1cb77428486cd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2504,16 +2504,16 @@
         },
         {
             "name": "robotkudos/rk-image-api",
-            "version": "0.2.1",
+            "version": "0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robotkudos/RKImageAPI.git",
-                "reference": "2da95eaa03fdca63b55e6fda779ddf54a9f3fa28"
+                "reference": "8069ade76191b20776826c70a815490734fc2752"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robotkudos/RKImageAPI/zipball/2da95eaa03fdca63b55e6fda779ddf54a9f3fa28",
-                "reference": "2da95eaa03fdca63b55e6fda779ddf54a9f3fa28",
+                "url": "https://api.github.com/repos/robotkudos/RKImageAPI/zipball/8069ade76191b20776826c70a815490734fc2752",
+                "reference": "8069ade76191b20776826c70a815490734fc2752",
                 "shasum": ""
             },
             "require": {
@@ -2543,7 +2543,11 @@
                 }
             ],
             "description": "API for processing image upload to work with rk-image-uploader React app.",
-            "time": "2020-10-20T21:14:32+00:00"
+            "support": {
+                "issues": "https://github.com/robotkudos/RKImageAPI/issues",
+                "source": "https://github.com/robotkudos/RKImageAPI/tree/0.2.2"
+            },
+            "time": "2021-01-12T00:02:07+00:00"
         },
         {
             "name": "robotkudos/rkdb",

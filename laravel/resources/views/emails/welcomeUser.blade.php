@@ -15,7 +15,7 @@ Welcome, {{$user->email}}
 Your PropertySpot username is: {{$user->email}}<br>
 Sign in here: <a href='https://propertyspot.net/signin'>https://propertyspot.net/signin</a><br>
 
-<p>Reset your password anytime here: <a href='https://propertyspot.net/forgot-password'>Reset My Password</p>J
+<p>Reset your password anytime here: <a href='https://propertyspot.net/forgot-password'>Reset My Password</a></p>
 
 <p>Thanks!</p>
 
