@@ -1,8 +1,12 @@
 {
-    "/js/bundle.js": "/js/bundle.js?id=69c5c44fe1e422bdf83c",
-    "/css/main.css": "/css/main.css?id=ede83dae14ec3c73fb51",
-    "/css/simple.css": "/css/simple.css?id=ece48a2e6a8b1aec8f26",
-    "/js/simple.js": "/js/simple.js?id=ea92ebf61b037d603dab",
+    "/js/bundle.js": "/js/bundle.js?id=24d3557db1211be5d90e",
+    "/css/main.css": "/css/main.css?id=6b3bf75879b947a290aa",
+    "/css/simple.css": "/css/simple.css?id=d7c6cd51f54ddb7037ac",
+    "/js/bundle.js.map": "/js/bundle.js.map?id=2a9cc6e916c10c8cf8a5",
+    "/css/main.css.map": "/css/main.css.map?id=ccac4e5f681f106d76c0",
+    "/css/simple.css.map": "/css/simple.css.map?id=fb4184035d2c896f85b8",
+    "/js/simple.js": "/js/simple.js?id=132a3aedff33b5afae05",
+    "/js/simple.js.map": "/js/simple.js.map?id=0319678b5a5f324025e9",
     "/js/vendor/blueimp-gallery.min.js": "/js/vendor/blueimp-gallery.min.js?id=135941eb019241bf6c4e",
     "/js/vendor/bootstrap.bundle.min.js": "/js/vendor/bootstrap.bundle.min.js?id=a5334e475209f965b486"
 }

@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', env('APP_ENV', 'production') ? 'bugsnag' : ''],
+            'channels' => ['single', env('APP_ENV', 'production') ? 'slack' : ''],
             'ignore_exceptions' => false,
         ],
 

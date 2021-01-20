@@ -6,6 +6,11 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils && \
     apt-get install -y libmagickwand-dev libmagickcore-dev && \
     pecl install imagick && \
-    docker-php-ext-enable imagick
+    docker-php-ext-enable imagick && \
+    apt-get install -y libzip-dev zip && \
+    docker-php-ext-install zip
+RUN apt-get install libjpeg-dev libpng-dev && \
+    docker-php-ext-configure gd --with-jpeg && \
+    docker-php-ext-install gd
 CMD service nginx start && \
     php-fpm

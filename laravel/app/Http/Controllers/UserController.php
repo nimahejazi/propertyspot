@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use RobotKudos\RKImage\ImageUploader;
 use RobotKudos\RKImage\Size;
@@ -108,6 +109,7 @@ class UserController extends Controller
                 return redirect('/signin')->with('error', 'Invalid username/password')->withInput();
             }
         } catch(\Exception $e) {
+            Log::critical($e);
             return redirect('/signin')->with('error', 'An error occurred, sorry for the inconvenience.')->withInput();
         }
     }
