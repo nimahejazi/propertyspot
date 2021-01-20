@@ -8,9 +8,10 @@ RUN apt-get update && \
     pecl install imagick && \
     docker-php-ext-enable imagick && \
     apt-get install -y libzip-dev zip && \
-    docker-php-ext-install zip
-RUN apt-get install libjpeg-dev libpng-dev && \
+    docker-php-ext-install zip && \
+    apt-get install libjpeg-dev libpng-dev && \
     docker-php-ext-configure gd --with-jpeg && \
-    docker-php-ext-install gd
+    docker-php-ext-install gd && \
+    apt-get clean
 CMD service nginx start && \
     php-fpm

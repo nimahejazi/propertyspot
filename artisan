@@ -1,2 +1,3 @@
 #!/bin/bash
-docker exec propertyspot_laravel php artisan $@
+[ -z "$CONTAINER_NAME" ] && CONTAINER_NAME=propertyspot_laravel
+docker exec $CONTAINER_NAME php artisan $@

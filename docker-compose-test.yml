@@ -13,7 +13,7 @@ services:
       MYSQL_DATABASE: propertyspot
       MYSQL_USER: propertyspot
       MYSQL_PASSWORD: REDACTED
-    container_name: propertyspot_db
+    container_name: propertyspot_db_test
 
   propertyspot:
     depends_on:
@@ -22,15 +22,12 @@ services:
     ports:
       - 80
       - 443
+    expose:
+      - 80
     restart: always
-    container_name: propertyspot_laravel
-    environment: 
-      VIRTUAL_HOST: propertyspot.robotkudos.com
-      LETSENCRYPT_HOST: propertyspot.robotkudos.com
-      LETSENCRYPT_EMAIL: nhejazi@gmail.com
+    container_name: propertyspot_laravel_test
     volumes:
       - ${WORKSPACE}/laravel:/var/www/html
-      - ${WORKSPACE}/site.conf:/etc/nginx/conf.d/site.conf
       - ${WORKSPACE}/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
 
 volumes:
