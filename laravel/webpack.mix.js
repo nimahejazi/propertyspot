@@ -30,19 +30,16 @@ mix.webpackConfig({
     },
 });
 
-mix.sass("resources/scss/main.scss", "public/css").version();
-mix.sass(
-    "resources/scss/templates/simple.scss",
-    "public/css/simple.css"
-).version();
-
-mix.js("resources/js/app.js", "public/js/bundle.js")
+mix
+    .setPublicPath('public')
+    .sass("resources/scss/main.scss", "public/css")
+    .sass(
+        "resources/scss/templates/simple.scss",
+        "public/css/simple.css"
+    )
+    .js("resources/js/app.js", "public/js/bundle.js")
+    .js("resources/js/simple.js", "public/js/simple.js")
     .sourceMaps()
-    .version();
-mix.js("resources/js/simple.js", "public/js/simple.js")
-    .sourceMaps()
-    .version();
-/* mix.js("resources/js/propertyspot-dashboard.js", "public/js"); */
-
-mix.copy("resources/js/vendor/*.js", "public/js/vendor");
-mix.copy("resources/img", "public/img");
+    .version()
+    .copy("resources/js/vendor/*.js", "public/js/vendor")
+    .copy("resources/img", "public/img");

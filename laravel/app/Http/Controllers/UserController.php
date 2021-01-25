@@ -178,7 +178,7 @@ class UserController extends Controller
             $user->save();
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Cannot save the image',
+                'message' => 'Cannot save the image:' . $e->getMessage(),
                 'success' => false,
             ]);
         }

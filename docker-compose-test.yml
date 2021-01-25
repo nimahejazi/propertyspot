@@ -18,17 +18,14 @@ services:
   propertyspot:
     depends_on:
       - propertyspot_db
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 80
       - 443
-    expose:
-      - 80
     restart: always
     container_name: propertyspot_laravel_test
-    volumes:
-      - ${WORKSPACE}/laravel:/var/www/html
-      - ${WORKSPACE}/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
 
 volumes:
   db_data:

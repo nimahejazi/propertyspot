@@ -1,9 +1,14 @@
 pipeline {
     agent any
 
+    environment {
+        JENKINS_HOME_HOST = '/home/ubuntu/jenkins-docker-compose/jenkins_home'
+    }
+
     stages {
         stage('Test') {
             steps {
+                sh ''
                 sh './test.sh'
             }
         }

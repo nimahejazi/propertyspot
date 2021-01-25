@@ -18,23 +18,26 @@ services:
   propertyspot:
     depends_on:
       - propertyspot_db
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - 80
       - 443
     restart: always
     container_name: propertyspot_laravel
+    volumes:
+      - storage:/app/storage
+      - cache:/app/bootstrap/cache
     environment: 
       VIRTUAL_HOST: propertyspot.robotkudos.com
       LETSENCRYPT_HOST: propertyspot.robotkudos.com
       LETSENCRYPT_EMAIL: nhejazi@gmail.com
-    volumes:
-      - ${WORKSPACE}/laravel:/var/www/html
-      - ${WORKSPACE}/site.conf:/etc/nginx/conf.d/site.conf
-      - ${WORKSPACE}/php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
 
 volumes:
   db_data:
+  storage:
+  cache:
 
 networks:
   default:
