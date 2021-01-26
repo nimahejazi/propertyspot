@@ -27,8 +27,9 @@ services:
     restart: always
     container_name: propertyspot_laravel
     volumes:
-      - storage:/app/storage
-      - cache:/app/bootstrap/cache
+      - storage:/var/www/html/storage
+      - cache:/var/www/html/bootstrap/cache
+      - public:/var/www/html/public
     environment: 
       VIRTUAL_HOST: propertyspot.robotkudos.com
       LETSENCRYPT_HOST: propertyspot.robotkudos.com
@@ -38,6 +39,7 @@ volumes:
   db_data:
   storage:
   cache:
+  public:
 
 networks:
   default:
