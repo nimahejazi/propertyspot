@@ -41,5 +41,9 @@ docker-compose -f docker-compose-test.yml up --build -d
 if [ $? -ne 0 ]; then
     exit 1
 fi
+./artisan dusk
+if [ $? -ne 0 ]; then
+    exit 1
+fi
 # After the test, remove the containers
 docker-compose -f docker-compose-test.yml down

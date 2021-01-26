@@ -9,10 +9,10 @@ services:
     ports:
       - 3306
     environment:
-      MYSQL_ROOT_PASSWORD: REDACTED
+      MYSQL_ROOT_PASSWORD: propertyspot
       MYSQL_DATABASE: propertyspot
       MYSQL_USER: propertyspot
-      MYSQL_PASSWORD: REDACTED
+      MYSQL_PASSWORD: propertyspot
     container_name: propertyspot_db_test
 
   propertyspot:
@@ -26,6 +26,11 @@ services:
       - 443
     restart: always
     container_name: propertyspot_laravel_test
+
+  selenium:
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
 
 volumes:
   db_data:

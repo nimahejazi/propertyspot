@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh ''
                 sh './test.sh'
             }
         }
