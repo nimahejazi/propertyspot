@@ -22,6 +22,7 @@ RUN apt-get update && \
     docker-php-ext-configure gd --with-jpeg && \
     docker-php-ext-install gd && \
     apt-get clean
+RUN mv ./laravel/.env.prod ./laravel/.env
 COPY ./laravel /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 COPY ./site.conf /etc/nginx/conf.d/site.conf
