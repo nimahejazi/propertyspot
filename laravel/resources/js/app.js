@@ -531,7 +531,10 @@ $(() => {
             })
                 .then(res => res.data)
                 .then(data => {
+                    console.log(data.photo_url);
+                    console.log(data.photo_url_2x);
                     $('#agent-photo')
+                        .attr('srcset', data.photo_url + ', ' + data.photo_url_2x + ' 2x')
                         .attr('src', data.photo_url)
                         .on('load', e => {
                             agentPhotoUploadLoading(false);
