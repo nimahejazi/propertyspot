@@ -41,5 +41,5 @@ mix
     .js("resources/js/simple.js", "public/js/simple.js")
     .sourceMaps()
     .version()
-    .copy("resources/js/vendor/*.js", "public/js/vendor")
+    .copy("resources/js/vendor", "public/js/vendor")
     .copy("resources/img", "public/img");
