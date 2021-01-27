@@ -440,23 +440,33 @@ main {
     height:20rem;
 }
 
+
 .listing-card {
     width: 15rem;
     border: solid 1px $dark-bg;
+    position: relative;
+    .address-container {
+        padding: 1rem;
+    }
     h3 {
         font-size: 1.2rem;
         margin-bottom: 1rem;
         line-height: 1.5rem;
     }
-    .listing-body {
-        padding: 1rem;
+    .next-step-container {
+        position: absolute;
+        bottom: 2rem;
+        width: 100%;
+    }
+    ul {
+        padding: 0 1rem;
     }
     &-dashed {
         @extend .listing-card;
         border: dashed 1px $light-bg;
         .plus-icon {
             transition: all .2s ease-in-out;
-            height: 15rem;
+            height: 16.3rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -472,6 +482,35 @@ main {
             height: 15rem;
             border-top: dashed 1px $light-bg;
         }
+    }
+    .listing-card-img {
+        position: relative;
+        height: 11rem;
+        overflow: hidden;
+        .status-tag {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: #fff;
+            padding: 2px 9px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    }
+    .next-step {
+        background: rgb(203, 203, 203);
+        display: block;
+        padding: 5px 0;
+        text-align: center;
+        margin-top: 1rem;
+        margin-bottom: .5rem;
+        text-transform: uppercase;
+    }
+    .next-step-link {
+        padding: 0 1rem;
+
     }
 }
 
