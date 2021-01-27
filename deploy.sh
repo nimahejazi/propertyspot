@@ -37,5 +37,5 @@ cp ./laravel/.env ./laravel/.env.bak
 cp ./laravel/.env.prod ./laravel/.env
 ./composer install
 docker-compose up --build -d
-sleep 10
+sleep 20
 ./artisan migrate --force
