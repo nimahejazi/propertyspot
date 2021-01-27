@@ -36,17 +36,7 @@ fi
 export CONTAINER_NAME=propertyspot_laravel_test
 ./composer install
 docker-compose -f docker-compose-test.yml up --build -d
-echo '****************************'
-echo 'TESTING DEPLOY ENVIRONMENT'
-echo '****************************'
-ls -lah
-echo '* .env CONTENT'
-cat laravel/.env
-echo '* .env.testing CONTENT'
-cat laravel/.env.testing
-echo '****************************'
-echo 'END TESTING'
-echo '****************************'
+sleep 10 # give enough time for db to start up
 ./artisan --env=testing migrate:fresh --seed
 ./artisan test
 if [ $? -ne 0 ]; then

@@ -37,15 +37,5 @@ cp ./laravel/.env ./laravel/.env.bak
 cp ./laravel/.env.prod ./laravel/.env
 ./composer install
 docker-compose up --build -d
-echo '****************************'
-echo 'TESTING DEPLOY ENVIRONMENT'
-echo '****************************'
-ls -lah
-echo '* .env CONTENT'
-cat laravel/.env
-echo '* .env.testing CONTENT'
-cat laravel/.env.testing
-echo '****************************'
-echo 'END TESTING'
-echo '****************************'
+sleep 10
 ./artisan migrate --force
