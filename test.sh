@@ -34,8 +34,8 @@ fi
 # since container name on test and deploy are different to prevent 
 # disruption of the production container while we test the release
 export CONTAINER_NAME=propertyspot_laravel_test
-docker-compose -f docker-compose-test.yml up --build -d
 ./composer install
+docker-compose -f docker-compose-test.yml up --build -d
 ./artisan --env=testing migrate:fresh --seed
 ./artisan test
 if [ $? -ne 0 ]; then

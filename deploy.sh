@@ -35,6 +35,6 @@ fi
 export CONTAINER_NAME=propertyspot_laravel
 cp ./laravel/.env ./laravel/.env.bak
 cp ./laravel/.env.prod ./laravel/.env
-docker-compose up --build -d
 ./composer install
+docker-compose up --build -d
 ./artisan migrate --force
