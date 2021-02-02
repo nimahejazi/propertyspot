@@ -14,14 +14,30 @@
                 <input type='hidden' id='id' value='{{$listing->id}}'>
                 @csrf
                 @method('PUT')
-                <div class="field">
-                    <label for="payment_status" class="label">Payment Status</label>
-                    <div class="select">
-                        <select name='payment_status'>
-                            <option @if ($listing->payment_status === NULL) selected @endif>NULL</option>
-                            <option @if ($listing->payment_status === 'paid') selected @endif value='paid' @if ($listing->payment_status === 'paid') selected @endif>Paid</option>
-                        </select>
+                <div class="columns">
+                    <div class="column">
+                        <div class="field">
+                            <label for="payment_status" class="label">Payment Status</label>
+                            <div class="control is-expanded">
+
+                                <div class="select is-fullwidth">
+                                    <select name='payment_status'>
+                                        <option @if ($listing->payment_status === NULL) selected @endif>NULL</option>
+                                        <option @if ($listing->payment_status === 'paid') selected @endif value='paid' @if ($listing->payment_status === 'paid') selected @endif>Paid</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+                    <div class="column">
+                        <div class="field">
+                            <label for="payment_date" class="label">Payment Date</label>
+                            <input type="text" class='input' id='payment_date' name='payment_date' value="{{old('payment_date', $listing->payment_date)}}">
+                        </div>
+
+                    </div>
+
                 </div>
                 <div class="field">
                     <label class='label' for="slug">Slug</label>

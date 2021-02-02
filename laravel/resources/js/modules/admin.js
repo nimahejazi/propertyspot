@@ -1,3 +1,4 @@
+const { Datepicker } = require('vanillajs-datepicker');
 module.exports = ($, axios, api_token, listing_id) => {
     $('#checkSlugAvailability').on('click', function (e) {
         e.preventDefault();
@@ -51,4 +52,13 @@ module.exports = ($, axios, api_token, listing_id) => {
     $('#slug').on('keyup', function(e) {
         $('#checkSlugAvailability').prop('disabled', this.value === '');
     });
+
+
+    const elem = document.getElementById('payment_date');
+    if (elem) {
+        const datepicker = new Datepicker(elem, {
+            orientation: 'left bottom'
+        });
+
+    }
 }
