@@ -31,8 +31,8 @@ services:
       - cache:/var/www/html/bootstrap/cache
       - public:/var/www/html/public
     environment: 
-      VIRTUAL_HOST: propertyspot.robotkudos.com
-      LETSENCRYPT_HOST: propertyspot.robotkudos.com
+      VIRTUAL_HOST: propertyspot.net,www.propertyspot.net
+      LETSENCRYPT_HOST: propertyspot.net,www.propertyspot.net
       LETSENCRYPT_EMAIL: nhejazi@gmail.com
 
 volumes:
