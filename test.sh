@@ -42,7 +42,7 @@ sleep 20 # give enough time for db to start up
 if [ $? -ne 0 ]; then
     exit 1
 fi
-./artisan dusk
+./artisan dusk --env=testing
 if [ $? -ne 0 ]; then
     exit 1
 fi
