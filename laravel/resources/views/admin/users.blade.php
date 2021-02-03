@@ -8,7 +8,28 @@
       @include('includes.admin-menu')
     </div>
     <div class="column">
-      <h1 class='is-size-3'>Users</h1>
+      <div class="">
+        @if (session('error'))
+            <div class='notification is-danger'>
+                <div class='delete'></div>
+                {{session('error')}}
+            </div>
+        @endif
+        @if (session('info'))
+            <div class='notification is-success'>
+                <div class='delete'></div>
+                {{session('info')}}
+            </div>
+        @endif
+      </div>
+      <div class="is-flex is-justify-content-space-between">
+        <h1 class='is-size-3'>Users</h1>
+        <a href="/admin/users/create" class="button">
+          <span class="icon">
+            <i class="fas fa-user-plus"></i>
+          </span>
+        </a>
+      </div>
       <table class='table is-fullwidth is-hoverable'>
         <thead>
           <tr>

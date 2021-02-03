@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use \App\Http\Controllers\ListingController;
 use \App\Http\Controllers\WebsiteController;
 use \App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminUserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,7 +69,7 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'users' ], function() {
 
 // Admin
 Route::group([ 'middleware' => [ 'auth', 'can:accessAdmin' ], 'prefix' => 'admin' ], function() {
-  Route::get('/users', [AdminController::class, 'showUsers'])->name('admin-users');
+  Route::resource('users', AdminUserController::class);
   Route::get('/users/{id}/listings', [AdminController::class, 'showUserListings']);
   Route::get('/listings/{id}/edit', [AdminController::class, 'showEditListing']);
   Route::put('/listings/{id}/edit', [AdminController::class, 'editListing']);

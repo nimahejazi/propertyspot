@@ -1,7 +1,7 @@
 <aside class='menu'>
     <p class='menu-label'>General</p>
     <ul class='menu-list'>
-        <li><a href='{{route("admin-users")}}'>Users</a></li>
+        <li><a href='{{route("users.index")}}'>Users</a></li>
     </ul>
     <p class="menu-label">Account</p>
     <ul class="menu-list">
