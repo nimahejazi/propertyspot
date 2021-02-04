@@ -33,9 +33,7 @@ fi
 # since container name on test and deploy are different to prevent 
 # disruption of the production container while we test the release
 export CONTAINER_NAME=propertyspot_laravel
-cp ./laravel/.env ./laravel/.env.bak
-cp ./laravel/.env.prod ./laravel/.env
 ./composer install
-docker-compose up --build -d
+docker-compose up -d
 sleep 20
 ./artisan migrate --force

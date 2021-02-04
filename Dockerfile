@@ -23,6 +23,7 @@ RUN apt-get update && \
     docker-php-ext-install gd && \
     apt-get clean
 COPY ./laravel /var/www/html
+COPY ./laravel/.env.prod /var/www/html/.env
 RUN chown -R www-data:www-data /var/www/html
 COPY ./site.conf /etc/nginx/conf.d/site.conf
 COPY ./php-custom.ini /usr/local/etc/php/conf.d/php-custom.ini

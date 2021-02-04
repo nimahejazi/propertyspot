@@ -12,7 +12,7 @@ services:
       MYSQL_ROOT_PASSWORD: propertyspot
       MYSQL_DATABASE: propertyspot
       MYSQL_USER: propertyspot
-      MYSQL_PASSWORD: propertyspot
+      MYSQL_PASSWORD: REDACTED
     container_name: propertyspot_db
 
   propertyspot:
@@ -35,6 +35,7 @@ services:
     image: selenium/standalone-chrome
     ports:
       - 4444:4444
+    container_name: propertyspot_selenium
 
 volumes:
   db_data:

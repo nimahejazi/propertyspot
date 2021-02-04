@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run --rm -v "$WORKSPACE/laravel":/app composer $@
+docker run --rm -v "$WORKSPACE/laravel":/app composer:1.10.16 $@

@@ -62,7 +62,7 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'users' ], function() {
     Route::post('/profile', [UserController::class, 'saveProfile']);
     Route::get('/new-listing/{id?}', [ListingController::class, 'showListing'])->name('new-listing');
     Route::get('/payment/{id}/new', [ListingController::class, 'showPaymentNew'])->name('payment');
-    Route::get('/payment/{id}', [ListingController::class, 'showPayment'])->name('payment');
+    Route::get('/payment/{id}', [ListingController::class, 'showPayment']);
     Route::get('/preview/{id}', [WebsiteController::class, 'previewWebsite'])->name('preview-website');
     Route::get('/settings/{id}', [WebsiteController::class, 'previewWebsite'])->name('listing-settings');
 });

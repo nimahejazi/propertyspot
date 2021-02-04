@@ -13,5 +13,6 @@ RUN apt-get update && \
     docker-php-ext-configure gd --with-jpeg && \
     docker-php-ext-install gd && \
     apt-get clean
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 CMD service nginx start && \
     php-fpm
