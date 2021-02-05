@@ -1,2 +1,3 @@
 #!/bin/bash
+[ -z "$WORKSPACE" ] && WORKSPACE=$(pwd)
 docker run --rm -v "$WORKSPACE/laravel":/app composer:1.10.16 $@

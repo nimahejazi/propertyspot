@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88de9e0b2ef1858efd2df010e7a80a7d",
+    "content-hash": "1cb9ffa2ed630389c0c0acb754464daf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2504,16 +2504,16 @@
         },
         {
             "name": "robotkudos/rk-image-api",
-            "version": "0.2.2",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robotkudos/RKImageAPI.git",
-                "reference": "8069ade76191b20776826c70a815490734fc2752"
+                "reference": "86b06dfaa6c3093f42bc1d5ca1c3f48db38a9e9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robotkudos/RKImageAPI/zipball/8069ade76191b20776826c70a815490734fc2752",
-                "reference": "8069ade76191b20776826c70a815490734fc2752",
+                "url": "https://api.github.com/repos/robotkudos/RKImageAPI/zipball/86b06dfaa6c3093f42bc1d5ca1c3f48db38a9e9e",
+                "reference": "86b06dfaa6c3093f42bc1d5ca1c3f48db38a9e9e",
                 "shasum": ""
             },
             "require": {
@@ -2543,11 +2543,7 @@
                 }
             ],
             "description": "API for processing image upload to work with rk-image-uploader React app.",
-            "support": {
-                "issues": "https://github.com/robotkudos/RKImageAPI/issues",
-                "source": "https://github.com/robotkudos/RKImageAPI/tree/0.2.2"
-            },
-            "time": "2021-01-12T00:02:07+00:00"
+            "time": "2021-02-05T20:57:34+00:00"
         },
         {
             "name": "robotkudos/rkdb",
@@ -2596,7 +2592,6 @@
                 "reference": "a1ba313c770e2075e5da54600e4350d088987c45",
                 "shasum": ""
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5546,6 +5541,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -5661,10 +5657,6 @@
                 "testing",
                 "webdriver"
             ],
-            "support": {
-                "issues": "https://github.com/laravel/dusk/issues",
-                "source": "https://github.com/laravel/dusk/tree/v6.11.0"
-            },
             "time": "2020-12-22T16:57:45+00:00"
         },
         {
@@ -7679,12 +7671,12 @@
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
@@ -7736,5 +7728,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "1.1.0"
 }
