@@ -24,9 +24,9 @@ RUN apt-get update && \
     apt-get clean
 COPY ./laravel /var/www/html
 COPY ./laravel/.env.prod /var/www/html/.env
-RUN chown -R www-data:www-data /var/www/html
 COPY ./site.conf /etc/nginx/conf.d/site.conf
 COPY ./php-custom.ini /usr/local/etc/php/conf.d/php-custom.ini
 COPY --from=builder app/public /var/www/html/public
+RUN chown -R www-data:www-data /var/www/html
 CMD service nginx start && \
     php-fpm
