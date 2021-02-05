@@ -110,7 +110,7 @@ class UserController extends Controller
             }
         } catch(\Exception $e) {
             Log::critical($e);
-            return redirect('/signin')->with('error', 'An error occurred, sorry for the inconvenience.')->withInput();
+            return redirect('/signin')->with('error', 'An error occurred, sorry for the inconvenience.' . $e->getMessage())->withInput();
         }
     }
 

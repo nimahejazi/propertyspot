@@ -10,7 +10,7 @@ use Tests\DuskTestCase;
 
 class UserTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    // use DatabaseMigrations;
     private $user;
 
     public function setUp() : void {

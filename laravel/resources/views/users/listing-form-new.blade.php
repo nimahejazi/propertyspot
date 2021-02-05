@@ -27,6 +27,6 @@
     <script src="/js/rk-image-uploader.min.js"></script>-->
     <script src='/js/vendor/rk-dashboard/js/loader.js'></script>
     <script src="/js/vendor/rk-dashboard/js/2.ab9c951b.chunk.js"></script>
-    <script src="/js/vendor/rk-dashboard/js/main.4ff12132.chunk.js"></script>
+    <script src="/js/vendor/rk-dashboard/js/main.6a5b3400.chunk.js"></script>
 
 @endsection

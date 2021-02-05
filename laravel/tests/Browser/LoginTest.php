@@ -11,27 +11,43 @@ use Tests\DuskTestCase;
 
 class LoginTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    // use DatabaseMigrations;
     /**
      * A Dusk test example.
      *
      * @return void
      */
-    public function test_user_can_login()
+    private $user;
+
+    protected function setUp() : void
     {
-        $user = User::create([
-            'email' => 'user@example.com', 
+        parent::setUp();
+        $this->user = User::create([
+            'email' => 'example@example.com',
             'password' => Hash::make('asdf1234'),
             'role'      => 'user',
             'api_token' => Str::random(60),
         ]);
-            
-        $this->browse(function (Browser $browser) use ($user) {
+    }
+
+    protected function tearDown(): void
+    {
+        User::destroy([
+            $this->user->id,
+        ]);
+        parent::tearDown();
+    }
+
+    public function test_user_can_login()
+    {
+        $this->browse(function (Browser $browser) {
             $browser->visit('/signin')
-                ->type('email', $user->email)
+                ->type('email', $this->user->email)
                 ->type('password', 'asdf1234')
                 ->press('#submit')
                 ->assertPathIs('/users/dashboard');
+            
+            $browser->driver->manage()->deleteAllCookies();
         });
     }
 
@@ -42,6 +58,7 @@ class LoginTest extends DuskTestCase
                 ->type('password', 'asdf1234')
                 ->press('#submit')
                 ->assertPresent('.notification.is-danger');
+            $browser->driver->manage()->deleteAllCookies();
         });
     }
 }

@@ -11,8 +11,7 @@ use Tests\DuskTestCase;
 
 class AdminTest extends DuskTestCase
 {
-    use DatabaseMigrations;
-    use RefreshDatabase;
+    // use DatabaseMigrations;
     private $user;
     private $admin;
     private $listings;
@@ -32,7 +31,7 @@ class AdminTest extends DuskTestCase
             $this->user->id,
             $this->admin->id,
         ]);
-        // Listing::destroy($this->listings);
+        parent::tearDown();
     }
     /**
      * A Dusk test example.
