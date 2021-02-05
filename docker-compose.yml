@@ -29,7 +29,7 @@ services:
     volumes:
       - storage:/var/www/html/storage
       - cache:/var/www/html/bootstrap/cache
-      - public:/var/www/html/public
+      - public_img:/var/www/html/public/img
     environment: 
       VIRTUAL_HOST: propertyspot.net,www.propertyspot.net
       LETSENCRYPT_HOST: propertyspot.net,www.propertyspot.net
@@ -39,7 +39,7 @@ volumes:
   db_data:
   storage:
   cache:
-  public:
+  public_img:
 
 networks:
   default:
