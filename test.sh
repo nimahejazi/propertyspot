@@ -38,7 +38,7 @@ export CONTAINER_NAME=propertyspot_laravel_test
 docker-compose -f docker-compose-test.yml up --build -d
 sleep 20 # give enough time for db to start up
 ./artisan --env=testing migrate:fresh --seed
-./artisan test
+./artisan test --env=testing
 if [ $? -ne 0 ]; then
     exit 1
 fi

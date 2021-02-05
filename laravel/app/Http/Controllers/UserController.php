@@ -102,7 +102,7 @@ class UserController extends Controller
                     return redirect()->intended(route('dashboard'));
                     break;
                   case 'admin':
-                    return redirect()->intended(route('admin-users'));
+                    return redirect()->intended(route('users.index'));
                     break;
                 }
             } else {

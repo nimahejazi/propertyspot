@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Listing;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,18 +19,24 @@ class ApiTest extends TestCase
      */
 
     private $user;
+    private $userTwo;
     private $admin;
     private $images_to_delete = [];
+    private $uploaded_image_id;
 
     protected function setUp() : void {
         parent::setUp();
-        $this->user = User::factory()->create();
+        $this->user = User::factory()->hasListings(3)->create();
+        $this->userTwo = User::factory()->hasListings(3)->create();
         $this->admin = User::factory()->admin()->create();
     }
 
     protected function tearDown(): void {
+        Listing::destroy($this->user->listings->pluck('id'));
+        Listing::destroy($this->userTwo->listings->pluck('id'));
         User::destroy([
             $this->user->id,
+            $this->userTwo->id,
             $this->admin->id,
         ]);
         foreach($this->images_to_delete as $image) {
@@ -68,4 +75,51 @@ class ApiTest extends TestCase
         $this->images_to_delete[] = $images['photo_url'];
         $this->images_to_delete[] = $images['photo_url_2x'];
     }
+
+    public function test_user_should_be_able_to_upload_image_for_listing()
+    {
+        $image = UploadedFile::fake()->image('sample');
+        $listing = $this->user->listings->first();
+        $response = $this->postJson('/api/image-api?api_token=' . $this->user->api_token, [
+            'name' => 'fakename',
+            'image' => $image,
+            'key' => $listing->id,
+            'position' => 1
+        ]);
+        
+        $response->assertJson([
+            'err' => false
+        ]);
+        $this->uploaded_image_id = $response->json('id');
+
+        $this->assertDatabaseHas('property_photos', [
+            'id' => $this->uploaded_image_id
+        ]);
+    }
+
+    public function test_user_should_be_able_to_delete_property_image()
+    {
+        $listing = $this->user->listings->first();
+        $response = $this->deleteJson('/api/image-api/' . $this->uploaded_image_id . '?key=' . $listing->id . 'api_token=' . $this->user->api_token);
+
+        $this->assertDatabaseMissing('property_photos', [
+            'id' => $this->uploaded_image_id
+        ]);
+    }
+
+    public function test_prevent_other_users_to_upload_image_to_user_listing()
+    {
+        $image = UploadedFile::fake()->image('sample');
+        $listing = $this->user->listings->first();
+        // send userTwo api_token
+        $response = $this->postJson('/api/image-api?api_token=' . $this->userTwo->api_token, [
+            'name' => 'fakename',
+            'image' => $image,
+            'key' => $listing->id,
+            'position' => 1
+        ]);
+        
+        $response->assertForbidden();
+    }
+
 }

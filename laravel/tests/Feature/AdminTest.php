@@ -13,13 +13,16 @@ class AdminTest extends TestCase
     use WithFaker;
 
     private $admin;
+    private $user;
     private $usersToDelete = [];
 
     public function setUp() : void
     {
         parent::setUp();
         $this->admin = User::factory()->admin()->make();
+        $this->user = User::factory()->create();
         $this->usersToDelete[] = $this->admin->id;
+        $this->usersToDelete[] = $this->user->id;
     }
 
     public function tearDown() : void
@@ -108,5 +111,14 @@ class AdminTest extends TestCase
         $this->usersToDelete[] = $user->id;
     }
 
+    public function test_admin_can_login_as_user()
+    {
+        echo $this->user->id;
+        $response = $this->followingRedirects()
+            ->actingAs($this->admin)
+            ->get('/admin/users/' . $this->user->id . '/login-as');
+        
+        $response->assertSee('Welcome, ' . $this->user->email);
+    }
 
 }

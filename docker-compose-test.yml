@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  propertyspot_db:
+  propertyspot_db_test:
     image: mysql:5.7
     volumes:
       - db_data_test:/var/lib/mysql
@@ -15,9 +15,9 @@ services:
       MYSQL_PASSWORD: REDACTED
     container_name: propertyspot_db_test
 
-  propertyspot:
+  propertyspot_test:
     depends_on:
-      - propertyspot_db
+      - propertyspot_db_test
     build:
       context: .
       dockerfile: Dockerfile

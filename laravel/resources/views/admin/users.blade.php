@@ -30,12 +30,13 @@
           </span>
         </a>
       </div>
-      <table class='table is-fullwidth is-hoverable'>
+      <table class='table is-fullwidth is-hoverable is-bordered'>
         <thead>
           <tr>
             <th>ID</th>
             <th>Email</th>
-            <th>Listing</th>
+            <th class='is-narrow'>Listing</th>
+            <th class='is-narrow'>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +45,13 @@
             <td>{{$user->id}}</td>
             <td>{{$user->email}}</td>
             <td><a href='/admin/users/{{$user->id}}/listings'>{{$user->listings()->count()}}</a></td>
+            <td>
+              <a href='/admin/users/{{$user->id}}/login-as'>
+                <span class="icon">
+                  <i class="fas fa-sign-in-alt"></i>
+                </span>
+              </a>
+            </td>
           </tr>
           @endforeach
         </tbody>

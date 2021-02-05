@@ -70,6 +70,7 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'users' ], function() {
 // Admin
 Route::group([ 'middleware' => [ 'auth', 'can:accessAdmin' ], 'prefix' => 'admin' ], function() {
   Route::resource('users', AdminUserController::class);
+  Route::get('/users/{id}/login-as', [AdminUserController::class, 'loginAs']);
   Route::get('/users/{id}/listings', [AdminController::class, 'showUserListings']);
   Route::get('/listings/{id}/edit', [AdminController::class, 'showEditListing']);
   Route::put('/listings/{id}/edit', [AdminController::class, 'editListing']);
