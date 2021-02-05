@@ -22,13 +22,13 @@ pipeline {
         failure {
             sh 'docker rm -f propertyspot_laravel_test propertyspot_db_test propertyspot_selenium'
             mail to: 'nima@robotkudos.com',
-                subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                subject: "❌ Failed Pipeline: ${currentBuild.fullDisplayName}",
                 body: "Something is wrong with ${env.BUILD_URL}"
         }
 
         success {
             mail to: 'nima@robotkudos.com',
-                subject: "Success Pipeline: ${currentBuild.fullDisplayName}",
+                subject: "✅ Success Pipeline: ${currentBuild.fullDisplayName}",
                 body: "Deployed successfully"
 
         }
