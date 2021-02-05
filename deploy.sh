@@ -34,6 +34,6 @@ fi
 # disruption of the production container while we test the release
 export CONTAINER_NAME=propertyspot_laravel
 ./composer install
-docker-compose up -d
+docker-compose up --build -d
 sleep 20
 ./artisan migrate --force
