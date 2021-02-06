@@ -113,7 +113,7 @@
             <div class="col-lg-8">
                 <div class="text">
                     <h2>{{$address}}</h2>
-                    <p>{{$listing->desc}}</p>
+                    <p>{{$listing->property_desc}}</p>
                     <div class="features">
                         @if ($listing->bedrooms) <div class="key-feature">{{$listing->bedrooms}} Bedrooms</div> @endif
                         @if ($listing->bathrooms) <div class="key-feature">{{$listing->bedrooms}} Bathrooms</div> @endif

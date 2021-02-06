@@ -22,7 +22,9 @@ class ListingFactory extends Factory
     public function definition()
     {
         return [
-            'street' => '123 Sample St'
+            'street' => $this->faker->streetAddress,
+            'property_desc' => $this->faker->sentence(),
+            'payment_status' => 'paid',
         ];
     }
 }
