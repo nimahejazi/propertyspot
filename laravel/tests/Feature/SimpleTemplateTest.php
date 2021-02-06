@@ -29,6 +29,13 @@ class SimpleTemplateTest extends TestCase
         $this->listing->save();
     }
 
+    public function tearDown() : void
+    {
+        Listing::destroy($this->listing->id);
+        User::destroy($this->user->id);
+        parent::tearDown();
+    }
+
     public function test_template_shows_address_and_desc()
     {
         $response = $this->get('/' . $this->listing->slug);
@@ -37,5 +44,11 @@ class SimpleTemplateTest extends TestCase
                 $this->listing->address, 
                 $this->listing->property_desc
             ]);
+    }
+
+    public function test_template_shows_agent_phone() 
+    {
+        $response = $this->get('/' . $this->listing->slug);
+        $response->assertSee( $this->user->phone );
     }
 }

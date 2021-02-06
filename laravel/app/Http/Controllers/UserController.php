@@ -142,6 +142,7 @@ class UserController extends Controller
             'fullname',
             'title',
             'email',
+            'phone',
             'license_no',
             'has_company',
             'company_name',

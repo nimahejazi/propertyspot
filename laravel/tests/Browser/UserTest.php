@@ -32,7 +32,7 @@ class UserTest extends DuskTestCase
                 'fullname' => 'Nima Hejazi',
                 'license_no' => '1234567',
                 'title' => 'Global Real Estate Advisor',
-                'phone' => '1231231234',
+                'phone' => '(123) 123-1234',
                 'company_name' => 'Berkshire Hathaway',
                 'company_website' => 'https://berkshire.com',
                 'company_address' => '123 Sample St, Santa Rosa, CA, 95405'
@@ -60,7 +60,8 @@ class UserTest extends DuskTestCase
                 'has_company' => true,
                 'company_name' => $data['company_name'],
                 'company_website' => $data['company_website'],
-                'company_address' => $data['company_address']
+                'company_address' => $data['company_address'],
+                'phone' => $data['phone']
             ]);
         });
     }
