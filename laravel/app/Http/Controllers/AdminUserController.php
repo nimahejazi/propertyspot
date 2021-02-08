@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Stripe;
 
 class AdminUserController extends Controller
 {
@@ -51,11 +52,20 @@ class AdminUserController extends Controller
             $user->role = 'user';
             $user->api_token = Str::random(60);
             $user->password = Hash::make($request->password);
+            $user->stripe_customer_id = $this->createStripUser($user);
             $user->saveQuietly();
         } catch (\Exception $e) {
             return redirect('/admin/users/create')->with('error', 'Error: ' . $e->getMessage());
         }
         return redirect('/admin/users')->with('info', 'User ' . $user->email . ' created successfully.');
+    }
+
+    public function createStripUser($user) {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        $strip_customer = Stripe\Customer::create([
+            'email' => $user->email
+        ]);
+        return $strip_customer->id;
     }
 
     /**

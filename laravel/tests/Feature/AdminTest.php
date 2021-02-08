@@ -121,4 +121,5 @@ class AdminTest extends TestCase
         $response->assertSee('Welcome, ' . $this->user->email);
     }
 
+
 }
