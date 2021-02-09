@@ -1,30 +1,40 @@
 const { Datepicker } = require('vanillajs-datepicker');
 module.exports = ($, axios, api_token, listing_id) => {
+    let slugCheckTimer = null;
+    $('#slug').on('keyup', e => {
+        $('#checkSlugAvailability').prop('disabled', this.value === '');
+        if (slugCheckTimer) {
+            clearTimeout(slugCheckTimer);
+        }
+        $('#slug-icon-success,#slug-icon-error').fadeOut(300, () => {
+            $('#slug-parent').addClass('is-loading');
+        });
+        slugCheckTimer = setTimeout(() => {
+            isSlugAvailable($('#slug').val(), api_token)
+                .then(isAvailable => {
+                    $('#slug-parent').removeClass('is-loading');
+                    if (isAvailable) {
+                        $('#slug-icon-success').fadeIn();
+                    } else {
+                        $('#slug-icon-error').fadeIn();
+                    }
+                });
+        }, 1000);
+
+    });
     $('#checkSlugAvailability').on('click', function (e) {
         e.preventDefault();
+        $('#checkSlugAvailability').attr('disabled', true);
         $('#slug-icon-success,#slug-icon-error').fadeOut(300, () => $('#slug-parent').addClass('is-loading'));
-        axios({
-            url: '/api/check-slug',
-            method: 'POST',
-            params: {
-                api_token
-            },
-            headers: {
-                'Accept': 'application/json',
-            },
-            data: {
-                'slug': $('#slug').val(),
-            }
-        })
-            .then(res => res.data)
-            .then(data => {
+        isSlugAvailable($('#slug').val(), api_token)
+            .then(isAvailable => {
                 $('#slug-parent').removeClass('is-loading');
-                if (data.available) {
+                if (isAvailable) {
                     $('#slug-icon-success').fadeIn();
                 } else {
                     $('#slug-icon-error').fadeIn();
                 }
-            })
+            });
     });
     $('#generateSlug').on('click', function (e) {
         e.preventDefault();
@@ -49,11 +59,15 @@ module.exports = ($, axios, api_token, listing_id) => {
                 $('#slug').val(data.slug);
             })
     });
-    $('#slug').on('keyup', function(e) {
-        $('#checkSlugAvailability').prop('disabled', this.value === '');
+
+    $('form#edit-listing').on('submit', e => {
+        if ( $('#slug').val() === '' || $('#slug-icon-success:visible').length == 0) {
+            if (!confirm('Slug is not confirmed, continue?')) {
+                e.preventDefault();
+                $('#slug').focus();
+            }
+        }
     });
-
-
     const elem = document.getElementById('payment_date');
     if (elem) {
         const datepicker = new Datepicker(elem, {
@@ -61,4 +75,24 @@ module.exports = ($, axios, api_token, listing_id) => {
         });
 
     }
+}
+
+function isSlugAvailable(slug, api_token) {
+    return axios({
+        url: '/api/check-slug',
+        method: 'POST',
+        params: {
+            api_token
+        },
+        headers: {
+            'Accept': 'application/json',
+        },
+        data: {
+            slug
+        }
+    })
+        .then(res => res.data)
+        .then(data => {
+            return data.available;
+        });
 }

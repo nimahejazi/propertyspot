@@ -9,7 +9,7 @@
         </div>
         <div class="column">
             <h1 class='is-size-3'>Edit Listing {{$listing->id}}</h1>
-            <form action='/admin/listings/{{$listing->id}}/edit' method='post'>
+            <form action='/admin/listings/{{$listing->id}}/edit' method='post' id='edit-listing'>
                 <input type='hidden' id='api_token' value='{{$user->api_token}}'>
                 <input type='hidden' id='id' value='{{$listing->id}}'>
                 @csrf
