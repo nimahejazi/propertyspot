@@ -1,6 +1,7 @@
 const $ = require("jquery");
 const blueimp = require("blueimp-gallery");
 const modal = require("bootstrap/js/src/modal");
+require("bootstrap/js/src/collapse");
 const axios = require("axios");
 const mask = require("./modules/mask");
 const addFormValidators = require("./modules/form-validators");
@@ -14,6 +15,16 @@ $.fn.isInViewport = function () {
 };
 
 $(() => {
+    // Bootstrap takes care of showing and hiding the menu
+    // here just hide menu after click.
+    $('.nav-item').on('click', e => {
+        if ($('#navbarNavAltMarkup').hasClass('show')) {
+            $('#navbarNavAltMarkup').collapse('hide');
+        }
+    });
+
+
+
     const [rkFormValidator, rkModalFormValidator] = addFormValidators(
         "simple",
         $
