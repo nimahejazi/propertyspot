@@ -18,7 +18,7 @@ const mix = require("laravel-mix");
 
 mix.webpackConfig({
     resolve: {
-        extensions: [".ts"],
+        extensions: [".ts", "tsx"],
     },
     module: {
         rules: [
@@ -26,6 +26,14 @@ mix.webpackConfig({
                 test: /\.ts$/,
                 use: ["babel-loader", "ts-loader"],
             },
+            {
+                test: /\.tsx$/,
+                use: ["babel-loader"],
+            },
+            {
+                test: /\.js$/,
+                use: ['babel-loader']
+            }
         ],
     },
 });
@@ -43,3 +51,6 @@ mix
     .version()
     .copy("resources/js/vendor", "public/js/vendor")
     .copy("resources/img", "public/img");
+
+mix.ts('resources/js/propertyspot-dashboard.js', 'public/js/propertyspot-dashboard.js')
+        .react()
