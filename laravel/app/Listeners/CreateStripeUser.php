@@ -31,7 +31,6 @@ class CreateStripeUser
         $strip_customer = Stripe\Customer::create([
             'email' => $event->user->email
         ]);
-        echo "CreateStripeUser event: " . $event->user->email . "\n";
         $event->user->stripe_customer_id = $strip_customer->id;
         $event->user->save();
     }

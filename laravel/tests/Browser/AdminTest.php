@@ -56,7 +56,6 @@ class AdminTest extends DuskTestCase
 
     public function test_user_made_by_admin_will_create_stripe_user_too()
     {
-        echo "Runnin test_user_made_by_asdmin_will_create_stripe_user_too()\n";
         $this->browse(function (Browser $browser) {
             $email = $this->faker->email;
             $browser->loginAs($this->admin)

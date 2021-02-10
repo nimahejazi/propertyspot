@@ -25,7 +25,6 @@ class LoginTest extends DuskTestCase
     protected function setUp() : void
     {
         parent::setUp();
-        echo "running setUp in LoginTest\n";
         $this->user = User::create([
             'email' => $this->faker->email,
             'password' => Hash::make('asdf1234'),
@@ -44,7 +43,6 @@ class LoginTest extends DuskTestCase
 
     public function test_user_can_login()
     {
-        echo "running test_user_can_login in LoginTest\n";
         $this->browse(function (Browser $browser) {
             $browser->visit('/signin')
                 ->type('email', $this->user->email)
@@ -57,7 +55,6 @@ class LoginTest extends DuskTestCase
     }
 
     public function test_user_see_error_on_wrong_credentials() {
-        echo "running test_user_see_error.. in LoginTest\n";
         $this->browse(function (Browser $browser) {
             $browser->visit('/signin')
                 ->type('email', 'dummy@example.com')
