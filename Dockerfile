@@ -1,10 +1,20 @@
-FROM node:15.2.0 as builder
+FROM node:15.8.0 as builder
 WORKDIR /app
 COPY ./laravel/package.json ./
 ARG SSH_KEY
+# Authorize SSH Host
+RUN mkdir -p /root/.ssh && \
+    chmod 0700 /root/.ssh && \
+    ssh-keyscan github.com > /root/.ssh/known_hosts
+
+# Add the key and set permissions
+RUN echo "$SSH_KEY" > /root/.ssh/id_rsa && \
+    chmod 600 /root/.ssh/id_rsa
+
 RUN npm install
 COPY ./laravel/resources ./resources
 COPY ./laravel/webpack.mix.js ./
+COPY ./laravel/babel.config.json ./
 RUN npm run prod
 
 FROM php:7.4-fpm

@@ -21,6 +21,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - SSH_KEY=${SSH_KEY}
     ports:
       - 80
       - 443

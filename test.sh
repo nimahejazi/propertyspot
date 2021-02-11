@@ -35,7 +35,7 @@ fi
 # disruption of the production container while we test the release
 export CONTAINER_NAME=propertyspot_laravel_test
 ./composer install
-docker-compose -f docker-compose-test.yml up --build -d
+SSH_KEY=$(cat ~/.ssh/id_rsa) docker-compose -f docker-compose-test.yml up --build -d
 sleep 20 # give enough time for db to start up
 ./artisan --env=testing migrate:fresh --seed
 ./artisan test --env=testing
