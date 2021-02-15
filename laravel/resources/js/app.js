@@ -1,4 +1,3 @@
-require('./modules/bootstrap');
 const addFormValidators = require('./modules/form-validators');
 const preparePayment = require('./modules/stripe');
 const mask = require('./modules/mask');
