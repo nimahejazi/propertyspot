@@ -19,8 +19,15 @@ class AdminUserController extends Controller
      */
     public function index()
     {
+        $apiToken = Auth::user()->api_token;
         $users = User::where('role', 'user')->get();
-        return view('admin.users', ['users' => $users]);
+        return view('admin.users', ['users' => $users, 'apiToken' => $apiToken]);
+    }
+
+    public function getAllUsers()
+    {
+        $users = User::where('role', 'user')->select(['id', 'email'])->withCount('listings')->get();
+        return response()->json($users);
     }
 
     /**

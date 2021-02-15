@@ -6,6 +6,7 @@
       <link rel="stylesheet" href="{{mix('css/main.css')}}" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Lato&amp;display=swap" rel="stylesheet" />
+      @yield('head')
       <title>@yield('title')</title>
   </head>
   <body>

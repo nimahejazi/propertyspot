@@ -1,6 +1,11 @@
 @extends('layouts.main')
 
 @section('title', 'List of All Users | PropertySpot.net Admin')
+
+@section('head')
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+@endsection
+
 @section('main')
 <div class="container section">
   <div class='columns'>
@@ -24,40 +29,20 @@
       </div>
       <div class="is-flex is-justify-content-space-between">
         <h1 class='is-size-3'>Users</h1>
+        <input type="hidden" id="api_token" value="{{$apiToken}}">
         <a href="/admin/users/create" class="button">
           <span class="icon">
             <i class="fas fa-user-plus"></i>
           </span>
         </a>
       </div>
-      <table class='table is-fullwidth is-hoverable is-bordered'>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th class='is-narrow'>Listing</th>
-            <th class='is-narrow'>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($users as $user)
-          <tr>
-            <td>{{$user->id}}</td>
-            <td>{{$user->email}}</td>
-            <td><a href='/admin/users/{{$user->id}}/listings'>{{$user->listings()->count()}}</a></td>
-            <td>
-              <a href='/admin/users/{{$user->id}}/login-as'>
-                <span class="icon">
-                  <i class="fas fa-sign-in-alt"></i>
-                </span>
-              </a>
-            </td>
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
+      <div id="list-of-users"></div>
     </div>
   </div>
 
 </div>
+@endsection
+
+@section('scripts')
+  <script src="/js/rk-instant-list.js"></script>
 @endsection

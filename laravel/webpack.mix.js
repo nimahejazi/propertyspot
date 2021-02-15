@@ -24,11 +24,11 @@ mix.webpackConfig({
         rules: [
             {
                 test: /\.ts$/,
-                use: ["babel-loader", "ts-loader"],
+                use: ["ts-loader" ],
             },
             {
                 test: /\.tsx$/,
-                use: ["babel-loader"],
+                use: ["babel-loader" ],
             },
             {
                 test: /\.js$/,
@@ -53,4 +53,6 @@ mix
     .copy("resources/img", "public/img");
 
 mix.ts('resources/js/propertyspot-dashboard.js', 'public/js/propertyspot-dashboard.js')
+        .react()
+mix.ts('resources/js/rk-instant-list.js', 'public/js/rk-instant-list.js')
         .react()

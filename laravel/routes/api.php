@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ListingController;
@@ -32,4 +33,5 @@ Route::middleware('auth:api')->get('/payment-preconfirm/{id}', [ListingControlle
 Route::middleware('auth:api')->post('/set-payment', [ListingController::class, 'returnPaymentIntent']);
 Route::middleware('auth:api')->post('/check-slug', [ListingController::class, 'checkSlug']);
 Route::middleware('auth:api')->post('/generate-slug', [ListingController::class, 'generateSlug']);
+Route::middleware(['auth:api', 'can:accessAdmin'])->get('/all-users', [AdminUserController::class, 'getAllUsers']);
 
