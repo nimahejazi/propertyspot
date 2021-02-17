@@ -8,6 +8,15 @@
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Lato&amp;display=swap" rel="stylesheet" />
       @yield('head')
       <title>@yield('title')</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPR9YWSX4Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DPR9YWSX4Z');
+        </script>
   </head>
   <body>
 
