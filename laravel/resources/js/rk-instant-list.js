@@ -18,10 +18,15 @@ const data = axios({
                 data={data}
                 actions={[
                     {
-                        title: 'Sign in as {name}',
+                        title: 'Show listings',
+                        icon: 'pageview',
+                        url: '/admin/users/{id}/listings'
+                    },
+                    {
+                        title: 'Sign in as {email}',
                         icon: 'exit_to_app',
                         url: '/admin/users/{id}/login-as'
-                    }
+                    },
                 ]}
                 headers={[
                     { id: 'id', title: 'ID', numeric: true, sortable: true},
