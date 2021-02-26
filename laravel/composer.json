@@ -15,7 +15,7 @@
         "guzzlehttp/guzzle": "^7.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "robotkudos/rk-image-api": "^0.2",
+        "robotkudos/rk-image-api": "^1.0",
         "robotkudos/rkdb": "dev-master",
         "robotkudos/rkhelpers": "dev-master",
         "robotkudos/rkimage": "^0.1.0",

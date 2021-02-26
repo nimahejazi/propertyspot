@@ -15,7 +15,7 @@
         "cross-env": "^7.0",
         "laravel-mix": "^6.0.11",
         "lodash": "^4.17.19",
-        "propertyspot-dashboard": "github:robotkudos/propertyspot-dashboard#0.2.0",
+        "propertyspot-dashboard": "github:robotkudos/propertyspot-dashboard",
         "resolve-url-loader": "^3.1.0",
         "rk-instant-list": "github:robotkudos/rk-instant-list",
         "sass": "^1.26.11",

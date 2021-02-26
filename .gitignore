@@ -5,3 +5,4 @@ tags
 laravel/public/js/bundle.js
 laravel/public/css/main.css
 /laravel/nbproject/private/
+.vscode/
