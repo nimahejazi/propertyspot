@@ -410,7 +410,7 @@
 <section class="copyright section-separator">
     <div class="container">
         @if($listing->user->has_company)
-            <p class="text-center copyright"><a href="{{$listing->user->company_website}}" target='_blank'>{{$listing->user->compnay_name}}</a> | {{$listing->user->company_address}}</p>
+            <p class="text-center copyright"><a href="{{$listing->user->company_website}}" target='_blank'>{{$listing->user->company_name}}</a> | {{$listing->user->company_address}}</p>
         @endif
         <p class="text-center copyright">&copy; 2020 PropertySpot.net | Create your own property website in minutes</p>
     </div>
