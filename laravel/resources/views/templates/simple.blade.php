@@ -116,7 +116,7 @@
                     <p>{{$listing->property_desc}}</p>
                     <div class="features">
                         @if ($listing->bedrooms) <div class="key-feature">{{$listing->bedrooms}} Bedrooms</div> @endif
-                        @if ($listing->bathrooms) <div class="key-feature">{{$listing->bedrooms}} Bathrooms</div> @endif
+                        @if ($listing->bathrooms) <div class="key-feature">{{$listing->bathrooms}} Bathrooms</div> @endif
                         @if ($listing->square_ft) <div class="key-feature">{{$listing->square_ft}}&plusmn; Sq. Ft.</div> @endif
                         @if ($listing->lot_square_ft) <div class="key-feature">{{$listing->lot_square_ft}}&plusmn; Sq. Ft. Lot</div> @endif
                     </div>

@@ -2504,16 +2504,16 @@
         },
         {
             "name": "robotkudos/rk-image-api",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robotkudos/rk-image-api.git",
-                "reference": "d2143db1c9b7954496d553638b9735b4faf7576f"
+                "reference": "1b5400b416e04a45753120d7f4a6886a2e9b7798"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robotkudos/rk-image-api/zipball/d2143db1c9b7954496d553638b9735b4faf7576f",
-                "reference": "d2143db1c9b7954496d553638b9735b4faf7576f",
+                "url": "https://api.github.com/repos/robotkudos/rk-image-api/zipball/1b5400b416e04a45753120d7f4a6886a2e9b7798",
+                "reference": "1b5400b416e04a45753120d7f4a6886a2e9b7798",
                 "shasum": ""
             },
             "require": {
@@ -2543,7 +2543,7 @@
                 }
             ],
             "description": "API for processing image upload to work with rk-image-uploader React app.",
-            "time": "2021-02-26T23:35:38+00:00"
+            "time": "2021-04-25T15:34:28+00:00"
         },
         {
             "name": "robotkudos/rkdb",
