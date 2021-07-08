@@ -43,7 +43,7 @@ class Listing extends Model
         return $this->hasMany('App\Models\PropertyAmenity');
     }
     public function photos() {
-        return $this->hasMany('App\Models\PropertyPhoto', 'key');
+        return $this->hasMany('App\Models\PropertyPhoto', 'key')->orderBy('position');
     }
     public function videos() {
         return $this->hasMany('App\Models\PropertyVideo');
