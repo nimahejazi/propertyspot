@@ -249,7 +249,7 @@
             <div class="col-sm-9">
                 <ul>
                     @if ($listing->bedrooms) <li>{{$listing->bedrooms}} Bedrooms</li> @endif
-                    @if ($listing->bathrooms) <li>{{$listing->bedrooms}} Bathrooms</li> @endif
+                    @if ($listing->bathrooms) <li>{{$listing->bathrooms}} Bathrooms</li> @endif
                     @if ($listing->square_ft) <li>{{$listing->square_ft}}&plusmn; Sq. Ft.</li> @endif
                     @if ($listing->lot_square_ft) <li>{{$listing->lot_square_ft}}&plusmn; Sq. Ft. Lot</li> @endif
                 </ul>
