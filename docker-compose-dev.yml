@@ -3,6 +3,7 @@ version: "3"
 services:
   propertyspot_db_test:
     image: mysql:5.7
+    platform: linux/amd64
     volumes:
       - db_data:/var/lib/mysql
     restart: always
@@ -33,6 +34,7 @@ services:
       
   selenium:
     image: selenium/standalone-chrome
+    platform: linux/amd64
     ports:
       - 4444:4444
     container_name: propertyspot_selenium
