@@ -33,13 +33,13 @@ class UserController extends Controller
         try {
             $user = User::where('email', $request->email)->first();
             if (!$user) {
-                return redirect(route('forgot-password'))->with('error', 'Email not found')->withInput();
+                return redirect(route('forgot-password'))->with('error', "We couldn't find an account with that email address.")->withInput();
             }
             $user->resetPassword();
 
 
         } catch(\Exception $e) {
-            return redirect(route('forgot-password'))->with('error', 'Unknown error happened. Sorry for the inconvenience.' . $e->getMessage())->withInput();
+            return redirect(route('forgot-password'))->with('error', 'An unknown error occurred. We apologize for the inconvenience.')->withInput();
         }
         return view('forgot-password', ['email' => $user->email, 'success' => true]);
     }
@@ -63,7 +63,7 @@ class UserController extends Controller
             ]);
 //            event(new Registered($user));
         } catch(\Exception $e) {
-            return redirect('/signup')->with('error', 'An error occurred, sorry for the inconvenience.')->withInput();
+            return redirect('/signup')->with('error', 'An error occurred. We apologize for the inconvenience.')->withInput();
         }
         Auth::login($user);
 
@@ -72,11 +72,11 @@ class UserController extends Controller
              'title'    => 'Success!',
              'subtitle' => 'Your account has been created successfully!',
              'paragraphs' => [
-                 'Thanks for signing up with PropertySpot.net. Now you can create a website for your property easy and fast',
-                 'To start creating a new website, sign in to your account.'
+                 'Thanks for signing up with PropertySpot.net. Now you can create a website for your property quickly and easily.',
+                 'To get started, head straight to your dashboard.'
              ],
              'link' => [
-                 'title'    => 'Sign in to start using PropertySpot.net',
+                 'title'    => 'Go to your dashboard',
                  'url'      => '/users/dashboard'
              ]
          ]);
@@ -106,17 +106,17 @@ class UserController extends Controller
                     break;
                 }
             } else {
-                return redirect('/signin')->with('error', 'Invalid username/password')->withInput();
+                return redirect('/signin')->with('error', 'Invalid email or password.')->withInput();
             }
         } catch(\Exception $e) {
             Log::critical($e);
-            return redirect('/signin')->with('error', 'An error occurred, sorry for the inconvenience.' . $e->getMessage())->withInput();
+            return redirect('/signin')->with('error', 'An error occurred. We apologize for the inconvenience.')->withInput();
         }
     }
 
     public function signout() {
         Auth::logout();
-        return redirect('/signin')->with('message', 'You are successfully signed out');
+        return redirect('/signin')->with('message', 'You have been signed out successfully.');
     }
 
     public function showDashboard() {
@@ -221,7 +221,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
         } catch(\Exception $e) {
-            return redirect(route('reset-password'))->with('error', 'Unknown error happened. Sorry for the inconvenience.' . $e->getMessage())->withInput();
+            return redirect(route('reset-password'))->with('error', 'An unknown error occurred. We apologize for the inconvenience.')->withInput();
         }
         event(new PasswordReset($user));
         return view('reset-password', ['success' => true]);

@@ -15,7 +15,7 @@
             <div class="container">
                 <div class="form-container">
                     <header>
-                        <h1>Sign in</h1>
+                        <h1>Forgot Password</h1>
                     </header>
                     <form class="form" action='{{route("forgot-password")}}' method="post">
                         @csrf
@@ -40,7 +40,7 @@
                             <div class="control"><input class="input @error('email') is-danger @enderror" type="email" placeholder="Email" name="email" id="email" value="{{old('email')}}"/></div>
                             <div class='help is-danger' id='email-err'>@error('email'){{$message}}@enderror</div>
                         </div>
-                        <div class="field"><button type='submit' id='submit' class="action-btn">Send Password Reset</button></div>
+                        <div class="field"><button type='submit' id='submit' class="action-btn">Send Password Reset Link</button></div>
                         @endif
                     </form>
                 </div>

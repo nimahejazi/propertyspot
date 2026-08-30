@@ -32,7 +32,7 @@
                             @isset ($success)
                                 <div class='notification is-success'>
                                     <div class='delete'></div>
-                                    Your password changed successfully. Now you can <a href='{{route('signin')}}'>login to your account.</a>
+                                    Your password has been changed successfully. You can now <a href='{{route('signin')}}'>log in to your account</a>.
                                 </div>
                             @else
                                 <form class="form" action="{{route('reset-password')}}" method='post'>

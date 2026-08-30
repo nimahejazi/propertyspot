@@ -23,13 +23,13 @@
             @case('empty')
                 <article class="message is-warning">
                     <div class="message-header"><p>MISSING AGENT PROFILE DETAILS</p></div>
-                    <div class="message-body">Your profile as an agent is missing. <a href="{{route('profile')}}">Add your headshot and details now</a>.</div>
+                    <div class="message-body">Your agent profile is empty. <a href="{{route('profile')}}">Add your headshot and details now</a>.</div>
                 </article>
                 @break
             @case('partially')
                 <article class="message is-warning">
                     <div class="message-header"><p>MISSING SOME AGENT PROFILE DETAILS</p></div>
-                    <div class="message-body">Your profile as an agent is incomplete. <a href="{{route('profile')}}">Complete your profile now</a>.</div>
+                    <div class="message-body">Your agent profile is incomplete. <a href="{{route('profile')}}">Complete your profile now</a>.</div>
                 </article>
                 @break
         @endswitch
@@ -87,9 +87,9 @@
                                     <ul class="links">
                                         <li><a href="/users/new-listing/{{$listing->id}}">Edit Listing</a></li>
                                         @if($isLive)
-                                            <li><a href="#" class="show-website-address" data-url='propertyspot.net/{{$listing->slug}}' data-address='{{$listing->getAddress()}}'>Show the Website Address</a></li>
+                                            <li><a href="#" class="show-website-address" data-url='propertyspot.net/{{$listing->slug}}' data-address='{{$listing->getAddress()}}'>View Website Link</a></li>
                                         @endif
-                                        <li><a href="{{route('preview-website', ['id' => $listing->id])}}" target='_blank'>Preview the Website</a></li>
+                                        <li><a href="{{route('preview-website', ['id' => $listing->id])}}" target='_blank'>Preview Website</a></li>
                                         <li><a href="{{route('listing-settings', ['id' => $listing->id])}}">Change Settings</a></li>
                                     </ul>
                                     @if ($nextStep)
@@ -121,7 +121,7 @@
       <div class='modal-card'>
           <header class='modal-card-head'>
               <p class='modal-card-title' id='website-address'></p>
-              <button class='delete' aria-label='close'></button>
+              <button class='delete' aria-label='Close'></button>
           </header>
           <section class='modal-card-body'>
               <div class="has-text-centered"><a id='website-url-a' href='#' target='_blank' class="title"><span  id='website-url'></span></a></div>

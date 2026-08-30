@@ -39,10 +39,10 @@
                     </div>
                 </div>
                 <div class="field">
-                    <button class='button is-primary' type='submit'>Create the User</button>
+                    <button class='button is-primary' type='submit'>Create User</button>
                     <a class='button' href='/admin/users'>Cancel</a>
                     @if (!$user->id)
-                    <div class="help">The user won't get welcome email.</div>
+                    <div class="help">This user will not receive a welcome email.</div>
                     @endif
                 </div>
             </form>

@@ -41,9 +41,10 @@ class VerifyEmail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Verify Your Email Address')
+                    ->line('Welcome to PropertySpot.net! Please verify your email address to complete your account setup.')
+                    ->action('Verify Email Address', url('/'))
+                    ->line('If you did not create an account, you can safely disregard this email.');
     }
 
     /**

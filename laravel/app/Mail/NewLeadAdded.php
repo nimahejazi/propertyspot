@@ -38,7 +38,7 @@ class NewLeadAdded extends Mailable
     public function build()
     {
         return $this
-            ->subject('You got a new request from ' . $this->listing->street)
+            ->subject('New lead from your listing at ' . $this->listing->street)
             ->view('emails.leadCreated');
     }
 }

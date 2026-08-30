@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', "Edit Lisiting $listing->id | PropertySpot.net Admin")
+@section('title', "Edit Listing {{$listing->id}} | PropertySpot.net Admin")
 @section('main')
 <div class="container section">
     <div class='columns'>

@@ -12,13 +12,13 @@ module.exports = (path, $) => {
         ));
         rkFormValidator.addValidator(new Validator(
             {id: 'password', title: 'Password'},
-            ['required', 'min:8', 'max:40', 'include:2:1234567890|Password should have at least 2 numbers'],
+            ['required', 'min:8', 'max:40', 'include:2:1234567890|Your password must contain at least 2 numbers.'],
             {id: 'password-err'},
             'is-danger'
         ));
         rkFormValidator.addValidator(new Validator(
             {id: 'password_confirmation', title: 'Password confirmation'},
-            ['required', 'compare:eq:password|Passwords are not matched'],
+            ['required', 'compare:eq:password|Passwords do not match.'],
             {id: 'password_confirmation-err'},
             'is-danger'
         ));
@@ -88,7 +88,7 @@ module.exports = (path, $) => {
         ));
         rkFormValidator.addValidator(new Validator(
             {id: 'email', title: 'Email'},
-            ['required|Please enter your email.', 'email|Please enter a valid email address e.g. jsmith@example.com'],
+            ['required|Please enter your email.', 'email|Please enter a valid email address, e.g. jsmith@example.com.'],
             {id: 'email-err'},
             'is-invalid'
         ));
@@ -113,7 +113,7 @@ module.exports = (path, $) => {
         ));
         rkModalFormValidator.addValidator(new Validator(
             {id: 'email-modal', title: 'Email'},
-            ['required|Please enter your email.', 'email|Please enter a valid email address e.g. jsmith@example.com'],
+            ['required|Please enter your email.', 'email|Please enter a valid email address, e.g. jsmith@example.com.'],
             {id: 'email-modal-err'},
             'is-invalid'
         ));
@@ -151,13 +151,13 @@ module.exports = (path, $) => {
         const rkFormValidator = new RKFormValidator();
         rkFormValidator.addValidator(new Validator(
             {id: 'password', title: 'Password'},
-            ['required', 'min:8', 'max:40', 'include:2:1234567890|Password should have at least 2 numbers'],
+            ['required', 'min:8', 'max:40', 'include:2:1234567890|Your password must contain at least 2 numbers.'],
             {id: 'password-err'},
             'is-danger'
         ));
         rkFormValidator.addValidator(new Validator(
             {id: 'password_confirmation', title: 'Password confirmation'},
-            ['required', 'compare:eq:password|Passwords are not matched'],
+            ['required', 'compare:eq:password|Passwords do not match.'],
             {id: 'password_confirmation-err'},
             'is-danger'
         ));

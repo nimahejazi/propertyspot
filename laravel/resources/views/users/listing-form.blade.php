@@ -62,7 +62,7 @@
                         <div class='page-box'>
                             <div class='has-text-danger' id='page-schools-error'></div>
                             <div class='field'>
-                                <div>School data may not auto-populate in rural areas. Feel free to type in different schools.</div>
+                                <div>School data may not auto-populate in rural areas. Feel free to enter different schools.</div>
                             </div>
                             <div class="field"
                                 <label class="label" for='elementary_school'>Elementary School</label>
@@ -252,7 +252,7 @@
                     </div>
                 </article>
                 <article class="ps-box multipage" id="page-videos">
-                    <div class="box-title">Property videos (Youtube or Vimeo links)</div>
+                    <div class="box-title">Property videos (YouTube or Vimeo links)</div>
                     <div class="box">
                         <div class='cover-loading'></div>
                         <div class='page-box'>
@@ -313,11 +313,11 @@
                         @endphp
                     <div class='box'>
                         <h5>Custom amenities</h5>
-                        <p>Do you need to add an amenity that you can't find in the list above? Add them here, one by one:</p>
+                        <p>Do you need to add an amenity that you can't find in the list above? Add it here, one at a time:</p>
 
                         <div id='rkAmenities'
                              listType="tag"
-                             placeholder="Type amenity here"
+                             placeholder="Type an amenity here"
                              addButtonTitle="Add Amenity"
                              hiddenInput='custom_amenities'
                              initialItems='{{ $custom_amenities }}'

@@ -28,7 +28,7 @@
 <header class="header bg-light sticky-top">
     @isset($preview)
         <div class='preview'>
-            <span>This is preview of your website.</span>
+            <span>This is a preview of your website.</span>
             <a href='/users/dashboard'>Return to dashboard</a>
         </div>
 
@@ -141,7 +141,7 @@
 </div>
 <section class="cta">
     <h2>Don't miss this opportunity...</h2>
-    <button class="btn btn-outline-secondary request-btn request-showing-btn">Request Showing</button>
+    <button class="btn btn-outline-secondary request-btn request-showing-btn">Request a Showing</button>
 </section>
 
 <section class="gallery" id="gallery">
@@ -187,7 +187,7 @@
             @endforeach
         </div>
     </div>
-    <div style="text-align: center; margin-top: 3rem;"><button class="btn btn-outline-secondary request-btn request-showing-btn" type="button">Request Showing</button></div>
+    <div style="text-align: center; margin-top: 3rem;"><button class="btn btn-outline-secondary request-btn request-showing-btn" type="button">Request a Showing</button></div>
 </section>
 <section class="location section-separator" id="location">
     <header>
@@ -317,14 +317,14 @@
                     <div class="col-lg">
                         <div class="form-group">
                             <label for="message">Message</label><textarea class="form-control" name="message" required="required" id="message" cols="30" rows="8"></textarea>
-                            <div class="invalid-feedback" id='message-err'>Please enter your message</div>
+                            <div class="invalid-feedback" id='message-err'>Please enter your message.</div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <div>
-                            <div class="text-danger" id="captcha-error" style='display:none'>Cannot verify security measures</div>
+                            <div class="text-danger" id="captcha-error" style='display:none'>Security verification failed. Please try again.</div>
                         </div>
                         <button class="btn btn-primary" type="submit">
                             <span class="spinner-border spinner-border-sm" style='display: none' role="status" aria-hidden="true"></span>
@@ -334,13 +334,13 @@
                 </div>
             </div>
             <div class='success-box' style='display: none'>
-                <img src='/img/checked-icon.png' alt='Cancel Icon' class='status-icon'>
+                <img src='/img/checked-icon.png' alt='Checked Icon' class='status-icon'>
                 <h4>Thanks for your interest!</h4>
                 <p>Your request has been received.</p>
             </div>
             <div class='error-box' style='display:none'>
-                <img src='/img/cancel-icon.png' alt='Checked Icon' class='status-icon'>
-                <h4>An error has happened.</h4>
+                <img src='/img/cancel-icon.png' alt='Cancel Icon' class='status-icon'>
+                <h4>An error occurred.</h4>
                 <p>Sorry for the inconvenience. We will look into it.</p>
             </div>
 
@@ -359,12 +359,12 @@
         <form class="needs-validation" method="POST" action="sendmail.php" id="form-modal" novalidate>
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Do you want to see more?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Would you like to schedule a showing?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class='form-box'>
                     <div class="modal-body">
-                        <p>Complete the information below to schedule a time and date to tour the property.</p>
+                        <p>Complete the information below to schedule a date and time to tour the property.</p>
                         <input type="hidden" name="from" value="visit" />
                         <div class="form-group">
                             <label class="col-form-label" for="name">Name:</label><input class="form-control" id="name-modal" type="text" required="required" name="name-modal" />
@@ -379,27 +379,27 @@
                             <div class="invalid-feedback" id='phone-modal-err'>Please enter your phone number.</div>
                         </div>
                         <div class="form-group">
-                            <label for="message">Message (optional)</label><textarea class="form-control" name="message-modal" required="required" id="message-modal" cols="30" rows="4"></textarea>
-                            <div class="invalid-feedback" id='message-modal-err'>Please enter your message</div>
+                            <label for="message">Message (optional)</label><textarea class="form-control" name="message-modal" id="message-modal" cols="30" rows="4"></textarea>
+                            <div class="invalid-feedback" id='message-modal-err'>Please enter your message.</div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="text-danger" id="captcha-error" style='display: none'>Cannot verify security measures</div>
+                        <div class="text-danger" id="captcha-error" style='display: none'>Security verification failed. Please try again.</div>
                         <button class="btn btn-primary" type="submit">
                             <span class="spinner-border spinner-border-sm" style='display: none' role="status" aria-hidden="true"></span>
-                            Submit request
+                            Submit Request
                         </button>
                     </div>
                 </div>
                 <div class='success-box' style='display: none'>
-                    <img src='/img/checked-icon.png' alt='Cancel Icon' class='status-icon'>
+                    <img src='/img/checked-icon.png' alt='Checked Icon' class='status-icon'>
                     <h4>Thanks for your interest!</h4>
                     <p>Your request has been received.</p>
                     <button class='btn btn-secondary' data-dismiss='modal'>Close</button>
                 </div>
                 <div class='error-box' style='display:none'>
-                    <img src='/img/cancel-icon.png' alt='Checked Icon' class='status-icon'>
-                    <h4>An error has happened.</h4>
+                    <img src='/img/cancel-icon.png' alt='Cancel Icon' class='status-icon'>
+                    <h4>An error occurred.</h4>
                     <p>Sorry for the inconvenience. We will look into it.</p>
                     <button class='btn btn-secondary' data-dismiss='modal'>Close</button>
                 </div>
@@ -412,7 +412,7 @@
         @if($listing->user->has_company)
             <p class="text-center copyright"><a href="{{$listing->user->company_website}}" target='_blank'>{{$listing->user->company_name}}</a> | {{$listing->user->company_address}}</p>
         @endif
-        <p class="text-center copyright">&copy; 2020 PropertySpot.net | Create your own property website in minutes</p>
+        <p class="text-center copyright">&copy; {{ date('Y') }} PropertySpot.net | Create your own property website in minutes</p>
     </div>
 </section>
 <script src="https://www.google.com/recaptcha/api.js?render=6LdrlNwZAAAAAJytQXt5UQ1Y564-Up8YJDGMO2Wa"></script>
