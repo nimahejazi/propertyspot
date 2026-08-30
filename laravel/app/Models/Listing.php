@@ -9,6 +9,35 @@ class Listing extends Model
 {
     use HasFactory;
 
+    // Fields the client may set through the API. Excludes user_id, slug,
+    // payment_* and square_customer_id which are set server-side only.
+    public const EDITABLE_FIELDS = [
+        'street',
+        'add_line2',
+        'county',
+        'city',
+        'state',
+        'zip',
+        'lat',
+        'lng',
+        'elementary_school',
+        'middle_school',
+        'high_school',
+        'property_type',
+        'bedrooms',
+        'bathrooms',
+        'square_ft',
+        'price',
+        'mls_no',
+        'listing_status_id',
+        'year_built',
+        'lot_square_ft',
+        'floors',
+        'garage_size',
+        'property_desc',
+        'featured_photo_id',
+    ];
+
     public $fillable = [
         'user_id',
         'street',
@@ -50,7 +79,7 @@ class Listing extends Model
     }
 
     public function status() {
-        return $this->hasOne('App\Models\ListingStatus');
+        return $this->belongsTo('App\Models\ListingStatus');
     }
 
     public function user() {
@@ -124,7 +153,7 @@ class Listing extends Model
         $slug = strtolower(str_replace(' ', '', $this->street));
         $slugBase = $slug;
         $i = 2;
-        while(Listing::where('slug', $slug)->count()) {
+        while(Listing::where('slug', $slug)->where('id', '!=', $this->id)->count()) {
             $slug = $slugBase . '-' . $i++;
         }
         return $slug;
@@ -147,6 +176,6 @@ class Listing extends Model
     }
 
     public function paymentStatus() {
-        return $this->hasOne('App\Models\PaymentStatus');
+        return $this->belongsTo('App\Models\PaymentStatus');
     }
 }

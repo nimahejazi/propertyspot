@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use App\Models\ListingStatus;
+use App\Models\PropertyPhoto;
 use App\Models\PropertyType;
 use App\Models\School;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class ListingController extends Controller
     public function saveListingDetails(Request $request) {
       if ($request->has('id')) {
         $listing = Listing::find($request->id);
-        if ($listing->user_id !== $request->user()->id) {
+        if ($listing === null || $listing->user_id !== $request->user()->id) {
             return response()->json(['success'=>false, 'message'=> 'Unauthorized']);
         }
         // from videos page
@@ -61,13 +62,16 @@ class ListingController extends Controller
             $listing->amenities()->delete();
             $listing->amenities()->createMany($this_amenities);
         }
-        $listing->fill($request->all());
+        $listing->fill($request->only(Listing::EDITABLE_FIELDS));
         $listing->save();
         return response()->json([
             'success'=> true
         ]);
 
       } else {
+        $request->validate([
+            'street' => 'required',
+        ]);
         $listing = new Listing([
           'user_id' =>  $request->user()->id,
           'street' => $request->street,
@@ -91,7 +95,7 @@ class ListingController extends Controller
             return response()->json(['success' => false, 'message' => 'street is required']);
         }
         $listing = Listing::find($request->id);
-        if ($listing->user_id !== $request->user()->id) {
+        if ($listing === null || $listing->user_id !== $request->user()->id) {
             return response()->json(['success'=>false, 'message'=> 'Unauthorized']);
         }
 
@@ -126,7 +130,7 @@ class ListingController extends Controller
             $listing->amenities()->delete();
             $listing->amenities()->createMany($this_amenities);
         } else {
-            $listing->fill($request->all());
+            $listing->fill($request->only(Listing::EDITABLE_FIELDS));
             $listing->save();
         }
         return response()->json([
@@ -142,11 +146,8 @@ class ListingController extends Controller
 
         if ($listing === null) return response()->json(['success'=> true, 'fields' => []]);
 
-        // Make sure only fillable fields will be sent out
-        // why?
-//        $white_list = $listing->getFillable();
         $fields = explode(',', $request->fields);
-//        $fields = array_intersect($fields, $white_list);
+        $fields = array_intersect($fields, Listing::EDITABLE_FIELDS);
         $res_fields = [];
         foreach($fields as $field) {
             $res_fields[$field] = $listing[$field];
@@ -192,7 +193,7 @@ class ListingController extends Controller
         /*     ]); */
         /* } else { */
             $res = Http::get('https://api.greatschools.org/schools/nearby',[
-                'key'   => 'a46e8bc708fdbd23cec422804df8b61c',
+                'key'   => config('services.greatschools.key'),
                 'state' => $state,
                 'lat'   => $lat,
                 'lon'   => $lng,
@@ -212,18 +213,18 @@ class ListingController extends Controller
                         'elementary_school' => $schoolGrades['elementary_school'],
                         'middle_school' => $schoolGrades['middle_school'],
                         'high_school'   => $schoolGrades['high_school'],
-                        'enrollment'    => (float) $school->enrollment ?? null,
-                        'gs_rating'     => (integer) $school->gsRating ?? null,
-                        'parent_rating' => (integer) $school->parentRating ?? null,
-                        'city'          => (string) $school->city ?? null,
-                        'state'         => (string) $school->state ?? null,
-                        'district'      => (string) $school->district ?? null,
-                        'address'       => (string) $school->address ?? null,
-                        'phone'         => (string) $school->phone ?? null,
-                        'website'       => (string) $school->website ?? null,
-                        'lat'           => (float) $school->lat ?? null,
-                        'lng'           => (float) $school->lon ?? null,
-                        'distance'      => (float) $school->distance ?? null
+                        'enrollment'    => $school->enrollment != '' ? (float) $school->enrollment : null,
+                        'gs_rating'     => $school->gsRating != '' ? (int) $school->gsRating : null,
+                        'parent_rating' => $school->parentRating != '' ? (int) $school->parentRating : null,
+                        'city'          => (string) $school->city,
+                        'state'         => (string) $school->state,
+                        'district'      => (string) $school->district,
+                        'address'       => (string) $school->address,
+                        'phone'         => (string) $school->phone,
+                        'website'       => (string) $school->website,
+                        'lat'           => $school->lat != '' ? (float) $school->lat : null,
+                        'lng'           => $school->lon != '' ? (float) $school->lon : null,
+                        'distance'      => $school->distance != '' ? (float) $school->distance : null
                     ];
                 }
                 //$listing->schools_fetched = true;
@@ -247,9 +248,11 @@ class ListingController extends Controller
         }
         $listing = Listing::where(['id' => $request->listing_id, 'user_id' => $request->user()->id])->first();
         if ($listing === null) return response()->json(['success'=> false, 'message' => 'Listing not found']);
-        $listing->featured_photo_id = $request->id;
+        $photo = PropertyPhoto::where('id', $request->id)->where('key', $listing->id)->first();
+        if ($photo === null) return response()->json(['success'=> false, 'message' => 'Photo not found']);
+        $listing->featured_photo_id = $photo->id;
         $listing->save();
-        response()->json(['success' => true]);
+        return response()->json(['success' => true]);
     }
 
     public function showPayment($id) {
@@ -259,7 +262,7 @@ class ListingController extends Controller
             'user_id'   => $user->id
         ])->firstOrFail();
         $options = new Options();
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $customer = \Stripe\Customer::retrieve($user->stripe_customer_id);
 
         $cards = Stripe\PaymentMethod::all([
@@ -277,9 +280,18 @@ class ListingController extends Controller
         return view('users/payment-new', ['id' => $id]);
     }
 
-    public function setPaymentProcessing($id) {
+    public function showListingSettings($id) {
+        return $this->showListing($id);
+    }
 
-        $listing = Listing::find($id);
+    public function setPaymentProcessing($id) {
+        $listing = Listing::where([
+            'id'      => $id,
+            'user_id' => Auth::user()->id
+        ])->first();
+        if ($listing === null) {
+            return response()->json(['success' => false, 'message' => 'Listing not found']);
+        }
         $listing->payment_status = 'processing';
         $listing->save();
         return response()->json([
@@ -287,18 +299,24 @@ class ListingController extends Controller
         ]);
     }
     public function returnPaymentIntent($id) {
-        $stripKey = env('STRIPE_SECRET_KEY');
-        Stripe\Stripe::setApiKey($stripKey);
+        $listing = Listing::where([
+            'id'      => $id,
+            'user_id' => Auth::user()->id
+        ])->first();
+        if ($listing === null) {
+            return response()->json(['success' => false, 'message' => 'Listing not found']);
+        }
+        Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $payment_intent = Stripe\PaymentIntent::create([
             'amount' => 1999,
             'currency' => 'usd',
             'customer' => Auth::user()->stripe_customer_id,
             'metadata' => [
-                'listing_id' => $id
+                'listing_id' => $listing->id
             ]
         ]);
         return response()->json([
-            'publishable_key' => env('STRIPE_PUBLISHABLE_KEY'),
+            'publishable_key' => config('services.stripe.key'),
             'client_secret' => $payment_intent->client_secret
         ]);
     }
@@ -349,20 +367,38 @@ class ListingController extends Controller
     }
 
     function checkSlug(Request $request) {
+        $request->validate(['slug' => 'required|alpha_dash|max:255']);
+        $excludedId = $request->listing_id ?? null;
+        $query = Listing::where('slug', $request->slug);
+        if ($excludedId) {
+            $query->where('id', '!=', $excludedId);
+        }
         return response()->json([
-            'available' => Listing::where('slug', $request->slug)->count() < 1
+            'available' => $query->count() < 1
         ]);
     }
     function generateSlug(Request $request) {
-        $listing = Listing::find($request->listing_id);
-        $slug = strtolower(str_replace(' ', '', $listing->street));
-        $slugBase = $slug;
-        $i = 2;
-        while(Listing::where('slug', $slug)->count()) {
-            $slug = $slugBase . '-' . $i++;
+        $listing = Listing::where([
+            'id'      => $request->listing_id,
+            'user_id' => $request->user()->id
+        ])->first();
+        if ($listing === null) {
+            return response()->json(['success' => false, 'message' => 'Listing not found']);
         }
         return response()->json([
-            'slug' => $slug
+            'slug' => $listing->createSlug()
         ]);
+    }
+
+    public function getPhotos($key) {
+        $listing = Listing::where(['id' => $key, 'user_id' => Auth::user()->id])->first();
+        if ($listing === null) {
+            return response()->json(['success' => false, 'message' => 'Listing not found']);
+        }
+        return response()->json(
+            PropertyPhoto::where('key', $listing->id)
+                ->orderBy('position')
+                ->get(['id', 'name', 'image_url', 'image_2x_url', 'thumb_url', 'thumb_2x_url', 'position'])
+        );
     }
 }

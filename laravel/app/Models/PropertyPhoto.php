@@ -17,6 +17,6 @@ class PropertyPhoto extends Model
     ];
 
     public function listing() {
-        $this->belongsTo('App\Model\Listing');
+        return $this->belongsTo('App\Models\Listing', 'key');
     }
 }

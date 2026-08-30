@@ -56,7 +56,6 @@ class UserController extends Controller
         try {
             $user = User::create([
                 'email'       => $request->email,
-                'role'        => 'user',
                 'password'    => Hash::make($request->password),
                 'api_token'   => Str::random(60),
                 'role'        => 'user',
@@ -98,12 +97,11 @@ class UserController extends Controller
         try {
             if (Auth::attempt($request->only(['email', 'password']), $request->input('remember_me'))) {
                 switch (Auth::user()->role) {
-                  case 'user':
-                    return redirect()->intended(route('dashboard'));
-                    break;
                   case 'admin':
                     return redirect()->intended(route('users.index'));
-                    break;
+                  case 'user':
+                  default:
+                    return redirect()->intended(route('dashboard'));
                 }
             } else {
                 return redirect('/signin')->with('error', 'Invalid email or password.')->withInput();
@@ -162,7 +160,6 @@ class UserController extends Controller
         $user = $request->user();
 
         if (!$request->hasFile('image')) {
-            header('Content-Type: application/json');
             return response()->json([
                     'message' => 'Image not found in the sent data',
                     'success' => false
@@ -170,16 +167,19 @@ class UserController extends Controller
         }
 
         try {
-            if (File::exists(public_path($user->photo_url))) File::delete(public_path($user->photo_url));
-            if (File::exists(public_path($user->photo_url_2x))) File::delete(public_path($user->photo_url_2x));
             $imageUploader = new ImageUploader(true,'img/users/');
             $savedImages = $imageUploader->save($request->image->path(), new Size(640));
+            $oldPhotoUrl = $user->photo_url;
+            $oldPhotoUrl2x = $user->photo_url_2x;
             $user->photo_url = '/' . $savedImages['image_url'];
             $user->photo_url_2x = '/' . $savedImages['image_url_retina'];
             $user->save();
+            if ($oldPhotoUrl && File::exists(public_path($oldPhotoUrl))) File::delete(public_path($oldPhotoUrl));
+            if ($oldPhotoUrl2x && File::exists(public_path($oldPhotoUrl2x))) File::delete(public_path($oldPhotoUrl2x));
         } catch (\Exception $e) {
+            Log::error('Profile photo upload failed: ' . $e->getMessage());
             return response()->json([
-                'message' => 'Cannot save the image:' . $e->getMessage(),
+                'message' => 'Cannot save the image.',
                 'success' => false,
             ]);
         }

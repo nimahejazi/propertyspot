@@ -76,7 +76,6 @@ class User extends Authenticatable
      * @return string 'complete'|'partially'|'empty'
      */
     public function userProfileStatus() {
-        $allDetails = false;
         $userDetails = [
             'fullname',
             'license_no',
@@ -84,17 +83,15 @@ class User extends Authenticatable
             'photo_url'
         ];
 
+        $filledDetails = 0;
         foreach ($userDetails as $detail) {
-            $allDetails = $this[$detail] ? true : false;
+            if ($this[$detail]) $filledDetails++;
         }
-        if ($allDetails) {
+        if ($filledDetails === count($userDetails)) {
             return 'complete';
         }
-        foreach ($userDetails as $detail) {
-            if ($this[$detail]) return 'partially';
-        }
+        if ($filledDetails > 0) return 'partially';
         return 'empty';
-
     }
 
     public function listings() {
