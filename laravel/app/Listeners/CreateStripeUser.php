@@ -27,7 +27,7 @@ class CreateStripeUser
      */
     public function handle(Registered $event)
     {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $strip_customer = Stripe\Customer::create([
             'email' => $event->user->email
         ]);

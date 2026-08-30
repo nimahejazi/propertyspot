@@ -43,19 +43,30 @@ class WebsiteController extends Controller
 
     public function postForm(Request $request) {
 
-        if (!$request->has(['token', 'csrf_token', 'listing_id'])) return response()->json(['success' => false, 'err' => 'Unable to verify the request']);
+        if (!$request->has(['token', 'listing_id'])) return response()->json(['success' => false, 'err' => 'Unable to verify the request']);
 
-        if (!$request->has(['name', 'email', 'phone']))
-        return response()->json(['success' => false, 'err' => 'Name, Email and Phone are required.']);
+        $request->validate([
+            'listing_id' => 'required|exists:listings,id',
+            'name'       => 'required|max:255',
+            'email'      => 'required|email|max:255',
+            'phone'      => 'required|max:255',
+            'message'    => 'nullable|max:5000',
+        ]);
+
+        $listing = Listing::where('id', $request->listing_id)->first();
+        if (!$listing || !$listing->isLive()) return response()->json(['success' => false, 'err' => 'Unable to verify the request']);
 
         $res = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret'    => '6LdrlNwZAAAAAAtQa-LtvToCCDrVQEeVINsSmwAN',
+            'secret'    => config('services.recaptcha.secret'),
             'response'  => $request->token
         ]);
 
-        if (!$res->ok() || $res['success'] == false || $res['score'] < 0.5) return response()->json(['success' => false, 'err' => 'Unable to verify the request']);
+        $minScore = (float) config('services.recaptcha.min_score', 0.5);
+        if (!$res->ok() || ($res['success'] ?? false) == false || ($res['score'] ?? 0) < $minScore) {
+            return response()->json(['success' => false, 'err' => 'Unable to verify the request']);
+        }
 
-        Lead::create($request->all());
+        Lead::create($request->only(['name', 'email', 'phone', 'message', 'listing_id']));
 
         return response()->json([
             'success' => true

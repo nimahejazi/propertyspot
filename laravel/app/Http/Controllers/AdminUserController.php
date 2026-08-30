@@ -50,7 +50,7 @@ class AdminUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|unique:App\Models\User,email',
             'password' => 'required|min:8|regex:/(?=.*[0-9].*[0-9])/'
         ]);
         try {
@@ -59,7 +59,7 @@ class AdminUserController extends Controller
             $user->role = 'user';
             $user->api_token = Str::random(60);
             $user->password = Hash::make($request->password);
-            $user->stripe_customer_id = $this->createStripUser($user);
+            $user->stripe_customer_id = $this->createStripeUser($user);
             $user->saveQuietly();
         } catch (\Exception $e) {
             return redirect('/admin/users/create')->with('error', 'Error: ' . $e->getMessage());
@@ -67,12 +67,12 @@ class AdminUserController extends Controller
         return redirect('/admin/users')->with('info', 'User ' . $user->email . ' created successfully.');
     }
 
-    public function createStripUser($user) {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
-        $strip_customer = Stripe\Customer::create([
+    public function createStripeUser($user) {
+        Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        $stripe_customer = Stripe\Customer::create([
             'email' => $user->email
         ]);
-        return $strip_customer->id;
+        return $stripe_customer->id;
     }
 
     /**

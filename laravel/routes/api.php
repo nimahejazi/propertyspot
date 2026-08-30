@@ -1,12 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminUserController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ListingController;
-use App\Http\Controllers\WebsiteController;
-use \App\Http\Controllers\UserController;
-use \App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -30,7 +27,6 @@ Route::middleware('auth:api')->get('/photos/{key}', [ListingController::class, '
 Route::middleware('auth:api')->put('/photos', [ListingController::class, 'setFeaturedPhoto']);
 Route::middleware('auth:api')->post('/payment-intent/{id}', [ListingController::class, 'returnPaymentIntent']);
 Route::middleware('auth:api')->get('/payment-preconfirm/{id}', [ListingController::class, 'setPaymentProcessing']);
-Route::middleware('auth:api')->post('/set-payment', [ListingController::class, 'returnPaymentIntent']);
 Route::middleware('auth:api')->post('/check-slug', [ListingController::class, 'checkSlug']);
 Route::middleware('auth:api')->post('/generate-slug', [ListingController::class, 'generateSlug']);
 Route::middleware(['auth:api', 'can:accessAdmin'])->get('/all-users', [AdminUserController::class, 'getAllUsers']);

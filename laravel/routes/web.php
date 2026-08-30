@@ -6,6 +6,7 @@ use \App\Http\Controllers\ListingController;
 use \App\Http\Controllers\WebsiteController;
 use \App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\StripeWebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,19 +24,17 @@ Route::get('/', function () {
 });
 
 Route::get('/test-bugsnag', function() {
+    if (app()->environment('production')) {
+        abort(404);
+    }
     Bugsnag\BugsnagLaravel\Facades\Bugsnag::notifyException(new \RuntimeException('Test error'));
 });
 
-Route::get('/signin', function() {
-    return view('signin');
-});
+Route::get('/signin', [UserController::class, 'showSignin'])->name('signin');
 
 // Signup
 Route::get('/signup', [UserController::class, 'showSignup'])->name('signup');
 Route::post('/signup', [UserController::class, 'signup']);
-
-// Signin
-Route::get('/signin', [UserController::class, 'showSignin'])->name('signin');
 Route::post('/signin', [UserController::class, 'signin']);
 
 Route::get('/forgot-password', [UserController::class, 'showForgotPassword'])->name('forgot-password');
@@ -47,9 +46,7 @@ Route::post('/reset-password', [UserController::class, 'resetPassword']);
 // Signout
 Route::get('/signout', [UserController::class, 'signout']);
 
-Route::post('/stripe/payment-hook', function() {
-    return view('stripe/payment-hook');
-});
+Route::post('/stripe/payment-hook', [StripeWebhookController::class, 'handle']);
 
 // Email verification
 Route::get('/email/verify', function() {
@@ -64,7 +61,7 @@ Route::group([ 'middleware' => 'auth', 'prefix' => 'users' ], function() {
     Route::get('/payment/{id}/new', [ListingController::class, 'showPaymentNew'])->name('payment');
     Route::get('/payment/{id}', [ListingController::class, 'showPayment']);
     Route::get('/preview/{id}', [WebsiteController::class, 'previewWebsite'])->name('preview-website');
-    Route::get('/settings/{id}', [WebsiteController::class, 'previewWebsite'])->name('listing-settings');
+    Route::get('/settings/{id}', [ListingController::class, 'showListingSettings'])->name('listing-settings');
 });
 
 // Admin
@@ -77,7 +74,7 @@ Route::group([ 'middleware' => [ 'auth', 'can:accessAdmin' ], 'prefix' => 'admin
   Route::delete('/listings/{id}/delete', [AdminController::class, 'deleteListing']);
 });
 
-Route::post('/post-form', [WebsiteController::class, 'postForm']);
+Route::post('/post-form', [WebsiteController::class, 'postForm'])->middleware('throttle:10,1');
 
 // Listing Website
 Route::get('/{slug}', [WebsiteController::class, 'showWebsite']);
