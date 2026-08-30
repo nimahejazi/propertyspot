@@ -10,10 +10,10 @@ services:
     ports:
       - 3306
     environment:
-      MYSQL_ROOT_PASSWORD: propertyspot
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: propertyspot
       MYSQL_USER: propertyspot
-      MYSQL_PASSWORD: REDACTED
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     container_name: propertyspot_db
 
   propertyspot_test:

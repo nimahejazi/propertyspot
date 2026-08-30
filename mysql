@@ -1,2 +1,8 @@
 #!/bin/bash
-docker exec -ti propertyspot_db /usr/bin/mysql -upropertyspot -pREDACTED propertyspot
+# MySQL client into the dev DB container (propertyspot_db).
+# Credentials come from root .env so this stays secret-free.
+set -e
+cd "$(dirname "$0")"
+[ -f .env ] || { echo "ERROR: root .env missing (need MYSQL_PASSWORD)."; exit 1; }
+MYSQL_PASSWORD=$(grep '^MYSQL_PASSWORD=' .env | cut -d= -f2-)
+exec docker exec -ti propertyspot_db /usr/bin/mysql -upropertyspot -p"$MYSQL_PASSWORD" propertyspot

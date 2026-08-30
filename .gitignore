@@ -1,5 +1,10 @@
 .DS_Store
 .idea/
+.env
+.env.*
+*.bak
+!laravel/.env.example
+!laravel/.env.dev.example
 tags
 **/*.swp
 laravel/public/js/bundle.js
