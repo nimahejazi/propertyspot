@@ -32,6 +32,8 @@ Gotchas:
 - Tests run against the **MySQL container**, not sqlite — the sqlite lines in `phpunit.xml` are commented out (`.env.testing` points at `propertyspot_db_test`). Bring the DB up first.
 - Dusk drives `http://selenium:4444/wd/hub` (selenium service in both dev and test compose files), uses `phpunit.dusk.xml` (separate config), and writes screenshots to `laravel/tests/Browser/screenshots/`.
 - Seeded logins (password `asdf1234`): `nima@robotkudos.com` (admin), `nhejazi@gmail.com` (user). Factory admin state: `User::factory()->admin()`.
+- On Apple Silicon: mysql:5.7 and selenium need `platform: linux/amd64` (set in compose files) and Rosetta emulation enabled in Docker Desktop.
+- Asset build on modern host Node: use `./npm-build.sh` (Node 15.8 container; host Node 26 breaks node-sass 4.x). Needs `~/.ssh/id_rsa` (or symlink to your key) with access to private GitHub deps.
 
 ## Architecture
 
@@ -41,15 +43,17 @@ Gotchas:
 - Password reset is custom: token + timestamp on the `users` table, 30-minute validity enforced by `User::isResetTokenValid` — the model is the source of truth, not `config/auth.php`.
 - `User` fires the `Registered` event on `created` via `$dispatchesEvents` — creating users in tests/seeders triggers verification mail (array/log mailer in test env).
 - Stripe (`stripe-php` 7.x): payment-intent endpoints in `api.php`; hook route `POST /stripe/payment-hook` in `web.php`.
-- Bugsnag reporting; smoke-test route `GET /test-bugsnag`.
+- Bugsnag reporting; smoke-test route `GET /test-bugsnag`. Requires `BugsnagServiceProvider` enabled in `config/app.php` (package discovery alone doesn't register the `bugsnag` channel).
+- Mail: Brevo SMTP relay (`smtp-relay.brevo.com`, port 587/TLS). SMTP **username is the dedicated `*@smtp-brevo.com` login, not the account email**. `.env.prod` is baked into the image at build time — credential changes require a rebuild, not a restart.
 - Frontend: laravel-mix 6 + Sass + React/TS (`webpack.mix.js`). Builds versioned `bundle.js`, `simple.js`, `main.css`, `simple.css`, plus React bundles `propertyspot-dashboard.js` / `rk-instant-list.js`; copies `resources/img/` → `public/img/`.
+- **All `public/js` + `public/css` are gitignored build artifacts** — never edit them; change `resources/` and rebuild.
 
 ## Conventions
 
 - Eloquent relations use string class names (`$this->hasMany('App\Models\Listing')`), not `::class` — follow this in models.
 - Don't rename old migrations — they are already deployed.
 - Style: StyleCI preset `laravel` with `no_unused_imports` disabled (`laravel/.styleci.yml`); there is no local lint command.
-- Per-environment configs are committed: `laravel/.env`, `.env.testing`, `.env.prod`, `.env.dusk`.
+- All `.env*` files are untracked (secrets); `laravel/.env.example` (prod-shaped) and `laravel/.env.dev.example` (dev-shaped) are the checked-in templates.
 
 ## CI/CD
 
