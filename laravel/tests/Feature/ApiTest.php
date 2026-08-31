@@ -63,7 +63,7 @@ class ApiTest extends TestCase
     }
 
     public function test_it_should_upload_profile_photo() {
-        $file = UploadedFile::fake()->image('sample.jpg');
+        $file = UploadedFile::fake()->image('sample.jpg', 1280, 800);
         $response = $this->postJson('/api/profile-photo?api_token=' . $this->user->api_token, [
             'image' => $file
         ]);
@@ -78,7 +78,7 @@ class ApiTest extends TestCase
 
     public function test_user_should_be_able_to_upload_image_for_listing()
     {
-        $image = UploadedFile::fake()->image('sample');
+        $image = UploadedFile::fake()->image('sample.jpg', 1600, 1000);
         $listing = $this->user->listings->first();
         $response = $this->postJson('/api/image-api?api_token=' . $this->user->api_token, [
             'name' => 'fakename',

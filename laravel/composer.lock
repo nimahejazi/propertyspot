@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47c173416ad1921c04af56d348f17e3a",
+    "content-hash": "512d557a830f008fc43205049be6cc5c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -918,7 +918,7 @@
                     "homepage": "https://github.com/mtdowling"
                 },
                 {
-                    "name": "Márk Sági-Kazár",
+                    "name": "M\u00e1rk S\u00e1gi-Kaz\u00e1r",
                     "email": "mark.sagikazar@gmail.com",
                     "homepage": "https://sagikazarmark.hu"
                 }
@@ -2504,16 +2504,16 @@
         },
         {
             "name": "robotkudos/rk-image-api",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/robotkudos/rk-image-api.git",
-                "reference": "1b5400b416e04a45753120d7f4a6886a2e9b7798"
+                "url": "https://github.com/nimahejazi/rk-image-api.git",
+                "reference": "3aa6ef0b7151b8f407a8b7a2c50d94f9ccb47ed8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robotkudos/rk-image-api/zipball/1b5400b416e04a45753120d7f4a6886a2e9b7798",
-                "reference": "1b5400b416e04a45753120d7f4a6886a2e9b7798",
+                "url": "https://api.github.com/repos/nimahejazi/rk-image-api/zipball/3aa6ef0b7151b8f407a8b7a2c50d94f9ccb47ed8",
+                "reference": "3aa6ef0b7151b8f407a8b7a2c50d94f9ccb47ed8",
                 "shasum": ""
             },
             "require": {
@@ -2532,7 +2532,6 @@
                     "RobotKudos\\RKImageAPI\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2543,7 +2542,11 @@
                 }
             ],
             "description": "API for processing image upload to work with rk-image-uploader React app.",
-            "time": "2021-04-25T15:34:28+00:00"
+            "support": {
+                "source": "https://github.com/nimahejazi/rk-image-api/tree/1.0.2",
+                "issues": "https://github.com/nimahejazi/rk-image-api/issues"
+            },
+            "time": "2026-08-30T21:49:50+00:00"
         },
         {
             "name": "robotkudos/rkdb",
@@ -2617,16 +2620,16 @@
         },
         {
             "name": "robotkudos/rkimage",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/robotkudos/RKImage.git",
-                "reference": "038101ba01f02ea726d1e30222f7f332fc3a593a"
+                "url": "https://github.com/nimahejazi/RKImage.git",
+                "reference": "014820338704f588a5ff320348640564dc0187d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robotkudos/RKImage/zipball/038101ba01f02ea726d1e30222f7f332fc3a593a",
-                "reference": "038101ba01f02ea726d1e30222f7f332fc3a593a",
+                "url": "https://api.github.com/repos/nimahejazi/RKImage/zipball/014820338704f588a5ff320348640564dc0187d7",
+                "reference": "014820338704f588a5ff320348640564dc0187d7",
                 "shasum": ""
             },
             "type": "library",
@@ -2635,7 +2638,6 @@
                     "RobotKudos\\RKImage\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2646,7 +2648,11 @@
                 }
             ],
             "description": "Image resizer and watermarker for Laravel.",
-            "time": "2020-08-05T17:47:34+00:00"
+            "support": {
+                "source": "https://github.com/nimahejazi/RKImage/tree/0.1.1",
+                "issues": "https://github.com/nimahejazi/RKImage/issues"
+            },
+            "time": "2026-08-30T21:52:17+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -2901,7 +2907,7 @@
                     "email": "fabien@symfony.com"
                 },
                 {
-                    "name": "Jean-François Simon",
+                    "name": "Jean-Fran\u00e7ois Simon",
                     "email": "jeanfrancois.simon@sensiolabs.com"
                 },
                 {
@@ -5532,7 +5538,7 @@
             ],
             "authors": [
                 {
-                    "name": "François Zaninotto"
+                    "name": "Fran\u00e7ois Zaninotto"
                 }
             ],
             "description": "Faker is a PHP library that generates fake data for you.",
@@ -5701,7 +5707,7 @@
             ],
             "authors": [
                 {
-                    "name": "Pádraic Brady",
+                    "name": "P\u00e1draic Brady",
                     "email": "padraic.brady@gmail.com",
                     "homepage": "http://blog.astrumfutura.com"
                 },

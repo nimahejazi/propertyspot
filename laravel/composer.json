@@ -15,10 +15,10 @@
         "guzzlehttp/guzzle": "^7.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "robotkudos/rk-image-api": "^1.0",
+        "robotkudos/rk-image-api": "^1.0.2",
         "robotkudos/rkdb": "dev-master",
         "robotkudos/rkhelpers": "dev-master",
-        "robotkudos/rkimage": "^0.1.0",
+        "robotkudos/rkimage": "^0.1.1",
         "stripe/stripe-php": "^7.61"
     },
     "require-dev": {
@@ -64,5 +64,15 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/nimahejazi/rk-image-api"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/nimahejazi/RKImage"
+        }
+    ]
 }

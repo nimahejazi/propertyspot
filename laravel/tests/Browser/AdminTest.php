@@ -62,7 +62,7 @@ class AdminTest extends DuskTestCase
                 ->visit('/admin/users/create')
                 ->type('email', $email)
                 ->type('password', '1234asdf')
-                ->press('Create the User');
+                ->press('Create User');
 
             $this->assertDatabaseHas('users', [
                 'email' => $email

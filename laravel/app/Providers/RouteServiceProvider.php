@@ -59,5 +59,11 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60);
         });
+
+        // Image upload API (rk-image-api package routes are outside the
+        // "api" middleware group, so they need their own limiter).
+        RateLimiter::for('image-api', function (Request $request) {
+            return Limit::perMinute(30)->by(optional($request->user('api'))->id ?: $request->ip());
+        });
     }
 }

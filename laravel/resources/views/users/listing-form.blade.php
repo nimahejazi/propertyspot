@@ -275,23 +275,6 @@
 
                     </div>
                 </article>
-                <article class="ps-box multipage" id="page-image-upload">
-                    <div class="box-title">Property images</div>
-                    <div class="box">
-                        <div class='cover-loading'></div>
-                        <div class='has-text-danger' id='page-image-upload-error'></div>
-                        <div class="field">
-                            <div
-                                id="rkImageUploader"
-                                url="{{$_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/api'}}"
-                                rkKey="{{$listing->id}}"
-                                apiToken='{{$user->api_token}}'
-                                bulletPoints='["- Click UPLOAD PHOTOS or drag and drop below", "- A maximum of 50 images can be added", "- Drag images to reorder them"]'
-                                maxItems='50'
-                            ></div>
-                        </div>
-                    </div>
-                </article>
                 <article class="ps-box multipage" id="page-amenities">
                     <div class="box-title">Property amenities</div>
                         <div class='has-text-danger' id='page-amenities-error'></div>
@@ -345,8 +328,5 @@
 @section('scripts')
     <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin="crossorigin"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin="crossorigin"></script>
-    <!--<script src="/js/rk-google-maps-autocomplete.min.js"></script>
-    <script src="/js/rk-taglist.min.js"></script>
-    <script src="/js/rk-image-uploader.min.js"></script>-->
     <script src='/js/propertyspot-dashboard.js'></script>
 @endsection

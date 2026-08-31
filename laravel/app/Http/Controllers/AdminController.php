@@ -50,6 +50,10 @@ class AdminController extends Controller
   function deleteListing($id) {
     $listing = Listing::findOrFail($id);
     $userId = $listing->user_id;
+    // Remove the photos' files and rows first so nothing is orphaned.
+    foreach ($listing->photos()->get() as $photo) {
+      $photo->deleteWithFiles();
+    }
     $listing->delete();
     return redirect("/admin/users/$userId/listings")->with(['message'=> "Listing $id has been deleted."]);
   }
