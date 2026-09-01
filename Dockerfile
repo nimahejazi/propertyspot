@@ -39,6 +39,13 @@ COPY ./laravel/.env.prod /var/www/html/.env
 COPY ./site.conf /etc/nginx/conf.d/site.conf
 COPY ./php-custom.ini /usr/local/etc/php/conf.d/php-custom.ini
 COPY --from=builder app/public /var/www/html/public
+# 1 GB VM (see GCP_DEPLOY.md): cap FPM workers so imagick upload spikes don't OOM.
+RUN sed -i \
+    -e 's/^pm.max_children = .*/pm.max_children = 3/' \
+    -e 's/^pm.start_servers = .*/pm.start_servers = 1/' \
+    -e 's/^pm.min_spare_servers = .*/pm.min_spare_servers = 1/' \
+    -e 's/^pm.max_spare_servers = .*/pm.max_spare_servers = 2/' \
+    /usr/local/etc/php-fpm.d/www.conf
 RUN chown -R www-data:www-data /var/www/html
 CMD service nginx start && \
     php-fpm

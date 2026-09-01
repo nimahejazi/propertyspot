@@ -1,5 +1,11 @@
 # Production Deployment — Single-VM Runbook
 
+> **SUPERSEDED for production by [`GCP_DEPLOY.md`](GCP_DEPLOY.md)** — prod now
+> targets a GCP e2-micro VM with Cloudflare in front and prebuilt images pushed
+> from the Mac (on-VM builds OOM at 1 GB; `docker-compose.prod.yml`,
+> `build-push.sh`, `deploy-vm.sh`). This file remains as the provider-agnostic
+> reference (data migration §4/§6, generic gotchas) and for non-GCP hosting.
+
 Status quo preserved: one VM runs docker-compose with `nginx-proxy` +
 `letsencrypt-companion` in front, `propertyspot_laravel` (php-fpm + nginx) and
 `propertyspot_db` (mysql:5.7) behind it. Zero code changes needed for this move.

@@ -1,0 +1,24 @@
+version: "3"
+
+# Prod overlay for the GCP e2-micro VM (1 GB RAM): replaces on-VM build with a
+# prebuilt image from Artifact Registry and caps memory per service.
+# Use together with docker-compose.yml:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# Requires GCP_DEPLOY.md §2 pull auth before first `pull`.
+
+services:
+  propertyspot_db:
+    command:
+      - --innodb_buffer_pool_size=64M
+      - --performance-schema=OFF
+      - --max_connections=30
+    mem_limit: 450m
+
+  propertyspot:
+    image: us-west1-docker.pkg.dev/PROJECT_ID/propertyspot/app:latest
+    pull_policy: always
+    # NOTE: compose cannot fully null the base file's build: stanza; this is
+    # harmless — deploy-vm.sh always `pull`s first, and pull_policy: always
+    # means compose never falls back to building this VM (1 GB, would OOM).
+    # FPM pool caps (pm.max_children=3 etc.) are baked into the image (Dockerfile).
+    mem_limit: 700m

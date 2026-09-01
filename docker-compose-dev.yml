@@ -31,6 +31,7 @@ services:
       - ./laravel:/var/www/html
       - ./site.conf:/etc/nginx/conf.d/site.conf
       - ./php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
+      - ./php-xdebug.ini:/usr/local/etc/php/conf.d/php-xdebug.ini
       
   selenium:
     image: selenium/standalone-chrome
