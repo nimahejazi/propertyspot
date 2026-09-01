@@ -126,9 +126,13 @@ git clone git@github.com:nimahejazi/propertyspot.git /opt/propertyspot/app
 ```
 
 - Deploy key: `ssh-keygen -t ed25519` on VM, public key → GitHub deploy key
-  (read-only).
+  (read-only). **GitHub may take a few minutes to activate a freshly added
+  deploy key** — if `ssh -T git@github.com` says `Permission denied (publickey)`
+  right after adding it, wait ~5 min and retry before debugging anything else.
 - `ln -s ~/.ssh/id_ed25519 ~/.ssh/id_rsa` — scripts/Dockerfile expect id_rsa.
-- **Root `.env`** (compose `MYSQL_*` creds): `scp .env deploy@vm:/opt/propertyspot/app/.env`
+- **Root `.env`** (compose `MYSQL_*` creds **and** `GCP_PROJECT_ID=propertyspot-net`
+  for the AR image reference in `docker-compose.prod.yml`):
+  `scp .env deploy@vm:/opt/propertyspot/app/.env`
 - **`laravel/.env.prod`**: `scp laravel/.env.prod deploy@vm:/opt/propertyspot/app/laravel/.env.prod`
   Fresh deploy → new `APP_KEY` is fine (generate locally).
 

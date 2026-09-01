@@ -15,7 +15,9 @@ services:
     mem_limit: 450m
 
   propertyspot:
-    image: us-west1-docker.pkg.dev/PROJECT_ID/propertyspot/app:latest
+    # PROJECT_ID is interpolated from the root .env (GCP_PROJECT_ID=...) —
+    # set it there per GCP_DEPLOY.md §4; never hardcode the project id here.
+    image: us-west1-docker.pkg.dev/${GCP_PROJECT_ID}/propertyspot/app:latest
     pull_policy: always
     # NOTE: compose cannot fully null the base file's build: stanza; this is
     # harmless — deploy-vm.sh always `pull`s first, and pull_policy: always
