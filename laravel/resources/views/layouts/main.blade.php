@@ -35,7 +35,7 @@
     </div>
     <footer class="main-footer">
         <div class="container">
-            <p class="copyright">&copy; Copyright {{$copyright_year}} by <a href='https://robotkudos.com' target='_blank'>Robot Kudos</a>. All rights reserved.</p>
+            <p class="copyright">&copy; Copyright {{$copyright_year}} by <a href='https://nimahejazi.me' target='_blank'>Nima Hejazi</a>. All rights reserved.</p>
         </div>
     </footer>
   </div>
